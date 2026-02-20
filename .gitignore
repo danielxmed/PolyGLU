@@ -1,0 +1,44 @@
+# Environment and secrets
+.env
+*.pem
+*.key
+
+# Data
+data/
+*.bin
+*.npy
+
+# Checkpoints
+checkpoints/
+checkpoints_sft/
+*.pt
+*.safetensors
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Weights & Biases
+wandb/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Outputs
+figures/
+results/

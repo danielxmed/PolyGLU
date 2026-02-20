@@ -1,0 +1,62 @@
+model:
+  vocab_size: 151669
+  d_model: 1024
+  d_ff: 4096
+  n_layers: 28
+  n_q_heads: 16
+  n_kv_heads: 8
+  head_dim: 64
+  seq_length: 4096
+  n_activations: 4
+  eps: 1.0e-6
+  use_flash_attn: true
+
+training:
+  # Optimizer
+  peak_lr: 1.0e-4
+  weight_decay: 0.1
+  adam_beta1: 0.9
+  adam_beta2: 0.95
+  adam_eps: 1.0e-8
+  grad_clip: 1.0
+
+  # Schedule
+  warmup_steps: 2000
+  total_steps: 19531
+
+  # Tau annealing
+  tau_max: 1.0
+  tau_min: 0.1
+
+  # Batching: 2 * 4096 * 64 = 524,288 tokens per step
+  micro_batch_size: 2
+  grad_accum_steps: 64
+
+  # Data mix (base proportions)
+  mix_math: 0.70
+  mix_stem: 0.25
+  mix_code: 0.05
+
+  # Data mix annealing (final 20% of training)
+  anneal_start_frac: 0.80
+  anneal_math: 0.85
+  anneal_stem: 0.10
+  anneal_code: 0.05
+
+  # Data paths
+  data_dir: data/tokenized
+  math_subdir: math
+  stem_subdir: stem
+  code_subdir: code
+
+  # Logging
+  wandb_project: polychromatic-lm
+  log_every: 100
+
+  # Checkpointing
+  checkpoint_dir: checkpoints
+  checkpoint_every: 1000
+  portable_checkpoint_every: 5000
+
+  # DeepSpeed
+  ds_config: configs/ds_config.json
