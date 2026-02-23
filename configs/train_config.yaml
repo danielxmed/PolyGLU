@@ -28,9 +28,10 @@ training:
   tau_max: 1.0
   tau_min: 0.1
 
-  # Batching: 2 * 4096 * 64 = 524,288 tokens per step
-  micro_batch_size: 2
-  grad_accum_steps: 64
+  # Batching: 16 * 4096 * 8 = 524,288 tokens per step
+  # Chunked CE avoids materializing full [B*T, vocab] logits (~20GB saved)
+  micro_batch_size: 16
+  grad_accum_steps: 8
 
   # Data mix (base proportions)
   mix_math: 0.70
@@ -51,7 +52,7 @@ training:
 
   # Logging
   wandb_project: polychromatic-lm
-  log_every: 100
+  log_every: 10
 
   # Checkpointing
   checkpoint_dir: checkpoints

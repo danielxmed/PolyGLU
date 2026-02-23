@@ -10,13 +10,20 @@ This is the ONLY entry point for model creation. It:
 import types
 import torch
 import torch.nn as nn
+import torch.utils.checkpoint
 
 from src.model.architecture import PolychromaticLM
 from src.model.config import ModelConfig
 
 
 def _make_block_forward_with_doc_masking(block):
-    """Patch TransformerBlock.forward to accept and pass cu_seqlens/max_seqlen."""
+    """Patch TransformerBlock.forward to accept and pass cu_seqlens/max_seqlen.
+
+    Uses selective gradient checkpointing: only the PolyGLU forward is
+    checkpointed (it creates 4 activation tensors ~2GB each), while
+    attention runs without checkpointing. This avoids recomputing attention
+    during backward while keeping PolyGLU memory-efficient.
+    """
     original_polyglu_forward = block.polyglu.forward
 
     def block_forward(self, x, rope, cu_seqlens=None, max_seqlen=None):
@@ -32,13 +39,27 @@ def _make_block_forward_with_doc_masking(block):
 
 
 def _make_model_forward_with_doc_masking(model):
-    """Patch PolychromaticLM.forward to accept and pass cu_seqlens/max_seqlen."""
+    """Patch PolychromaticLM.forward to accept and pass cu_seqlens/max_seqlen.
 
-    def model_forward(self, token_ids, cu_seqlens=None, max_seqlen=None):
+    Full gradient checkpointing on each block: saves memory by recomputing
+    block forward during backward. Required because PolyGLU stores 4
+    activation tensors per block (~2GB each at micro_batch=16).
+    """
+
+    def model_forward(self, token_ids, cu_seqlens=None, max_seqlen=None, return_hidden=False):
         x = self.embeddings(token_ids)
         for block in self.model_core:
-            x = block(x, self.rope, cu_seqlens=cu_seqlens, max_seqlen=max_seqlen)
+            if self.training:
+                x = torch.utils.checkpoint.checkpoint(
+                    block, x, self.rope,
+                    cu_seqlens=cu_seqlens, max_seqlen=max_seqlen,
+                    use_reentrant=False,
+                )
+            else:
+                x = block(x, self.rope, cu_seqlens=cu_seqlens, max_seqlen=max_seqlen)
         x = self.rmsnorm(x)
+        if return_hidden:
+            return x
         output = self.output_head(x)
         return output
 

@@ -75,6 +75,7 @@ def tokenize_and_write(
     output_dir: str,
     max_tokens: int,
     token: str | None = None,
+    split: str = "train",
 ):
     """Stream a HF dataset, tokenize, and write binary uint32 chunks.
 
@@ -102,7 +103,7 @@ def tokenize_and_write(
     ds = load_dataset(
         dataset_id,
         name=config,
-        split="train",
+        split=split,
         streaming=True,
         token=token,
     )
@@ -196,6 +197,7 @@ def main():
     parser.add_argument("--max-tokens", type=int, default=10_000_000_000, help="Max tokens to process")
     parser.add_argument("--all", action="store_true", help="Tokenize all 3 sources")
     parser.add_argument("--output-base", type=str, default="data/tokenized", help="Base output dir for --all")
+    parser.add_argument("--split", type=str, default="train", help="Dataset split name")
     parser.add_argument("--hf-token", type=str, default=None, help="HF token (or set HF_TOKEN env var)")
     args = parser.parse_args()
 
@@ -211,6 +213,7 @@ def main():
             output_dir=args.output,
             max_tokens=args.max_tokens,
             token=token,
+            split=args.split,
         )
     else:
         parser.error("Either --all or both --dataset and --output are required")

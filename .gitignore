@@ -42,3 +42,7 @@ wandb/
 # Outputs
 figures/
 results/
+
+
+# Logs
+*.log
