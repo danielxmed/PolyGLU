@@ -59,5 +59,8 @@ training:
   checkpoint_every: 1000
   portable_checkpoint_every: 5000
 
+  # Resume
+  resume_from: checkpoints/portable_step10000_migrated.pt
+
   # DeepSpeed
   ds_config: configs/ds_config.json

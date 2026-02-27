@@ -25,7 +25,7 @@ import torch.nn as nn
 import wandb
 
 from src.model.config import ModelConfig, TrainConfig
-from src.model.model import create_model, get_routing_entropy
+from src.model.model import create_model, get_routing_entropy, get_dynamic_routing_entropy
 from src.data.dataloader import PretrainingDataLoader
 
 # Enable TF32 for any float32 operations (e.g., loss accumulation)
@@ -77,15 +77,17 @@ def chunked_cross_entropy(
 def create_optimizer(model: nn.Module, config: TrainConfig) -> torch.optim.AdamW:
     """Create AdamW optimizer with param group separation.
 
-    Replicates frozen Trainer lines 260-273:
-    - 2D+ params (weights): weight_decay = 0.1
-    - 1D params (biases, norms, alpha, beta): weight_decay = 0.0
+    - 2D+ weight matrices: weight_decay = 0.1
+    - 1D params (biases, norms, beta): weight_decay = 0.0
+    - Routing params (alpha): weight_decay = 0.0
     """
     decay_params = []
     no_decay_params = []
 
     for name, param in model.named_parameters():
         if param.ndim == 1:
+            no_decay_params.append(param)
+        elif 'alpha' in name:
             no_decay_params.append(param)
         else:
             decay_params.append(param)
@@ -190,7 +192,6 @@ def train(model_config: ModelConfig, train_config: TrainConfig, local_rank: int 
             start_step = checkpoint.get("step", 0)
             tau = checkpoint.get("tau", 1.0)
             model_engine.module.update_tau(start_step, train_config.total_steps)
-            # Reload optimizer and scheduler state
             optimizer.load_state_dict(checkpoint["optimizer"])
             scheduler.load_state_dict(checkpoint["scheduler"])
             print(f"Resumed from portable checkpoint at step {start_step}")
@@ -336,6 +337,12 @@ def train(model_config: ModelConfig, train_config: TrainConfig, local_rank: int 
                 # Routing entropy (every log_every steps)
                 entropy_dict = get_routing_entropy(model_engine.module)
                 log_dict.update(entropy_dict)
+
+                # Dynamic routing entropy (uses current batch as sample)
+                dynamic_entropy = get_dynamic_routing_entropy(
+                    model_engine.module, input_ids
+                )
+                log_dict.update(dynamic_entropy)
 
                 wandb.log(log_dict, step=global_step)
 

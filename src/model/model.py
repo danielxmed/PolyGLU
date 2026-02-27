@@ -128,6 +128,60 @@ def get_routing_entropy(model: PolychromaticLM) -> dict:
     return entropies
 
 
+def get_dynamic_routing_entropy(model: PolychromaticLM, sample_input: torch.Tensor) -> dict:
+    """Compute routing entropy from FULL routing logits (alpha + beta * gate_net(h)).
+
+    Unlike get_routing_entropy() which only measures static alpha preferences,
+    this captures the actual routing decisions the model makes on real data.
+
+    Args:
+        model: PolychromaticLM instance (should be in eval mode for this call).
+        sample_input: A single batch of token IDs [B, T] to run through the model.
+
+    Returns:
+        Dict of per-layer and mean dynamic entropy for WandB logging.
+    """
+    entropies = {}
+    hooks = []
+    layer_logits = {}
+
+    def make_hook(layer_idx):
+        def hook_fn(module, input, output):
+            x = input[0]
+            with torch.no_grad():
+                mean_pool_h = torch.mean(x, dim=1)  # [B, d_model]
+                logits = module.alpha.unsqueeze(0) + (
+                    module.beta * module.gate_net(mean_pool_h).unsqueeze(1)
+                )  # [B, d_ff, K]
+                probs = torch.softmax(logits.float(), dim=-1)
+                log_probs = torch.log(probs + 1e-10)
+                entropy = -(probs * log_probs).sum(dim=-1)  # [B, d_ff]
+                layer_logits[layer_idx] = entropy.mean().item()
+        return hook_fn
+
+    for i, block in enumerate(model.model_core):
+        h = block.polyglu.register_forward_hook(make_hook(i))
+        hooks.append(h)
+
+    was_training = model.training
+    model.eval()
+    with torch.no_grad():
+        model(sample_input)
+    if was_training:
+        model.train()
+
+    for h in hooks:
+        h.remove()
+
+    for i in sorted(layer_logits.keys()):
+        entropies[f"dynamic_routing_entropy/layer_{i}"] = layer_logits[i]
+
+    entropies["dynamic_routing_entropy/mean"] = (
+        sum(layer_logits.values()) / len(layer_logits) if layer_logits else 0.0
+    )
+    return entropies
+
+
 def load_checkpoint(path: str, config: ModelConfig, device: str = "cpu") -> tuple:
     """Load a portable checkpoint (.pt format matching frozen Trainer).
 

@@ -1,0 +1,1573 @@
+
+ ▐▛███▜▌   Claude Code v2.1.50
+▝▜█████▛▘  Opus 4.6 · Claude Max
+  ▘▘ ▝▝    /workspace/PolyGLU
+
+❯ Claude, let's handle this one: @HOUSTON-WE-HAVE-A-PROBLEM.md  
+  ⎿  Read HOUSTON-WE-HAVE-A-PROBLEM.md (245 lines)
+
+● I've read the hotfix instructions. Let me explore the relevant files to
+  understand the current code before planning the changes.
+
+● 3 Explore agents finished (ctrl+o to expand)
+   ├─ Explore train.py for optimizer and logging · 1 tool use · 39.0k tokens
+   │  ⎿  Done
+   ├─ Explore model.py for routing entropy · 2 tool uses · 41.6k tokens
+   │  ⎿  Done
+   └─ Explore architecture.py for PolyGLU · 1 tool use · 39.0k tokens
+      ⎿  Done
+
+● Good, I have a thorough understanding of all the files. One critical finding:
+  input_ids is not in scope in the logging block — it's only available inside
+  the micro-step loop. Let me read the exact training loop structure to plan how
+   to capture it.
+
+● Read 1 file (ctrl+o to expand)
+
+● Good — I can now see that input_ids is in scope in the logging block (line 255
+   is inside the same for batch in dataloader loop as the logging block at line
+  321). The first agent's analysis was slightly off on this point. Now let me
+  design the plan.
+
+● Read 2 files (ctrl+o to expand)
+
+● Now let me check the end of model.py to know where to add the new function.
+
+● Read 1 file (ctrl+o to expand)
+
+● I now have complete context. Let me write the plan.
+
+● Updated plan
+  ⎿  /plan to preview
+
+● Three targeted changes across two files — no frozen files touched:
+
+  1. src/training/train.py — Fix create_optimizer to route alpha params to the
+  no-decay group (it's 2D but not a weight matrix)
+  2. src/model/model.py — Add get_dynamic_routing_entropy() using forward hooks
+  to measure entropy from the full routing logits on real data
+  3. src/training/train.py — Wire the new metric into the logging block (line
+  337), right after the existing static entropy call
+
+  input_ids is already in scope at the logging block (same for batch loop), so
+  no variable plumbing needed.
+
+● User approved Claude's plan
+  ⎿  Plan saved to: ~/.claude/plans/valiant-leaping-platypus.md · /plan to 
+     edit
+     Mid-Training Hotfix: Fix Alpha Weight Decay + Add Dynamic Routing 
+     Entropy
+
+     Context
+
+     PolychromaticLM is 64% through pre-training (~12,500 / ~19,531 steps).
+      Two issues need fixing:
+
+     1. Bug: The alpha routing parameter (shape [4096, 4]) is 2D, so it
+     incorrectly receives weight_decay=0.1, continuously pulling it toward
+     zero and preventing static activation specialization.
+     2. Missing metric: get_routing_entropy() only measures static alpha
+     preferences. We need a complementary metric that captures the full
+     routing decision (alpha + beta * gate_net(h)) on real data.
+
+     Training will resume from a portable checkpoint (optimizer rebuilt
+     fresh), so changing param group membership is safe.
+
+     ---
+     Change 1: Fix create_optimizer to exclude alpha from weight decay
+
+     File: src/training/train.py (lines 77–102)
+
+     Edit: Add an 'alpha' in name condition to route alpha params to the
+     no-decay group. Update the docstring to reflect the three-way split.
+
+     # Current (line 88-91):
+     if param.ndim == 1:
+         no_decay_params.append(param)
+     else:
+         decay_params.append(param)
+
+     # New:
+     if param.ndim == 1:
+         no_decay_params.append(param)
+     elif 'alpha' in name:
+         no_decay_params.append(param)
+     else:
+         decay_params.append(param)
+
+     Also update docstring (lines 78–83) to document routing params as a
+     separate category.
+
+     ---
+     Change 2: Add get_dynamic_routing_entropy() to model.py
+
+     File: src/model/model.py — add new function after
+     get_routing_entropy() (after line 128)
+
+     The function:
+     - Registers forward hooks on each block.polyglu module
+     - Runs a forward pass in eval mode with torch.no_grad()
+     - Hooks capture the full routing logits (alpha + beta * 
+     gate_net(mean_pool(x))) and compute entropy
+     - Returns a WandB-compatible dict with per-layer and mean dynamic
+     entropy
+     - Cleans up hooks and restores training mode afterward
+
+     Key details:
+     - Access pattern: model.model_core[i].polyglu (matches existing
+     get_routing_entropy)
+     - Hook input: input[0] is x (the input to PolyGLU after rmsnorm_2)
+     - Routing computation mirrors architecture.py PolyGLU.forward lines
+     42–44
+
+     ---
+     Change 3: Call dynamic entropy in the training loop logging block
+
+     File: src/training/train.py (lines 336–338)
+
+     Edit: After the existing get_routing_entropy call (line 337), add a
+     call to get_dynamic_routing_entropy using model_engine.module and
+     input_ids (which is in scope — it's the last micro-batch's input from
+     line 255, inside the same for batch in dataloader loop).
+
+     Also update the import on line 28 to include
+     get_dynamic_routing_entropy.
+
+     ---
+     Files Modified
+
+     File: src/training/train.py
+     Lines: 28
+     Change: Add get_dynamic_routing_entropy to import
+     ────────────────────────────────────────
+     File: src/training/train.py
+     Lines: 78–91
+     Change: Fix create_optimizer docstring + param grouping
+     ────────────────────────────────────────
+     File: src/training/train.py
+     Lines: 337–338
+     Change: Add dynamic entropy call in logging block
+     ────────────────────────────────────────
+     File: src/model/model.py
+     Lines: after 128
+     Change: Add get_dynamic_routing_entropy() function
+
+     No frozen files (architecture.py, flash_attention.py, config.py,
+     src/data/) are touched.
+
+     ---
+     Verification
+
+     1. Confirm alpha params now appear in no-decay group by inspecting
+     optimizer param groups
+     2. Run a short training test (a few steps) and verify:
+       - No crashes or shape mismatches
+       - dynamic_routing_entropy/* keys appear in logs alongside existing
+     routing_entropy/*
+       - Training loss does not spike
+
+● Let me implement all three changes now.
+
+● Update(src/training/train.py)
+  ⎿  Added 5 lines, removed 3 lines
+      77  def create_optimizer(model: nn.Module, config: TrainConfig) -> 
+          torch.optim.AdamW:
+      78      """Create AdamW optimizer with param group separation.
+      79  
+      80 -    Replicates frozen Trainer lines 260-273:                   
+      81 -    - 2D+ params (weights): weight_decay = 0.1                 
+      82 -    - 1D params (biases, norms, alpha, beta): weight_decay = 0.
+         -0                                                              
+      80 +    - 2D+ weight matrices: weight_decay = 0.1                  
+      81 +    - 1D params (biases, norms, beta): weight_decay = 0.0      
+      82 +    - Routing params (alpha): weight_decay = 0.0               
+      83      """
+      84      decay_params = []
+      85      no_decay_params = []
+     ...
+      87      for name, param in model.named_parameters():
+      88          if param.ndim == 1:
+      89              no_decay_params.append(param)
+      90 +        elif 'alpha' in name:                                  
+      91 +            no_decay_params.append(param)                      
+      92          else:
+      93              decay_params.append(param)
+      94  
+
+● Update(src/training/train.py)
+  ⎿  Added 1 line, removed 1 line
+      25  import wandb
+      26  
+      27  from src.model.config import ModelConfig, TrainConfig
+      28 -from src.model.model import create_model, get_routing_entropy  
+      28 +from src.model.model import create_model, get_routing_entropy, 
+         +get_dynamic_routing_entropy                                    
+      29  from src.data.dataloader import PretrainingDataLoader
+      30  
+      31  # Enable TF32 for any float32 operations (e.g., loss accumulati
+          on)
+
+● Update(src/training/train.py)
+  ⎿  Added 6 lines
+      339                  entropy_dict = get_routing_entropy(model_engin
+           e.module)
+      340                  log_dict.update(entropy_dict)
+      341  
+      342 +                # Dynamic routing entropy (uses current batch 
+          +as sample)                                                    
+      343 +                dynamic_entropy = get_dynamic_routing_entropy(
+      344 +                    model_engine.module, input_ids            
+      345 +                )                                             
+      346 +                log_dict.update(dynamic_entropy)              
+      347 +                                                              
+      348                  wandb.log(log_dict, step=global_step)
+      349  
+      350                  print(
+
+● Now add the get_dynamic_routing_entropy function to model.py.
+
+● Update(src/model/model.py)
+  ⎿  Added 54 lines
+      128      return entropies
+      129  
+      130  
+      131 +def get_dynamic_routing_entropy(model: PolychromaticLM, sample
+          +_input: torch.Tensor) -> dict:                                
+      132 +    """Compute routing entropy from FULL routing logits (alpha
+          + + beta * gate_net(h)).                                       
+      133 +                                                              
+      134 +    Unlike get_routing_entropy() which only measures static al
+          +pha preferences,                                              
+      135 +    this captures the actual routing decisions the model makes
+          + on real data.                                                
+      136 +                                                              
+      137 +    Args:                                                     
+      138 +        model: PolychromaticLM instance (should be in eval mod
+          +e for this call).                                             
+      139 +        sample_input: A single batch of token IDs [B, T] to ru
+          +n through the model.                                          
+      140 +                                                              
+      141 +    Returns:                                                  
+      142 +        Dict of per-layer and mean dynamic entropy for WandB l
+          +ogging.                                                       
+      143 +    """                                                       
+      144 +    entropies = {}                                            
+      145 +    hooks = []                                                
+      146 +    layer_logits = {}                                         
+      147 +                                                              
+      148 +    def make_hook(layer_idx):                                 
+      149 +        def hook_fn(module, input, output):                   
+      150 +            x = input[0]                                      
+      151 +            with torch.no_grad():                             
+      152 +                mean_pool_h = torch.mean(x, dim=1)  # [B, d_mo
+          +del]                                                          
+      153 +                logits = module.alpha.unsqueeze(0) + (        
+      154 +                    module.beta * module.gate_net(mean_pool_h)
+          +.unsqueeze(1)                                                 
+      155 +                )  # [B, d_ff, K]                             
+      156 +                probs = torch.softmax(logits.float(), dim=-1) 
+      157 +                log_probs = torch.log(probs + 1e-10)          
+      158 +                entropy = -(probs * log_probs).sum(dim=-1)  # 
+          +[B, d_ff]                                                     
+      159 +                layer_logits[layer_idx] = entropy.mean().item(
+          +)                                                             
+      160 +        return hook_fn                                        
+      161 +                                                              
+      162 +    for i, block in enumerate(model.model_core):              
+      163 +        h = block.polyglu.register_forward_hook(make_hook(i)) 
+      164 +        hooks.append(h)                                       
+      165 +                                                              
+      166 +    was_training = model.training                             
+      167 +    model.eval()                                              
+      168 +    with torch.no_grad():                                     
+      169 +        model(sample_input)                                   
+      170 +    if was_training:                                          
+      171 +        model.train()                                         
+      172 +                                                              
+      173 +    for h in hooks:                                           
+      174 +        h.remove()                                            
+      175 +                                                              
+      176 +    for i in sorted(layer_logits.keys()):                     
+      177 +        entropies[f"dynamic_routing_entropy/layer_{i}"] = laye
+          +r_logits[i]                                                   
+      178 +                                                              
+      179 +    entropies["dynamic_routing_entropy/mean"] = (             
+      180 +        sum(layer_logits.values()) / len(layer_logits) if laye
+          +r_logits else 0.0                                             
+      181 +    )                                                         
+      182 +    return entropies                                          
+      183 +                                                              
+      184 +                                                              
+      185  def load_checkpoint(path: str, config: ModelConfig, device: st
+           r = "cpu") -> tuple:
+      186      """Load a portable checkpoint (.pt format matching frozen 
+           Trainer).
+      187  
+
+● All three changes are in. Let me verify the edits look correct.
+
+● Read 2 files (ctrl+o to expand)
+
+● All three changes are clean and correct. Here's a summary:
+
+  Change 1 — Fix alpha weight decay (src/training/train.py:87-93):
+  - Added elif 'alpha' in name check so alpha params (2D, [4096, 4]) go to the
+  no-decay group instead of being penalized with weight_decay=0.1
+
+  Change 2 — Add dynamic routing entropy (src/model/model.py:131-182):
+  - New get_dynamic_routing_entropy() function uses forward hooks to capture the
+   full routing logits (alpha + beta * gate_net(h)) on real data, computes
+  entropy, and returns a WandB-compatible dict with per-layer and mean values
+
+  Change 3 — Wire into training loop (src/training/train.py:342-346):
+  - Calls get_dynamic_routing_entropy(model_engine.module, input_ids) right
+  after the existing static entropy call, logging dynamic_routing_entropy/* keys
+   alongside routing_entropy/*
+
+  No frozen files were touched. The param group structure stays at 2 groups
+  (same count isn't required since you're resuming from a portable checkpoint
+  with a fresh optimizer).
+
+✻ Sautéed for 3m 3s
+
+❯ Ok, so let's do the surgery now. \                                        
+  \                                                                         
+  ## Resume Procedure                                                       
+                                                                            
+  1. Let the current training finish its current step cleanly (or Ctrl+C at 
+   a clean point)                                                           
+  2. Verify the latest portable checkpoint exists (e.g.,                    
+  `checkpoints/portable_step10000.pt`                                       
+     or save one now at the current step)                                   
+  3. Apply Changes 1, 2, and 3                                              
+  4. Resume training from the portable checkpoint:                          
+     ```bash                                                                
+     deepspeed --num_gpus=1 -m src.training.train \                         
+         --config configs/train_config.yaml                                 
+     ```                                                                    
+     With `resume_from` in the config pointing to the portable .pt file.    
+     The optimizer will be rebuilt fresh (losing momentum state), which is  
+     actually desirable since the old momentum for alpha was contaminated   
+     by weight decay.                                                       
+                                                                            
+
+● Changes 1-3 are already applied. Let me verify the checkpoint situation and
+  config before launching.
+
+● Read 1 file (ctrl+o to expand)
+
+● Good — portable_step10000.pt exists. The config has no resume_from field. Let
+  me check how the training script handles resume.
+
+● Searched for 2 patterns (ctrl+o to expand)
+
+● Let me see the full resume logic to understand how it handles portable vs
+  DeepSpeed checkpoints.
+
+● Read 1 file (ctrl+o to expand)
+
+● There's a critical issue with the resume path. Lines 196-197 load the old
+  optimizer/scheduler state from the portable checkpoint, which would:
+  1. Restore the contaminated momentum for alpha
+  2. Possibly mismap states since param groups changed (alpha moved from decay
+  to no_decay)
+
+  The whole point of using a portable checkpoint is to rebuild the optimizer
+  fresh. Let me check how the scheduler is set up so I can handle this
+  correctly.
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● There's a problem with the portable checkpoint resume path. Lines 196-197 load
+   the old optimizer and scheduler states — but we need a fresh optimizer (the
+  whole point of using a portable checkpoint). The old optimizer state has param
+   groups that won't match our new grouping, and the alpha momentum is
+  contaminated.
+
+  Let me also check how config is parsed to understand how to set resume_from.
+
+● Read 2 files (ctrl+o to expand)
+
+● Now I see two things to fix for the resume:
+
+  1. Config: Add resume_from: checkpoints/portable_step10000.pt to the YAML
+  2. Resume logic: Remove optimizer.load_state_dict() — the optimizer must start
+   fresh (old param groups don't match, and alpha momentum is contaminated).
+  Keep the scheduler state (LR schedule is independent of param groups).
+
+● Update(configs/train_config.yaml)
+  ⎿  Added 3 lines
+      59    checkpoint_every: 1000
+      60    portable_checkpoint_every: 5000
+      61  
+      62 +  # Resume                                                     
+      63 +  resume_from: checkpoints/portable_step10000.pt               
+      64 +                                                               
+      65    # DeepSpeed
+      66    ds_config: configs/ds_config.json
+
+● Update(src/training/train.py)
+  ⎿  Added 4 lines, removed 4 lines
+      186              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      187              print(f"Resumed from DeepSpeed checkpoint at step 
+           {start_step}")
+      188          else:
+      189 -            # Fall back to portable checkpoint                
+      189 +            # Fall back to portable checkpoint (fresh optimize
+          +r)                                                            
+      190              checkpoint = torch.load(train_config.resume_from, 
+           map_location=device, weights_only=False)
+      191              model_engine.module.load_state_dict(checkpoint["mo
+           del"])
+      192              start_step = checkpoint.get("step", 0)
+      193              tau = checkpoint.get("tau", 1.0)
+      194              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      195 -            # Reload optimizer and scheduler state            
+      196 -            optimizer.load_state_dict(checkpoint["optimizer"])
+      195 +            # Skip optimizer state — rebuild fresh so alpha ge
+          +ts correct no-decay group                                     
+      196 +            # (old momentum was contaminated by weight decay o
+          +n routing params)                                             
+      197              scheduler.load_state_dict(checkpoint["scheduler"])
+      198 -            print(f"Resumed from portable checkpoint at step {
+          -start_step}")                                                 
+      198 +            print(f"Resumed from portable checkpoint at step {
+          +start_step} (fresh optimizer)")                               
+      199  
+      200      # --- Data ---
+      201      print("Creating dataloader...", flush=True)
+
+● Let me verify all edits one final time before launch.
+
+● Read 2 files (ctrl+o to expand)
+
+● Everything looks correct. Here's the complete summary of all changes:
+
+  src/training/train.py:
+  - Line 28: Added get_dynamic_routing_entropy to imports
+  - Lines 80-93: create_optimizer now routes alpha params to no-decay group
+  - Lines 188-198: Portable checkpoint resume skips optimizer state loading
+  (fresh optimizer)
+  - Lines 342-346: Dynamic routing entropy computed and logged alongside static
+  entropy
+
+  src/model/model.py:
+  - Lines 131-182: New get_dynamic_routing_entropy() function using forward
+  hooks
+
+  configs/train_config.yaml:
+  - Lines 62-63: resume_from: checkpoints/portable_step10000.pt
+
+  The resume path will:
+  1. Load model weights from portable_step10000.pt
+  2. Restore step=10000 and tau
+  3. Skip optimizer state (fresh AdamW with alpha now in no-decay group)
+  4. Keep scheduler state (LR positioned correctly at step 10000)
+
+  Ready to launch when you give the go-ahead:
+  deepspeed --num_gpus=1 -m src.training.train --config
+  configs/train_config.yaml
+
+✻ Sautéed for 2m 38s
+
+❯ root@45f9c8172927:/workspace/PolyGLU# deepspeed --num_gpus=1 -m           
+  src.training.train --config configs/train_config.yaml                     
+  usage: deepspeed [-h] [-H HOSTFILE] [-i INCLUDE] [-e EXCLUDE]             
+  [--num_nodes NUM_NODES] [--min_elastic_nodes MIN_ELASTIC_NODES]           
+                   [--max_elastic_nodes MAX_ELASTIC_NODES] [--num_gpus      
+  NUM_GPUS] [--master_port MASTER_PORT] [--master_addr MASTER_ADDR]         
+                   [--node_rank NODE_RANK] [--launcher LAUNCHER]            
+  [--launcher_args LAUNCHER_ARGS] [--module] [--no_python]                  
+  [--no_local_rank]                                                         
+                   [--no_ssh] [--no_ssh_check] [--force_multi] [--save_pid] 
+   [--enable_each_rank_log ENABLE_EACH_RANK_LOG]                            
+                   [--autotuning {tune,run}] [--elastic_training]           
+  [--bind_cores_to_rank] [--bind_core_list BIND_CORE_LIST]                  
+                   [--ssh_port SSH_PORT] [--venv_script VENV_SCRIPT]        
+  [--log_level {debug,info,warning,error,critical}] [-q]                    
+                   user_script ...                                          
+  deepspeed: error: unrecognized arguments: -m                              
+  root@45f9c8172927:/workspace/PolyGLU#                                     
+
+● Let me check how the project's own script launches training.
+
+● Read 1 file (ctrl+o to expand)
+
+● The deepspeed launcher uses --module not -m. The usage output confirms
+  [--module] is a valid flag.
+
+● Update(scripts/run_train.sh)
+  ⎿  Added 1 line, removed 1 line
+       9      export $(cat .env | grep -v '^#' | xargs)
+      10  fi
+      11  
+      12 -deepspeed --num_gpus=1 -m src.training.train \                 
+      12 +deepspeed --num_gpus=1 --module src.training.train \           
+      13      --config configs/train_config.yaml
+      14  
+      15  echo "=== Pre-Training Complete ==="
+
+● Try:
+
+  deepspeed --num_gpus=1 --module src.training.train --config
+  configs/train_config.yaml
+
+❯ Seems good so far. U sure we killed the last train, right? Otherwise, GPU 
+   is not gonna handle both                                                 
+
+● I didn't kill anything — we never managed the previous process in this
+  session. Let me check what's on the GPU right now.
+
+● Bash(nvidia-smi)
+  ⎿  Fri Feb 27 13:09:33 2026
+     +---------------------------------------------------------------------
+     --------------------+
+     … +22 lines (ctrl+o to expand)
+
+● GPU is at 73.9GB / 80GB and 100% utilization — the old training is still
+  running. No processes shown in nvidia-smi (common in containers), but let me
+  find it.
+
+● Bash(ps aux | grep -E 'deepspeed|train\.py|python.*src' | grep -v grep)
+  ⎿  root      250458  0.0  0.0   4784  1024 ?        S    Feb21   0:00 /bi
+     n/bash -c -l source /root/.claude/shell-snapshots/snapshot-bash-177161
+     8147628-86if5z.sh && shopt -u extglob 2>/dev/null || true && eval 'sou
+     … +23 lines (ctrl+o to expand)
+
+● Two training runs are active:
+
+  1. Old run (PID 251155, started Feb 21) — the original training, using port
+  29501
+  2. New run (PID 500390, started just now at 13:08) — the one you just launched
+
+  Both are competing for the same GPU. The old run needs to be killed. Want me
+  to kill the old training process tree (PIDs 250458, 250459, 250819, 251155)?
+
+❯ Yep, OOM on our current training, we have to kill the other one. Do it.] 
+
+● Bash(kill 251155 250819 250459 250458)
+  ⎿  (No output)
+
+● Bash(ps aux | grep -E 'deepspeed|train\.py|python.*src' | grep -v grep)
+  ⎿  No matches found
+
+● Old training killed. But the new run (PID 500390) also died — likely OOM'd
+  before the old one freed memory. Let me confirm the GPU is clear and relaunch.
+
+● Bash(nvidia-smi)
+  ⎿  Fri Feb 27 13:10:34 2026
+     +---------------------------------------------------------------------
+     --------------------+
+     … +23 lines (ctrl+o to expand)
+
+● GPU is clear — 1MiB used, 0% utilization. Ready to relaunch:
+
+  deepspeed --num_gpus=1 --module src.training.train --config
+  configs/train_config.yaml
+
+❯ Estamos assim:\                                                           
+  \                                                                         
+  2026-02-27 10:11:41                                                       
+  Starting training from step 10000 to 19531                                
+  2026-02-27 10:11:42                                                       
+    [debug] training mode: True                                             
+  2026-02-27 10:11:42                                                       
+    [debug] mem before forward: 16.72 GB                                    
+  2026-02-27 10:11:43                                                       
+    [debug] hidden shape: torch.Size([16, 4096, 1024]), dtype:              
+  torch.bfloat16                                                            
+  2026-02-27 10:11:43                                                       
+    [debug] mem after forward: 20.89 GB                                     
+  2026-02-27 10:11:44                                                       
+    [debug] loss: 1.9766                                                    
+  2026-02-27 10:11:44                                                       
+    [debug] mem after loss: 21.03 GB                                        
+  2026-02-27 10:11:44                                                       
+  /usr/local/lib/python3.11/dist-packages/torch/utils/checkpoint.py:1399:   
+  FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please    
+  use `torch.amp.autocast('cpu', args...)` instead.                         
+  2026-02-27 10:11:44                                                       
+    with device_autocast_ctx,                                               
+  torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  #      
+  type: ignore[attr-defined]                                                
+  2026-02-27 10:11:48                                                       
+    [micro 1] loss=1.9766 dt=6.023s                                         
+  2026-02-27 10:11:53                                                       
+    [micro 2] loss=2.7500 dt=5.545s                                         
+  2026-02-27 10:11:59                                                       
+    [micro 3] loss=2.0820 dt=5.576s                                         
+  2026-02-27 10:12:04                                                       
+    [micro 4] loss=1.7227 dt=5.571s                                         
+  2026-02-27 10:12:10                                                       
+    [micro 5] loss=2.1406 dt=5.528s                                         
+  2026-02-27 10:14:41                                                       
+    [micro 32] loss=10.5625 dt=5.551s\                                      
+  \                                                                         
+  Está aquecendo, certo?                                                    
+
+● Sim, está aquecendo — e é esperado. O optimizer está fresh (sem
+  momentum/variance do Adam), então ele precisa de algumas centenas de steps
+  para reconstruir essas estatísticas. O loss de 10.56 no micro 32 é um spike
+  transiente.
+
+  O que observar:
+  - Primeiros ~100-200 steps: loss vai oscilar e pode spikar. Normal com Adam
+  frio.
+  - Depois de ~500 steps: deveria estabilizar de volta perto de onde estava
+  (~2.0 range)
+  - Se o loss não cair depois de 500+ steps, aí temos problema.
+
+  O LR no step 10000 já está em cosine decay (bem abaixo do peak), o que limita
+  o dano do optimizer frio. Fica de olho nos primeiros logs do WandB quando
+  aparecerem — especialmente o train/loss e os dois entropy metrics
+  (routing_entropy/mean vs dynamic_routing_entropy/mean).
+
+❯ Olha:\                                                                    
+  \                                                                         
+  2026-02-27 10:11:41                                                       
+  Starting training from step 10000 to 19531                                
+  2026-02-27 10:11:42                                                       
+    [debug] training mode: True                                             
+  2026-02-27 10:11:42                                                       
+    [debug] mem before forward: 16.72 GB                                    
+  2026-02-27 10:11:43                                                       
+    [debug] hidden shape: torch.Size([16, 4096, 1024]), dtype:              
+  torch.bfloat16                                                            
+  2026-02-27 10:11:43                                                       
+    [debug] mem after forward: 20.89 GB                                     
+  2026-02-27 10:11:44                                                       
+    [debug] loss: 1.9766                                                    
+  2026-02-27 10:11:44                                                       
+    [debug] mem after loss: 21.03 GB                                        
+  2026-02-27 10:11:44                                                       
+  /usr/local/lib/python3.11/dist-packages/torch/utils/checkpoint.py:1399:   
+  FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please    
+  use `torch.amp.autocast('cpu', args...)` instead.                         
+  2026-02-27 10:11:44                                                       
+    with device_autocast_ctx,                                               
+  torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  #      
+  type: ignore[attr-defined]                                                
+  2026-02-27 10:11:48                                                       
+    [micro 1] loss=1.9766 dt=6.023s                                         
+  2026-02-27 10:11:53                                                       
+    [micro 2] loss=2.7500 dt=5.545s                                         
+  2026-02-27 10:11:59                                                       
+    [micro 3] loss=2.0820 dt=5.576s                                         
+  2026-02-27 10:12:04                                                       
+    [micro 4] loss=1.7227 dt=5.571s                                         
+  2026-02-27 10:12:10                                                       
+    [micro 5] loss=2.1406 dt=5.528s                                         
+  2026-02-27 10:14:41                                                       
+    [micro 32] loss=10.5625 dt=5.551s                                       
+  2026-02-27 10:17:39                                                       
+    [micro 64] loss=9.9688 dt=5.556s                                        
+  2026-02-27 10:19:08                                                       
+    [step 10010] loss=9.8672 tok/s=11732 elapsed=446.9s                     
+  2026-02-27 10:19:10                                                       
+  Step 10010/19531 | Loss: 9.8672 | LR: 0.000057 | τ: 0.539 | tok/s: 11732  
+  | entropy: 1.386\                                                         
+  \                                                                         
+                                                                            
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ E agora? Nos preocupamos? 
+  ⎿  Interrupted · What should Claude do instead?
+
+❯ Só mata o processo, vai dar problema  
+
+● Bash(pkill -f "src.training.train")
+  ⎿  Error: Exit code 144
+
+● Bash(ps aux | grep -E 'train\.py|src.training' | grep -v grep; nvidia-smi
+      --query-gpu=memory.used --format=csv,noheader)
+  ⎿  1 MiB
+
+● Morto. GPU livre.
+
+  O loss em 9.87 no step 10010 é preocupante — não é warmup transiente, é
+  divergência real. O problema é o optimizer 100% frio. O Adam sem
+  momentum/variance acumulada está fazendo updates muito agressivos mesmo com LR
+   baixo (0.000057).
+
+  O fix: na hora do resume do portable checkpoint, precisamos carregar o
+  optimizer state sim, mas só para os params que não mudaram de grupo. Ou, mais
+  simples: carregar o optimizer state antigo e depois zerar apenas o state do
+  alpha.
+
+  Deixa eu olhar como fazer isso.
+
+● Read 1 file (ctrl+o to expand)
+
+● O loss em 9.87 não é warmup — é divergência do optimizer frio. Preciso
+  repensar a abordagem do resume. O problema é que zeramos o estado do Adam
+  (momentum/variance) de TODOS os parâmetros, não só do alpha.
+
+  Deixa eu verificar a config do DeepSpeed e redesenhar o resume.
+
+● Read 1 file (ctrl+o to expand)
+
+● ZeRO stage 0 — good, optimizer is basically vanilla PyTorch. The problem is
+  clear: we threw away ALL Adam momentum/variance, not just alpha's. The fix is
+  to transplant the per-parameter optimizer states from the old checkpoint into
+  the new optimizer, mapping by parameter identity.
+
+● Read 1 file (ctrl+o to expand)
+
+● Now I'll add a helper to transplant optimizer states, mapping from the old
+  param group structure to the new one.
+
+● Update(src/training/train.py)
+  ⎿  Added 31 lines
+       74      return total_loss / (B * T)
+       75  
+       76  
+       77 +def _transplant_optimizer_state(optimizer, model, old_opt_stat
+          +e_dict):                                                      
+       78 +    """Copy per-parameter Adam states from an old checkpoint i
+          +nto a new optimizer.                                          
+       79 +                                                              
+       80 +    The old checkpoint had alpha in the decay group (ndim >= 2
+          + → decay).                                                    
+       81 +    The new optimizer has alpha in the no_decay group. We reco
+          +nstruct the old                                               
+       82 +    parameter ordering to map checkpoint state indices to para
+          +meter tensors,                                                
+       83 +    then copy states (exp_avg, exp_avg_sq, step) into the new 
+          +optimizer.                                                    
+       84 +    """                                                       
+       85 +    old_state = old_opt_state_dict["state"]                   
+       86 +                                                              
+       87 +    # Reconstruct old param ordering: decay (ndim >= 2) first,
+          + then no_decay (ndim == 1)                                    
+       88 +    old_decay = []                                            
+       89 +    old_no_decay = []                                         
+       90 +    for name, param in model.named_parameters():              
+       91 +        if param.ndim == 1:                                   
+       92 +            old_no_decay.append(param)                        
+       93 +        else:                                                 
+       94 +            old_decay.append(param)                           
+       95 +    old_param_list = old_decay + old_no_decay                 
+       96 +                                                              
+       97 +    # Copy each param's optimizer state by tensor identity    
+       98 +    for idx_str, state_vals in old_state.items():             
+       99 +        idx = int(idx_str)                                    
+      100 +        if idx < len(old_param_list):                         
+      101 +            param = old_param_list[idx]                       
+      102 +            optimizer.state[param] = {                        
+      103 +                k: v.clone() if isinstance(v, torch.Tensor) el
+          +se v                                                          
+      104 +                for k, v in state_vals.items()                
+      105 +            }                                                 
+      106 +                                                              
+      107 +                                                              
+      108  def create_optimizer(model: nn.Module, config: TrainConfig) ->
+            torch.optim.AdamW:
+      109      """Create AdamW optimizer with param group separation.
+      110  
+
+● Now update the resume path to use the transplant instead of skipping optimizer
+   state entirely.
+
+● Update(src/training/train.py)
+  ⎿  Added 5 lines, removed 4 lines
+      217              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      218              print(f"Resumed from DeepSpeed checkpoint at step 
+           {start_step}")
+      219          else:
+      220 -            # Fall back to portable checkpoint (fresh optimize
+          -r)                                                            
+      220 +            # Portable checkpoint resume with param group migr
+          +ation.                                                        
+      221 +            # Old optimizer had alpha in decay group; new has 
+          +alpha in no_decay.                                            
+      222 +            # We transplant per-parameter Adam states so only 
+          +the grouping changes.                                         
+      223              checkpoint = torch.load(train_config.resume_from, 
+           map_location=device, weights_only=False)
+      224              model_engine.module.load_state_dict(checkpoint["mo
+           del"])
+      225              start_step = checkpoint.get("step", 0)
+      226              tau = checkpoint.get("tau", 1.0)
+      227              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      226 -            # Skip optimizer state — rebuild fresh so alpha ge
+          -ts correct no-decay group                                     
+      227 -            # (old momentum was contaminated by weight decay o
+          -n routing params)                                             
+      228 +            _transplant_optimizer_state(optimizer, model_engin
+          +e.module, checkpoint["optimizer"])                            
+      229              scheduler.load_state_dict(checkpoint["scheduler"])
+      229 -            print(f"Resumed from portable checkpoint at step {
+          -start_step} (fresh optimizer)")                               
+      230 +            print(f"Resumed from portable checkpoint at step {
+          +start_step} (optimizer states transplanted)")                 
+      231  
+      232      # --- Data ---
+      233      print("Creating dataloader...", flush=True)
+
+● Let me verify the final state of both modified sections.
+
+● Read 1 file (ctrl+o to expand)
+
+● Looks correct. The approach:
+
+  1. New optimizer is created with alpha in no_decay group (correct weight
+  decay)
+  2. _transplant_optimizer_state reconstructs the old param ordering (where
+  alpha was in decay), maps checkpoint state indices to actual parameter
+  tensors, and copies Adam states (exp_avg, exp_avg_sq, step) into the new
+  optimizer
+  3. Every parameter keeps its momentum/variance — no cold start
+  4. Alpha just stops getting the L2 penalty going forward
+
+  Ready to relaunch:
+
+  deepspeed --num_gpus=1 --module src.training.train --config
+  configs/train_config.yaml
+
+✻ Worked for 5m 20s
+
+❯ /export 
+  ⎿  Conversation copied to clipboard
+
+❯ root@45f9c8172927:/workspace/PolyGLU#  deepspeed --num_gpus=1 --module    
+  src.training.train --config configs/train_config.yaml                     
+  [2026-02-27 13:33:11,880] [WARNING] [runner.py:232:fetch_hostfile] Unable 
+   to find hostfile, will proceed with training with local resources only.  
+  [2026-02-27 13:33:11,881] [INFO] [runner.py:630:main] cmd =               
+  /usr/bin/python -u -m deepspeed.launcher.launch                           
+  --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1             
+  --master_port=29500 --module --enable_each_rank_log=None --log_level=info 
+   src.training.train --config configs/train_config.yaml                    
+  [2026-02-27 13:33:17,908] [INFO] [launch.py:162:main] WORLD INFO DICT:    
+  {'localhost': [0]}                                                        
+  [2026-02-27 13:33:17,908] [INFO] [launch.py:168:main] nnodes=1,           
+  num_local_procs=1, node_rank=0                                            
+  [2026-02-27 13:33:17,908] [INFO] [launch.py:179:main]                     
+  global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})       
+  [2026-02-27 13:33:17,908] [INFO] [launch.py:180:main] dist_world_size=1   
+  [2026-02-27 13:33:17,908] [INFO] [launch.py:184:main] Setting             
+  CUDA_VISIBLE_DEVICES=0                                                    
+  [2026-02-27 13:33:17,909] [INFO] [launch.py:272:main] process 514411      
+  spawned with command: ['/usr/bin/python', '-u', '-m',                     
+  'src.training.train', '--local_rank=0', '--config',                       
+  'configs/train_config.yaml']                                              
+  Creating model (vocab=151669, layers=28)...                               
+  Total parameters: 597,153,888                                             
+  [rank0]: Traceback (most recent call last):                               
+  [rank0]:   File "<frozen runpy>", line 198, in _run_module_as_main        
+  [rank0]:   File "<frozen runpy>", line 88, in _run_code                   
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 452, in  
+  <module>                                                                  
+  [rank0]:     main()                                                       
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 448, in  
+  main                                                                      
+  [rank0]:     train(model_config, train_config,                            
+  local_rank=args.local_rank)                                               
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 228, in  
+  train                                                                     
+  [rank0]:     _transplant_optimizer_state(optimizer, model_engine.module,  
+  checkpoint["optimizer"])                                                  
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 85, in   
+  _transplant_optimizer_state                                               
+  [rank0]:     old_state = old_opt_state_dict["state"]                      
+  [rank0]:                 ~~~~~~~~~~~~~~~~~~^^^^^^^^^                      
+  [rank0]: KeyError: 'state'                                                
+  [2026-02-27 13:34:01,088] [INFO] [launch.py:335:sigkill_handler] Killing  
+  subprocess 514411                                                         
+  [2026-02-27 13:34:01,089] [ERROR] [launch.py:341:sigkill_handler]         
+  ['/usr/bin/python', '-u', '-m', 'src.training.train', '--local_rank=0',   
+  '--config', 'configs/train_config.yaml'] exits with return code = 1       
+
+● The checkpoint's optimizer state dict has a different structure than expected.
+   Let me check what keys it actually has.
+
+● Read 1 file (ctrl+o to expand)
+
+● DeepSpeed wraps the optimizer state. The Adam states are in
+  base_optimizer_state. Let me dig deeper.
+
+● Read 2 files (ctrl+o to expand)
+
+● DeepSpeed flattens all params per group into single tensors. This changes the
+  transplant approach entirely. Let me understand the full structure.
+
+● Read 1 file (ctrl+o to expand)
+
+● The optimizer state is in DeepSpeed's flattened format — all params per group
+  concatenated into single tensors. The simple transplant won't work. I need to
+  do tensor surgery on the flattened buffers to move alpha's slice from group 0
+  to group 1.
+
+  Let me write a migration script for the checkpoint.
+
+● Read 2 files (ctrl+o to expand)
+
+● Good — contiguous layout. Now I'll write the migration script. It needs to:
+  1. Extract alpha slices from group 0's flattened tensors (fp32 master,
+  exp_avg, exp_avg_sq)
+  2. Rebuild group 0 without alpha, group 1 with alpha appended
+  3. Update param_slice_mappings with new offsets
+
+● Write(scripts/migrate_checkpoint.py)
+  ⎿  Wrote 112 lines to scripts/migrate_checkpoint.py
+       1 """Migrate portable checkpoint: move alpha from decay group to n
+         o_decay group.
+       2 
+       3 This script transforms the DeepSpeed optimizer state so that alp
+         ha parameters
+       4 (PolyGLU routing preferences) are in the no_decay param group in
+         stead of the
+       5 decay group. All Adam states (exp_avg, exp_avg_sq, step) are pre
+         served.
+       6 
+       7 Usage:
+       8     python scripts/migrate_checkpoint.py checkpoints/portable_st
+         ep10000.pt
+       9 """
+      10 import sys
+     … +102 lines (ctrl+o to expand)
+
+● Read 1 file (ctrl+o to expand)
+
+● Migration complete. Now update the config to point to the migrated checkpoint,
+   and also revert the _transplant_optimizer_state resume path to use normal
+  optimizer.load_state_dict.
+
+● Update(configs/train_config.yaml)
+  ⎿  Added 1 line, removed 1 line
+      60    portable_checkpoint_every: 5000
+      61  
+      62    # Resume
+      63 -  resume_from: checkpoints/portable_step10000.pt               
+      63 +  resume_from: checkpoints/portable_step10000_migrated.pt      
+      64  
+      65    # DeepSpeed
+      66    ds_config: configs/ds_config.json
+
+● Update(src/training/train.py)
+  ⎿  Added 3 lines, removed 5 lines
+      217              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      218              print(f"Resumed from DeepSpeed checkpoint at step 
+           {start_step}")
+      219          else:
+      220 -            # Portable checkpoint resume with param group migr
+          -ation.                                                        
+      221 -            # Old optimizer had alpha in decay group; new has 
+          -alpha in no_decay.                                            
+      222 -            # We transplant per-parameter Adam states so only 
+          -the grouping changes.                                         
+      220 +            # Fall back to portable checkpoint                
+      221              checkpoint = torch.load(train_config.resume_from, 
+           map_location=device, weights_only=False)
+      222              model_engine.module.load_state_dict(checkpoint["mo
+           del"])
+      223              start_step = checkpoint.get("step", 0)
+      224              tau = checkpoint.get("tau", 1.0)
+      225              model_engine.module.update_tau(start_step, train_c
+           onfig.total_steps)
+      228 -            _transplant_optimizer_state(optimizer, model_engin
+          -e.module, checkpoint["optimizer"])                            
+      226 +            optimizer.load_state_dict(checkpoint["optimizer"])
+      227              scheduler.load_state_dict(checkpoint["scheduler"])
+      230 -            print(f"Resumed from portable checkpoint at step {
+          -start_step} (optimizer states transplanted)")                 
+      228 +            print(f"Resumed from portable checkpoint at step {
+          +start_step}")                                                 
+      229  
+      230      # --- Data ---
+      231      print("Creating dataloader...", flush=True)
+
+● Now clean up the unused _transplant_optimizer_state function since we're using
+   the migrated checkpoint instead.
+
+● Update(src/training/train.py)
+  ⎿  Removed 31 lines
+       74      return total_loss / (B * T)
+       75  
+       76  
+       77 -def _transplant_optimizer_state(optimizer, model, old_opt_stat
+          -e_dict):                                                      
+       78 -    """Copy per-parameter Adam states from an old checkpoint i
+          -nto a new optimizer.                                          
+       79 -                                                              
+       80 -    The old checkpoint had alpha in the decay group (ndim >= 2
+          - → decay).                                                    
+       81 -    The new optimizer has alpha in the no_decay group. We reco
+          -nstruct the old                                               
+       82 -    parameter ordering to map checkpoint state indices to para
+          -meter tensors,                                                
+       83 -    then copy states (exp_avg, exp_avg_sq, step) into the new 
+          -optimizer.                                                    
+       84 -    """                                                       
+       85 -    old_state = old_opt_state_dict["state"]                   
+       86 -                                                              
+       87 -    # Reconstruct old param ordering: decay (ndim >= 2) first,
+          - then no_decay (ndim == 1)                                    
+       88 -    old_decay = []                                            
+       89 -    old_no_decay = []                                         
+       90 -    for name, param in model.named_parameters():              
+       91 -        if param.ndim == 1:                                   
+       92 -            old_no_decay.append(param)                        
+       93 -        else:                                                 
+       94 -            old_decay.append(param)                           
+       95 -    old_param_list = old_decay + old_no_decay                 
+       96 -                                                              
+       97 -    # Copy each param's optimizer state by tensor identity    
+       98 -    for idx_str, state_vals in old_state.items():             
+       99 -        idx = int(idx_str)                                    
+      100 -        if idx < len(old_param_list):                         
+      101 -            param = old_param_list[idx]                       
+      102 -            optimizer.state[param] = {                        
+      103 -                k: v.clone() if isinstance(v, torch.Tensor) el
+          -se v                                                          
+      104 -                for k, v in state_vals.items()                
+      105 -            }                                                 
+      106 -                                                              
+      107 -                                                              
+       77  def create_optimizer(model: nn.Module, config: TrainConfig) ->
+            torch.optim.AdamW:
+       78      """Create AdamW optimizer with param group separation.
+       79  
+
+● Good. Now the approach is:
+  - Migrated checkpoint has alpha's optimizer state already in group 1
+  (no_decay)
+  - create_optimizer puts alpha in no_decay group → groups match
+  - optimizer.load_state_dict loads cleanly — all Adam momentum/variance
+  preserved
+
+  Ready to relaunch:
+
+  deepspeed --num_gpus=1 --module src.training.train --config
+  configs/train_config.yaml
+
+✻ Cogitated for 6m 26s
+
+❯ /context 
+  ⎿  Context Usage
+     ⛁ ⛀ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁   claude-opus-4-6 · 103k/200k tokens (52%)
+     ⛁ ⛁ ⛁ ⛀ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ 
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁   Estimated usage by category
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁   ⛁ System prompt: 3.4k tokens (1.7%)
+     ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛁ ⛶   ⛁ System tools: 17.8k tokens (8.9%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Memory files: 3.6k tokens (1.8%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Skills: 61 tokens (0.0%)
+     ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶ ⛶   ⛁ Messages: 70.8k tokens (35.4%)
+     ⛶ ⛶ ⛶ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛶ Free space: 71k (35.7%)
+     ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝ ⛝   ⛝ Autocompact buffer: 33k tokens (16.5%)
+
+     MCP tools · /mcp (loaded on-demand)
+
+     Available
+     └ mcp__claude_ai_Google_Calendar__gcal_list_calendars
+     └ mcp__claude_ai_Google_Calendar__gcal_list_events
+     └ mcp__claude_ai_Google_Calendar__gcal_get_event
+     └ mcp__claude_ai_Google_Calendar__gcal_find_my_free_time
+     └ mcp__claude_ai_Google_Calendar__gcal_find_meeting_times
+     └ mcp__claude_ai_Google_Calendar__gcal_create_event
+     └ mcp__claude_ai_Google_Calendar__gcal_update_event
+     └ mcp__claude_ai_Google_Calendar__gcal_delete_event
+     └ mcp__claude_ai_Google_Calendar__gcal_respond_to_event
+     └ mcp__claude_ai_Gmail__gmail_get_profile
+     └ mcp__claude_ai_Gmail__gmail_search_messages
+     └ mcp__claude_ai_Gmail__gmail_read_message
+     └ mcp__claude_ai_Gmail__gmail_read_thread
+     └ mcp__claude_ai_Gmail__gmail_list_drafts
+     └ mcp__claude_ai_Gmail__gmail_create_draft
+     └ mcp__claude_ai_Dice__search_jobs
+     └ mcp__claude_ai_Indeed__search_jobs
+     └ mcp__claude_ai_Indeed__get_job_details
+     └ mcp__claude_ai_Indeed__get_company_data
+     └ mcp__claude_ai_Indeed__get_resume
+     └ mcp__claude_ai_Hugging_Face__hf_whoami
+     └ mcp__claude_ai_Hugging_Face__space_search
+     └ mcp__claude_ai_Hugging_Face__hub_repo_search
+     └ mcp__claude_ai_Hugging_Face__paper_search
+     └ mcp__claude_ai_Hugging_Face__hub_repo_details
+     └ mcp__claude_ai_Hugging_Face__hf_doc_search
+     └ mcp__claude_ai_Hugging_Face__hf_doc_fetch
+     └ mcp__claude_ai_Hugging_Face__dynamic_space
+     └ mcp__claude_ai_Hugging_Face__hf_hub_community
+     └ mcp__claude_ai_ICD-10_Codes__lookup_code
+     └ mcp__claude_ai_ICD-10_Codes__search_codes
+     └ mcp__claude_ai_ICD-10_Codes__validate_code
+     └ mcp__claude_ai_ICD-10_Codes__get_hierarchy
+     └ mcp__claude_ai_ICD-10_Codes__get_by_category
+     └ mcp__claude_ai_ICD-10_Codes__get_by_body_system
+     └ mcp__claude_ai_Tavily__tavily_search
+     └ mcp__claude_ai_Tavily__tavily_extract
+     └ mcp__claude_ai_Tavily__tavily_crawl
+     └ mcp__claude_ai_Tavily__tavily_map
+     └ mcp__claude_ai_Tavily__tavily_research
+     └ mcp__claude_ai_Context7__resolve-library-id
+     └ mcp__claude_ai_Context7__query-docs
+
+     Memory files · /memory
+     └ CLAUDE.md: 3.6k tokens
+
+     Skills · /skills
+
+❯ root@45f9c8172927:/workspace/PolyGLU# deepspeed --num_gpus=1 --module     
+  src.training.train --config configs/train_config.yaml                     
+  [2026-02-27 13:43:00,023] [WARNING] [runner.py:232:fetch_hostfile] Unable 
+   to find hostfile, will proceed with training with local resources only.  
+  [2026-02-27 13:43:00,024] [INFO] [runner.py:630:main] cmd =               
+  /usr/bin/python -u -m deepspeed.launcher.launch                           
+  --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1             
+  --master_port=29500 --module --enable_each_rank_log=None --log_level=info 
+   src.training.train --config configs/train_config.yaml                    
+  [2026-02-27 13:43:05,863] [INFO] [launch.py:162:main] WORLD INFO DICT:    
+  {'localhost': [0]}                                                        
+  [2026-02-27 13:43:05,863] [INFO] [launch.py:168:main] nnodes=1,           
+  num_local_procs=1, node_rank=0                                            
+  [2026-02-27 13:43:05,863] [INFO] [launch.py:179:main]                     
+  global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})       
+  [2026-02-27 13:43:05,863] [INFO] [launch.py:180:main] dist_world_size=1   
+  [2026-02-27 13:43:05,863] [INFO] [launch.py:184:main] Setting             
+  CUDA_VISIBLE_DEVICES=0                                                    
+  [2026-02-27 13:43:05,864] [INFO] [launch.py:272:main] process 521628      
+  spawned with command: ['/usr/bin/python', '-u', '-m',                     
+  'src.training.train', '--local_rank=0', '--config',                       
+  'configs/train_config.yaml']                                              
+  Creating model (vocab=151669, layers=28)...                               
+  Total parameters: 597,153,888                                             
+  [rank0]: Traceback (most recent call last):                               
+  [rank0]:   File "<frozen runpy>", line 198, in _run_module_as_main        
+  [rank0]:   File "<frozen runpy>", line 88, in _run_code                   
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 419, in  
+  <module>                                                                  
+  [rank0]:     main()                                                       
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 415, in  
+  main                                                                      
+  [rank0]:     train(model_config, train_config,                            
+  local_rank=args.local_rank)                                               
+  [rank0]:   File "/workspace/PolyGLU/src/training/train.py", line 195, in  
+  train                                                                     
+  [rank0]:     optimizer.load_state_dict(checkpoint["optimizer"])           
+  [rank0]:   File "/usr/local/lib/python3.11/dist-packages/deepspeed/runtim 
+  e/fp16/unfused_optimizer.py", line 376, in load_state_dict                
+  [rank0]:     self.loss_scale_config.cur_scale = state_dict['cur_scale']   
+  [rank0]:                                        ~~~~~~~~~~^^^^^^^^^^^^^   
+  [rank0]: KeyError: 'cur_scale'                                            
+  [2026-02-27 13:43:48,991] [INFO] [launch.py:335:sigkill_handler] Killing  
+  subprocess 521628                                                         
+  [2026-02-27 13:43:48,991] [ERROR] [launch.py:341:sigkill_handler]         
+  ['/usr/bin/python', '-u', '-m', 'src.training.train', '--local_rank=0',   
+  '--config', 'configs/train_config.yaml'] exits with return code = 1       
+  root@45f9c8172927:/workspace/PolyGLU#                                     
+
+● DeepSpeed's optimizer wrapper expects its own state dict format, not the
+  nested one. Let me check what keys it expects.
+
+● Read 1 file (ctrl+o to expand)
+
+● The DeepSpeed optimizer's load_state_dict expects cur_scale as a top-level
+  key, but the checkpoint stores it inside a loss_scaler object. Let me fix this
+   by adding the expected key before loading.
+
+● Read 2 files (ctrl+o to expand)
+
+● Format mismatch — the checkpoint was saved by a different DeepSpeed optimizer
+  class than what's loading it. Let me check how the checkpoint was originally
+  saved.
+
+● Searched for 1 pattern, read 1 file (ctrl+o to expand)
+
+● Found it. The checkpoint was saved by a different DeepSpeed optimizer class
+  (BF16_Optimizer format) than what's loading it now (FP16_UnfusedOptimizer).
+  The formats are completely different. Let me check the new format's
+  fp32_groups structure.
+
+● Searched for 1 pattern (ctrl+o to expand)
+
+● Completely different format. The checkpoint was saved by BF16_Optimizer
+  (flattened param groups), but the current code creates FP16_UnfusedOptimizer
+  (per-parameter FP32 copies). I need to convert between these formats in the
+  migration script.
+
+  Let me update the migration to output the correct format.
+
+● Searched for 1 pattern (ctrl+o to expand)
+
+● Now I have the complete picture. Let me rewrite the migration script to
+  convert from the old BF16_Optimizer flattened format to the new
+  FP16_UnfusedOptimizer per-parameter format, with alpha moved to no_decay.
+
+● Read 1 file (ctrl+o to expand)
+
+● Write(scripts/migrate_checkpoint.py)
+  ⎿  Added 123 lines, removed 78 lines
+        1 -"""Migrate portable checkpoint: move alpha from decay group to
+          - no_decay group.                                              
+        1 +"""Migrate portable checkpoint: convert BF16_Optimizer format 
+          +to FP16_UnfusedOptimizer format.                              
+        2  
+        3 -This script transforms the DeepSpeed optimizer state so that a
+          -lpha parameters                                               
+        4 -(PolyGLU routing preferences) are in the no_decay param group 
+          -instead of the                                                
+        5 -decay group. All Adam states (exp_avg, exp_avg_sq, step) are p
+          -reserved.                                                     
+        3 +Moves alpha from decay group to no_decay group while convertin
+          +g between                                                     
+        4 +DeepSpeed optimizer state formats. All Adam states (exp_avg, e
+          +xp_avg_sq, step)                                              
+        5 +are preserved.                                                
+        6  
+        7 +Old format (BF16_Optimizer): flattened FP32 tensors per group 
+          ++ param_slice_mappings                                        
+        8 +New format (FP16_UnfusedOptimizer): per-parameter FP32 copies 
+          ++ standard PyTorch state dict                                 
+        9 +                                                              
+       10  Usage:
+       11      python scripts/migrate_checkpoint.py checkpoints/portable_
+           step10000.pt
+       12  """
+       13  import sys
+       14  import torch
+       15  from collections import OrderedDict
+       13 -from deepspeed.utils.tensor_fragment import fragment_address  
+       16  
+       17 +from src.model.config import ModelConfig                      
+       18 +from src.model.model import create_model                      
+       19  
+       20 +                                                              
+       21  def migrate(path: str):
+       22      print(f"Loading {path}...")
+       23      ckpt = torch.load(path, map_location="cpu", weights_only=F
+           alse)
+       24  
+       20 -    opt = ckpt["optimizer"]                                   
+       21 -    psm = opt["param_slice_mappings"]                         
+       22 -    fp32 = opt["single_partition_of_fp32_groups"]             
+       23 -    bos = opt["base_optimizer_state"]                         
+       24 -    state0 = bos["state"][0]                                  
+       25 -    state1 = bos["state"][1]                                  
+       25 +    # --- Parse old BF16_Optimizer format ---                 
+       26 +    old_opt = ckpt["optimizer"]                               
+       27 +    psm = old_opt["param_slice_mappings"]  # [group0: OrderedD
+          +ict, group1: OrderedDict]                                     
+       28 +    fp32_flat = old_opt["single_partition_of_fp32_groups"]  # 
+          +[tensor, tensor]                                              
+       29 +    bos = old_opt["base_optimizer_state"]                     
+       30 +    old_state0 = bos["state"][0]  # {step, exp_avg, exp_avg_sq
+          +} - flattened                                                 
+       31 +    old_state1 = bos["state"][1]                              
+       32 +    old_pg = bos["param_groups"]                              
+       33  
+       27 -    # --- Rebuild group 0 (decay) without alpha ---           
+       28 -    new_fp32_0 = []                                           
+       29 -    new_avg_0 = []                                            
+       30 -    new_avg_sq_0 = []                                         
+       31 -    new_psm_0 = OrderedDict()                                 
+       32 -    offset_0 = 0                                              
+       34 +    # --- Create model to get param shapes and iteration order
+          + ---                                                          
+       35 +    model_config = ModelConfig.from_yaml("configs/train_config
+          +.yaml")                                                       
+       36 +    # Don't need flash attention for this                     
+       37 +    model_config_no_flash = ModelConfig(**{                   
+       38 +        k: (False if k == "use_flash_attn" else v)            
+       39 +        for k, v in model_config.__dict__.items()             
+       40 +    })                                                        
+       41 +    model = create_model(model_config_no_flash)               
+       42  
+       34 -    # --- Collect alpha slices to append to group 1 ---       
+       35 -    alpha_fp32 = []                                           
+       36 -    alpha_avg = []                                            
+       37 -    alpha_avg_sq = []                                         
+       38 -    alpha_psm = OrderedDict()                                 
+       43 +    # --- Build name -> (old_group, shape) mapping ---        
+       44 +    param_shapes = {name: p.shape for name, p in model.named_p
+          +arameters()}                                                  
+       45  
+       40 -    for name, frag in psm[0].items():                         
+       41 -        s = frag.start                                        
+       42 -        n = frag.numel                                        
+       43 -        if "alpha" in name:                                   
+       44 -            alpha_fp32.append(fp32[0][s : s + n])             
+       45 -            alpha_avg.append(state0["exp_avg"][s : s + n])    
+       46 -            alpha_avg_sq.append(state0["exp_avg_sq"][s : s + n
+          -])                                                            
+       47 -            alpha_psm[name] = n  # store numel, compute offset
+          - later                                                        
+       48 -        else:                                                 
+       49 -            new_fp32_0.append(fp32[0][s : s + n])             
+       50 -            new_avg_0.append(state0["exp_avg"][s : s + n])    
+       51 -            new_avg_sq_0.append(state0["exp_avg_sq"][s : s + n
+          -])                                                            
+       52 -            new_psm_0[name] = fragment_address(numel=n, start=
+          -offset_0)                                                     
+       53 -            offset_0 += n                                     
+       46 +    # --- Extract per-param tensors from old flattened format 
+          +---                                                           
+       47 +    # Maps param_name -> {fp32, exp_avg, exp_avg_sq, step, sha
+          +pe}                                                           
+       48 +    param_data = {}                                           
+       49  
+       55 -    # --- Rebuild group 1 (no_decay) with alpha appended ---  
+       56 -    new_psm_1 = OrderedDict()                                 
+       57 -    offset_1 = 0                                              
+       58 -    # Keep existing group 1 entries                           
+       59 -    for name, frag in psm[1].items():                         
+       60 -        new_psm_1[name] = fragment_address(numel=frag.numel, s
+          -tart=offset_1)                                                
+       61 -        offset_1 += frag.numel                                
+       62 -    # Append alpha entries                                    
+       63 -    for name, numel in alpha_psm.items():                     
+       64 -        new_psm_1[name] = fragment_address(numel=numel, start=
+          -offset_1)                                                     
+       65 -        offset_1 += numel                                     
+       50 +    for group_idx, group_psm in enumerate(psm):               
+       51 +        flat_fp32 = fp32_flat[group_idx]                      
+       52 +        flat_avg = (old_state0 if group_idx == 0 else old_stat
+          +e1)["exp_avg"]                                                
+       53 +        flat_avg_sq = (old_state0 if group_idx == 0 else old_s
+          +tate1)["exp_avg_sq"]                                          
+       54 +        step = (old_state0 if group_idx == 0 else old_state1)[
+          +"step"]                                                       
+       55  
+       67 -    # --- Concatenate tensors ---                             
+       68 -    new_fp32_0_t = torch.cat(new_fp32_0)                      
+       69 -    new_fp32_1_t = torch.cat([fp32[1]] + alpha_fp32)          
+       70 -    new_avg_0_t = torch.cat(new_avg_0)                        
+       71 -    new_avg_1_t = torch.cat([state1["exp_avg"]] + alpha_avg)  
+       72 -    new_avg_sq_0_t = torch.cat(new_avg_sq_0)                  
+       73 -    new_avg_sq_1_t = torch.cat([state1["exp_avg_sq"]] + alpha_
+          -avg_sq)                                                       
+       56 +        for name, frag in group_psm.items():                  
+       57 +            s, n = frag.start, frag.numel                     
+       58 +            shape = param_shapes[name]                        
+       59 +            param_data[name] = {                              
+       60 +                "fp32": flat_fp32[s : s + n].reshape(shape).cl
+          +one(),                                                        
+       61 +                "exp_avg": flat_avg[s : s + n].reshape(shape).
+          +clone(),                                                      
+       62 +                "exp_avg_sq": flat_avg_sq[s : s + n].reshape(s
+          +hape).clone(),                                                
+       63 +                "step": step.clone(),                         
+       64 +                "old_group": group_idx,                       
+       65 +            }                                                 
+       66  
+       75 -    # --- Verify sizes ---                                    
+       76 -    total_before = fp32[0].numel() + fp32[1].numel()          
+       77 -    total_after = new_fp32_0_t.numel() + new_fp32_1_t.numel() 
+       78 -    assert total_before == total_after, f"Size mismatch: {tota
+          -l_before} vs {total_after}"                                   
+       67 +    # --- Apply NEW grouping logic (alpha moves to no_decay) -
+          +--                                                            
+       68 +    new_groups = [[], []]  # [decay_names, no_decay_names]    
+       69 +    for name, param in model.named_parameters():              
+       70 +        if param.ndim == 1:                                   
+       71 +            new_groups[1].append(name)                        
+       72 +        elif "alpha" in name:                                 
+       73 +            new_groups[1].append(name)                        
+       74 +        else:                                                 
+       75 +            new_groups[0].append(name)                        
+       76  
+       80 -    alpha_total = sum(t.numel() for t in alpha_fp32)          
+       81 -    print(f"Moved {len(alpha_fp32)} alpha params ({alpha_total
+          -:,} elements) from group 0 to group 1")                       
+       82 -    print(f"Group 0: {fp32[0].numel():,} -> {new_fp32_0_t.nume
+          -l():,}")                                                      
+       83 -    print(f"Group 1: {fp32[1].numel():,} -> {new_fp32_1_t.nume
+          -l():,}")                                                      
+       77 +    alpha_moved = sum(1 for n in new_groups[1] if param_data[n
+          +]["old_group"] == 0)                                          
+       78 +    print(f"Moving {alpha_moved} alpha params from decay to no
+          +_decay")                                                      
+       79 +    print(f"Group 0 (decay): {len(new_groups[0])} params")    
+       80 +    print(f"Group 1 (no_decay): {len(new_groups[1])} params") 
+       81  
+       85 -    # --- Update checkpoint ---                               
+       86 -    opt["single_partition_of_fp32_groups"] = [new_fp32_0_t, ne
+          -w_fp32_1_t]                                                   
+       87 -    opt["param_slice_mappings"] = [new_psm_0, new_psm_1]      
+       88 -    opt["group_paddings"] = [0, 0]                            
+       82 +    # --- Build FP16_UnfusedOptimizer state dict ---          
+       83 +    fp32_groups = [[], []]                                    
+       84 +    optimizer_state = {}                                      
+       85 +    param_idx = 0                                             
+       86  
+       90 -    bos["state"][0] = {                                       
+       91 -        "step": state0["step"],                               
+       92 -        "exp_avg": new_avg_0_t,                               
+       93 -        "exp_avg_sq": new_avg_sq_0_t,                         
+       87 +    for gi, group_names in enumerate(new_groups):             
+       88 +        group_param_indices = []                              
+       89 +        for name in group_names:                              
+       90 +            pd = param_data[name]                             
+       91 +            fp32_groups[gi].append(pd["fp32"])                
+       92 +            optimizer_state[param_idx] = {                    
+       93 +                "step": pd["step"],                           
+       94 +                "exp_avg": pd["exp_avg"],                     
+       95 +                "exp_avg_sq": pd["exp_avg_sq"],               
+       96 +            }                                                 
+       97 +            group_param_indices.append(param_idx)             
+       98 +            param_idx += 1                                    
+       99 +                                                              
+      100 +    # Build param_groups metadata from old checkpoint         
+      101 +    lr = old_pg[0]["lr"]                                      
+      102 +    betas = old_pg[0]["betas"]                                
+      103 +    eps = old_pg[0]["eps"]                                    
+      104 +                                                              
+      105 +    new_opt_state_dict = {                                    
+      106 +        "dynamic_loss_scale": False,                          
+      107 +        "cur_scale": 1.0,                                     
+      108 +        "cur_iter": 10000,                                    
+      109 +        "optimizer_state_dict": {                             
+      110 +            "state": optimizer_state,                         
+      111 +            "param_groups": [                                 
+      112 +                {                                             
+      113 +                    "lr": lr,                                 
+      114 +                    "betas": betas,                           
+      115 +                    "eps": eps,                               
+      116 +                    "weight_decay": 0.1,                      
+      117 +                    "amsgrad": False,                         
+      118 +                    "maximize": False,                        
+      119 +                    "foreach": None,                          
+      120 +                    "capturable": False,                      
+      121 +                    "differentiable": False,                  
+      122 +                    "fused": None,                            
+      123 +                    "params": list(range(len(new_groups[0]))),
+      124 +                },                                            
+      125 +                {                                             
+      126 +                    "lr": lr,                                 
+      127 +                    "betas": betas,                           
+      128 +                    "eps": eps,                               
+      129 +                    "weight_decay": 0.0,                      
+      130 +                    "amsgrad": False,                         
+      131 +                    "maximize": False,                        
+      132 +                    "foreach": None,                          
+      133 +                    "capturable": False,                      
+      134 +                    "differentiable": False,                  
+      135 +                    "fused": None,                            
+      136 +                    "params": list(range(len(new_groups[0]), p
+          +aram_idx)),                                                   
+      137 +                },                                            
+      138 +            ],                                                
+      139 +        },                                                    
+      140 +        "fp32_groups": fp32_groups,                           
+      141      }
+       95 -    bos["state"][1] = {                                       
+       96 -        "step": state1["step"],                               
+       97 -        "exp_avg": new_avg_1_t,                               
+       98 -        "exp_avg_sq": new_avg_sq_1_t,                         
+       99 -    }                                                         
+      142  
+      101 -    # Param group metadata (each group has 1 flattened param) 
+      102 -    bos["param_groups"][0]["params"] = [0]                    
+      103 -    bos["param_groups"][1]["params"] = [1]                    
+      143 +    ckpt["optimizer"] = new_opt_state_dict                    
+      144  
+      145      out_path = path.replace(".pt", "_migrated.pt")
+      146      print(f"Saving to {out_path}...")
+      147      torch.save(ckpt, out_path)
+      148 +                                                              
+      149 +    # Verify                                                  
+      150 +    total_params = len(new_groups[0]) + len(new_groups[1])    
+      151 +    total_states = len(optimizer_state)                       
+      152 +    print(f"Total params: {total_params}, total states: {total
+          +_states}")                                                    
+      153      print("Done.")
+      154  
+      155  
+
+● Read 2 files (ctrl+o to expand)
+
+● Migration complete. 253 decay + 225 no_decay = 478 total, matching the new
+  optimizer's 478 state entries. Let me verify the format matches what
+  FP16_UnfusedOptimizer.load_state_dict expects.
+
+● Read 1 file (ctrl+o to expand)
+
+● Format matches perfectly. Config already points to the migrated checkpoint.
+  Ready to relaunch:
+
+  deepspeed --num_gpus=1 --module src.training.train --config
+  configs/train_config.yaml
+
+✻ Crunched for 9m 11s
+
+❯ We good?\                                                                 
+  \                                                                         
+  root@45f9c8172927:/workspace/PolyGLU# deepspeed --num_gpus=1 --module     
+  src.training.train --config configs/train_config.yaml                     
+  [2026-02-27 13:54:28,494] [WARNING] [runner.py:232:fetch_hostfile] Unable 
+   to find hostfile, will proceed with training with local resources only.  
+  [2026-02-27 13:54:28,495] [INFO] [runner.py:630:main] cmd =               
+  /usr/bin/python -u -m deepspeed.launcher.launch                           
+  --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1             
+  --master_port=29500 --module --enable_each_rank_log=None --log_level=info 
+   src.training.train --config configs/train_config.yaml                    
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:162:main] WORLD INFO DICT:    
+  {'localhost': [0]}                                                        
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:168:main] nnodes=1,           
+  num_local_procs=1, node_rank=0                                            
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:179:main]                     
+  global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})       
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:180:main] dist_world_size=1   
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:184:main] Setting             
+  CUDA_VISIBLE_DEVICES=0                                                    
+  [2026-02-27 13:54:34,209] [INFO] [launch.py:272:main] process 530586      
+  spawned with command: ['/usr/bin/python', '-u', '-m',                     
+  'src.training.train', '--local_rank=0', '--config',                       
+  'configs/train_config.yaml']                                              
+  Creating model (vocab=151669, layers=28)...                               
+  Total parameters: 597,153,888                                             
+  Resumed from portable checkpoint at step 10000                            
+  Creating dataloader...                                                    
+  wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from   
+  /root/.netrc.                                                             
+  wandb: Currently logged in as: danielmedeiros-medeiros                    
+  (danielmedeiros-medeiros-nobrega-medtech) to https://api.wandb.ai. Use    
+  `wandb login --relogin` to force relogin                                  
+  wandb: Tracking run with wandb version 0.25.0                             
+  wandb: Run data is saved locally in                                       
+  /workspace/PolyGLU/wandb/run-20260227_135516-ihx2pzyh                     
+  wandb: Run `wandb offline` to turn off syncing.                           
+  wandb: Syncing run toasty-durian-22                                       
+  wandb: ⭐️ View project at                                                 
+  https://wandb.ai/danielmedeiros-medeiros-nobrega-medtech/polychromatic-lm 
+  wandb: 🚀 View run at https://wandb.ai/danielmedeiros-medeiros-nobrega-me 
+  dtech/polychromatic-lm/runs/ihx2pzyh                                      
+  Starting training from step 10000 to 19531                                
+    [debug] training mode: True                                             
+    [debug] mem before forward: 11.95 GB                                    
+    [debug] hidden shape: torch.Size([16, 4096, 1024]), dtype:              
+  torch.bfloat16                                                            
+    [debug] mem after forward: 16.12 GB                                     
+    [debug] loss: 1.9766                                                    
+    [debug] mem after loss: 16.25 GB                                        
+  /usr/local/lib/python3.11/dist-packages/torch/utils/checkpoint.py:1399:   
+  FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please    
+  use `torch.amp.autocast('cpu', args...)` instead.                         
+    with device_autocast_ctx,                                               
+  torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  #      
+  type: ignore[attr-defined]                                                
+    [micro 1] loss=1.9766 dt=5.971s                                         
+    [micro 2] loss=2.7500 dt=5.543s                                         
+    [micro 3] loss=2.0820 dt=5.572s                                         
+    [micro 4] loss=1.7188 dt=5.565s                                         
+    [micro 5] loss=2.1406 dt=5.525s                                         
+    [micro 32] loss=1.3438 dt=5.558s                                        
+    [micro 64] loss=1.9844 dt=5.563s                                        
+    [step 10010] loss=2.0513 tok/s=11720 elapsed=447.4s                     
+  Step 10010/19531 | Loss: 2.0513 | LR: 0.000057 | τ: 0.539 | tok/s: 11720  
+  | entropy: 1.386                                                          
+                                                                            
+
+● Loss at 2.05 — right where it should be. No divergence, Adam momentum
+  preserved. The hotfix is live.
+
+  Watch WandB for:
+  - dynamic_routing_entropy/mean — the new metric should now appear alongside
+  routing_entropy/mean
+  - Static entropy should start dropping over the next ~500-1000 steps as alpha
+  is freed from weight decay
+  - Loss should continue its normal trajectory

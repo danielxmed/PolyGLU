@@ -9,7 +9,7 @@ if [ -f .env ]; then
     export $(cat .env | grep -v '^#' | xargs)
 fi
 
-deepspeed --num_gpus=1 -m src.training.train \
+deepspeed --num_gpus=1 --module src.training.train \
     --config configs/train_config.yaml
 
 echo "=== Pre-Training Complete ==="

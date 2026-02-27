@@ -1,0 +1,2544 @@
+Registered feb 27 2026; 10:30 AM 
+
+[2026-02-21 04:36:30,564] [WARNING] [runner.py:232:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+[2026-02-21 04:36:30,565] [INFO] [runner.py:630:main] cmd = /usr/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMF19 --master_addr=127.0.0.1 --master_port=29501 --module --enable_each_rank_log=None --log_level=info src.training.train --config configs/train_config.yaml
+[2026-02-21 04:36:36,302] [INFO] [launch.py:162:main] WORLD INFO DICT: {'localhost': [0]}
+[2026-02-21 04:36:36,302] [INFO] [launch.py:168:main] nnodes=1, num_local_procs=1, node_rank=0
+[2026-02-21 04:36:36,302] [INFO] [launch.py:179:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0]})
+[2026-02-21 04:36:36,302] [INFO] [launch.py:180:main] dist_world_size=1
+[2026-02-21 04:36:36,302] [INFO] [launch.py:184:main] Setting CUDA_VISIBLE_DEVICES=0
+[2026-02-21 04:36:36,303] [INFO] [launch.py:272:main] process 251155 spawned with command: ['/usr/bin/python', '-u', '-m', 'src.training.train', '--local_rank=0', '--config', 'configs/train_config.yaml']
+Creating model (vocab=151669, layers=28)...
+Total parameters: 597,153,888
+Before initializing optimizer states
+MA 3.34 GB         Max_MA 3.34 GB         CA 3.35 GB         Max_CA 3 GB 
+CPU Virtual Memory:  used = 78.6 GB, percent = 3.9%
+After initializing optimizer states
+MA 3.34 GB         Max_MA 5.56 GB         CA 5.57 GB         Max_CA 6 GB 
+CPU Virtual Memory:  used = 78.62 GB, percent = 3.9%
+After initializing ZeRO optimizer
+MA 3.34 GB         Max_MA 3.34 GB         CA 5.57 GB         Max_CA 6 GB 
+CPU Virtual Memory:  used = 78.62 GB, percent = 3.9%
+Creating dataloader...
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from WANDB_API_KEY.
+wandb: Currently logged in as: danielmedeiros-medeiros (danielmedeiros-medeiros-nobrega-medtech) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run 5e7jpok8
+wandb: Tracking run with wandb version 0.25.0
+wandb: Run data is saved locally in /workspace/PolyGLU/wandb/run-20260221_043731-5e7jpok8
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run pious-tree-19
+wandb: ⭐️ View project at https://wandb.ai/danielmedeiros-medeiros-nobrega-medtech/polychromatic-lm
+wandb: 🚀 View run at https://wandb.ai/danielmedeiros-medeiros-nobrega-medtech/polychromatic-lm/runs/5e7jpok8
+Starting training from step 0 to 19531
+  [debug] training mode: True
+  [debug] mem before forward: 3.58 GB
+  [debug] hidden shape: torch.Size([16, 4096, 1024]), dtype: torch.bfloat16
+  [debug] mem after forward: 7.75 GB
+  [debug] loss: 12.1250
+  [debug] mem after loss: 7.89 GB
+/usr/local/lib/python3.11/dist-packages/torch/utils/checkpoint.py:1399: FutureWarning: `torch.cpu.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cpu', args...)` instead.
+  with device_autocast_ctx, torch.cpu.amp.autocast(**cpu_autocast_kwargs), recompute_context:  # type: ignore[attr-defined]
+  [micro 1] loss=12.1250 dt=5.907s
+  [micro 2] loss=12.1250 dt=5.537s
+  [micro 3] loss=12.1250 dt=5.564s
+  [micro 4] loss=12.1250 dt=5.553s
+  [micro 5] loss=12.1562 dt=5.512s
+  [step 1] loss=12.1328 tok/s=11692 elapsed=44.8s
+  [step 2] loss=12.1367 tok/s=11742 elapsed=89.3s
+  [step 3] loss=12.1367 tok/s=11742 elapsed=134.0s
+  [micro 32] loss=12.1250 dt=5.538s
+  [step 4] loss=12.1328 tok/s=11752 elapsed=178.5s
+  [step 5] loss=12.1367 tok/s=11749 elapsed=223.1s
+  [step 6] loss=12.1328 tok/s=11753 elapsed=267.7s
+  [step 7] loss=12.1289 tok/s=11759 elapsed=312.1s
+  [micro 64] loss=12.1250 dt=5.541s
+  [step 8] loss=12.1289 tok/s=11764 elapsed=356.5s
+  [step 9] loss=12.1289 tok/s=11768 elapsed=401.0s
+  [step 10] loss=12.1328 tok/s=11769 elapsed=445.5s
+Step 10/19531 | Loss: 12.1328 | LR: 0.000001 | τ: 1.000 | tok/s: 11769 | entropy: 1.386
+  [step 20] loss=11.9531 tok/s=5881 elapsed=891.5s
+Step 20/19531 | Loss: 11.9531 | LR: 0.000001 | τ: 0.999 | tok/s: 11756 | entropy: 1.386
+  [step 30] loss=11.4922 tok/s=3923 elapsed=1336.4s
+Step 30/19531 | Loss: 11.4922 | LR: 0.000002 | τ: 0.999 | tok/s: 11783 | entropy: 1.386
+  [step 40] loss=10.9102 tok/s=2942 elapsed=1782.1s
+Step 40/19531 | Loss: 10.9102 | LR: 0.000002 | τ: 0.998 | tok/s: 11762 | entropy: 1.386
+  [step 50] loss=10.4961 tok/s=2356 elapsed=2225.2s
+Step 50/19531 | Loss: 10.4961 | LR: 0.000003 | τ: 0.998 | tok/s: 11832 | entropy: 1.386
+  [step 60] loss=10.3047 tok/s=1969 elapsed=2662.3s
+Step 60/19531 | Loss: 10.3047 | LR: 0.000003 | τ: 0.997 | tok/s: 11997 | entropy: 1.386
+  [step 70] loss=10.0781 tok/s=1691 elapsed=3100.0s
+Step 70/19531 | Loss: 10.0781 | LR: 0.000004 | τ: 0.997 | tok/s: 11978 | entropy: 1.386
+  [step 80] loss=9.5859 tok/s=1482 elapsed=3537.3s
+Step 80/19531 | Loss: 9.5859 | LR: 0.000004 | τ: 0.996 | tok/s: 11990 | entropy: 1.386
+  [step 90] loss=9.4570 tok/s=1319 elapsed=3975.0s
+Step 90/19531 | Loss: 9.4570 | LR: 0.000005 | τ: 0.996 | tok/s: 11979 | entropy: 1.386
+  [step 100] loss=9.2305 tok/s=1188 elapsed=4413.0s
+Step 100/19531 | Loss: 9.2305 | LR: 0.000005 | τ: 0.995 | tok/s: 11970 | entropy: 1.386
+  [step 110] loss=8.7539 tok/s=1081 elapsed=4851.2s
+Step 110/19531 | Loss: 8.7539 | LR: 0.000006 | τ: 0.995 | tok/s: 11963 | entropy: 1.386
+  [step 120] loss=8.5312 tok/s=991 elapsed=5288.9s
+Step 120/19531 | Loss: 8.5312 | LR: 0.000006 | τ: 0.995 | tok/s: 11978 | entropy: 1.386
+  [step 130] loss=8.4395 tok/s=916 elapsed=5726.5s
+Step 130/19531 | Loss: 8.4395 | LR: 0.000007 | τ: 0.994 | tok/s: 11981 | entropy: 1.386
+  [step 140] loss=8.3828 tok/s=850 elapsed=6164.7s
+Step 140/19531 | Loss: 8.3828 | LR: 0.000007 | τ: 0.994 | tok/s: 11966 | entropy: 1.386
+  [step 150] loss=8.4492 tok/s=794 elapsed=6602.5s
+Step 150/19531 | Loss: 8.4492 | LR: 0.000008 | τ: 0.993 | tok/s: 11977 | entropy: 1.386
+  [step 160] loss=8.1738 tok/s=745 elapsed=7040.5s
+Step 160/19531 | Loss: 8.1738 | LR: 0.000008 | τ: 0.993 | tok/s: 11968 | entropy: 1.386
+  [step 170] loss=8.1465 tok/s=701 elapsed=7482.1s
+Step 170/19531 | Loss: 8.1465 | LR: 0.000009 | τ: 0.992 | tok/s: 11873 | entropy: 1.386
+  [step 180] loss=8.0879 tok/s=661 elapsed=7927.7s
+Step 180/19531 | Loss: 8.0879 | LR: 0.000009 | τ: 0.992 | tok/s: 11768 | entropy: 1.386
+  [step 190] loss=8.0352 tok/s=626 elapsed=8373.0s
+Step 190/19531 | Loss: 8.0352 | LR: 0.000010 | τ: 0.991 | tok/s: 11774 | entropy: 1.386
+  [step 200] loss=7.9902 tok/s=595 elapsed=8818.5s
+Step 200/19531 | Loss: 7.9902 | LR: 0.000010 | τ: 0.991 | tok/s: 11768 | entropy: 1.386
+  [step 210] loss=7.8789 tok/s=566 elapsed=9264.2s
+Step 210/19531 | Loss: 7.8789 | LR: 0.000010 | τ: 0.990 | tok/s: 11764 | entropy: 1.386
+  [step 220] loss=7.6270 tok/s=540 elapsed=9707.0s
+Step 220/19531 | Loss: 7.6270 | LR: 0.000011 | τ: 0.990 | tok/s: 11840 | entropy: 1.386
+  [step 230] loss=7.7246 tok/s=517 elapsed=10144.4s
+Step 230/19531 | Loss: 7.7246 | LR: 0.000012 | τ: 0.989 | tok/s: 11987 | entropy: 1.386
+  [step 240] loss=7.2773 tok/s=495 elapsed=10581.8s
+Step 240/19531 | Loss: 7.2773 | LR: 0.000012 | τ: 0.989 | tok/s: 11986 | entropy: 1.386
+  [step 250] loss=7.2910 tok/s=476 elapsed=11019.5s
+Step 250/19531 | Loss: 7.2910 | LR: 0.000013 | τ: 0.989 | tok/s: 11980 | entropy: 1.386
+  [step 260] loss=7.2129 tok/s=457 elapsed=11464.7s
+Step 260/19531 | Loss: 7.2129 | LR: 0.000013 | τ: 0.988 | tok/s: 11776 | entropy: 1.386
+  [step 270] loss=7.2383 tok/s=440 elapsed=11911.0s
+Step 270/19531 | Loss: 7.2383 | LR: 0.000014 | τ: 0.988 | tok/s: 11746 | entropy: 1.386
+  [step 280] loss=7.4805 tok/s=424 elapsed=12357.9s
+Step 280/19531 | Loss: 7.4805 | LR: 0.000014 | τ: 0.987 | tok/s: 11733 | entropy: 1.386
+  [step 290] loss=6.9531 tok/s=409 elapsed=12804.4s
+Step 290/19531 | Loss: 6.9531 | LR: 0.000015 | τ: 0.987 | tok/s: 11741 | entropy: 1.386
+  [step 300] loss=6.5742 tok/s=396 elapsed=13245.7s
+Step 300/19531 | Loss: 6.5742 | LR: 0.000015 | τ: 0.986 | tok/s: 11883 | entropy: 1.386
+  [step 310] loss=6.4844 tok/s=383 elapsed=13685.7s
+Step 310/19531 | Loss: 6.4844 | LR: 0.000016 | τ: 0.986 | tok/s: 11914 | entropy: 1.386
+  [step 320] loss=6.2969 tok/s=371 elapsed=14124.5s
+Step 320/19531 | Loss: 6.2969 | LR: 0.000016 | τ: 0.985 | tok/s: 11949 | entropy: 1.386
+  [step 330] loss=6.3008 tok/s=360 elapsed=14567.5s
+Step 330/19531 | Loss: 6.3008 | LR: 0.000017 | τ: 0.985 | tok/s: 11834 | entropy: 1.386
+  [step 340] loss=6.3320 tok/s=349 elapsed=15014.3s
+Step 340/19531 | Loss: 6.3320 | LR: 0.000017 | τ: 0.984 | tok/s: 11735 | entropy: 1.386
+  [step 350] loss=6.1641 tok/s=339 elapsed=15460.2s
+Step 350/19531 | Loss: 6.1641 | LR: 0.000017 | τ: 0.984 | tok/s: 11757 | entropy: 1.386
+  [step 360] loss=6.0059 tok/s=330 elapsed=15906.5s
+Step 360/19531 | Loss: 6.0059 | LR: 0.000018 | τ: 0.983 | tok/s: 11747 | entropy: 1.386
+  [step 370] loss=5.8828 tok/s=321 elapsed=16352.0s
+Step 370/19531 | Loss: 5.8828 | LR: 0.000018 | τ: 0.983 | tok/s: 11769 | entropy: 1.386
+  [step 380] loss=6.0703 tok/s=312 elapsed=16798.7s
+Step 380/19531 | Loss: 6.0703 | LR: 0.000019 | τ: 0.983 | tok/s: 11737 | entropy: 1.386
+  [step 390] loss=5.9883 tok/s=304 elapsed=17245.8s
+Step 390/19531 | Loss: 5.9883 | LR: 0.000020 | τ: 0.982 | tok/s: 11726 | entropy: 1.386
+  [step 400] loss=5.8613 tok/s=296 elapsed=17692.9s
+Step 400/19531 | Loss: 5.8613 | LR: 0.000020 | τ: 0.982 | tok/s: 11727 | entropy: 1.386
+  [step 410] loss=5.7363 tok/s=289 elapsed=18139.4s
+Step 410/19531 | Loss: 5.7363 | LR: 0.000021 | τ: 0.981 | tok/s: 11742 | entropy: 1.386
+  [step 420] loss=6.2285 tok/s=282 elapsed=18586.7s
+Step 420/19531 | Loss: 6.2285 | LR: 0.000021 | τ: 0.981 | tok/s: 11721 | entropy: 1.386
+  [step 430] loss=5.7344 tok/s=276 elapsed=19029.6s
+Step 430/19531 | Loss: 5.7344 | LR: 0.000022 | τ: 0.980 | tok/s: 11840 | entropy: 1.386
+  [step 440] loss=5.8262 tok/s=269 elapsed=19473.6s
+Step 440/19531 | Loss: 5.8262 | LR: 0.000022 | τ: 0.980 | tok/s: 11808 | entropy: 1.386
+  [step 450] loss=5.6621 tok/s=263 elapsed=19919.6s
+Step 450/19531 | Loss: 5.6621 | LR: 0.000023 | τ: 0.979 | tok/s: 11754 | entropy: 1.386
+  [step 460] loss=5.9297 tok/s=257 elapsed=20365.5s
+Step 460/19531 | Loss: 5.9297 | LR: 0.000023 | τ: 0.979 | tok/s: 11760 | entropy: 1.386
+  [step 470] loss=5.6992 tok/s=252 elapsed=20811.2s
+Step 470/19531 | Loss: 5.6992 | LR: 0.000023 | τ: 0.978 | tok/s: 11762 | entropy: 1.386
+  [step 480] loss=5.5879 tok/s=247 elapsed=21257.1s
+Step 480/19531 | Loss: 5.5879 | LR: 0.000024 | τ: 0.978 | tok/s: 11758 | entropy: 1.386
+  [step 490] loss=5.5176 tok/s=242 elapsed=21703.2s
+Step 490/19531 | Loss: 5.5176 | LR: 0.000024 | τ: 0.977 | tok/s: 11754 | entropy: 1.386
+  [step 500] loss=5.4609 tok/s=237 elapsed=22149.3s
+Step 500/19531 | Loss: 5.4609 | LR: 0.000025 | τ: 0.977 | tok/s: 11751 | entropy: 1.386
+  [step 510] loss=5.5391 tok/s=232 elapsed=22595.3s
+Step 510/19531 | Loss: 5.5391 | LR: 0.000026 | τ: 0.977 | tok/s: 11756 | entropy: 1.386
+  [step 520] loss=5.4414 tok/s=228 elapsed=23041.1s
+Step 520/19531 | Loss: 5.4414 | LR: 0.000026 | τ: 0.976 | tok/s: 11760 | entropy: 1.386
+  [step 530] loss=5.3770 tok/s=223 elapsed=23487.2s
+Step 530/19531 | Loss: 5.3770 | LR: 0.000027 | τ: 0.976 | tok/s: 11754 | entropy: 1.386
+  [step 540] loss=5.2324 tok/s=219 elapsed=23932.8s
+Step 540/19531 | Loss: 5.2324 | LR: 0.000027 | τ: 0.975 | tok/s: 11766 | entropy: 1.386
+  [step 550] loss=5.1973 tok/s=215 elapsed=24378.2s
+Step 550/19531 | Loss: 5.1973 | LR: 0.000028 | τ: 0.975 | tok/s: 11771 | entropy: 1.386
+  [step 560] loss=5.3691 tok/s=211 elapsed=24824.0s
+Step 560/19531 | Loss: 5.3691 | LR: 0.000028 | τ: 0.974 | tok/s: 11761 | entropy: 1.386
+  [step 570] loss=5.0898 tok/s=207 elapsed=25270.4s
+Step 570/19531 | Loss: 5.0898 | LR: 0.000028 | τ: 0.974 | tok/s: 11744 | entropy: 1.386
+  [step 580] loss=4.9805 tok/s=204 elapsed=25716.5s
+Step 580/19531 | Loss: 4.9805 | LR: 0.000029 | τ: 0.973 | tok/s: 11753 | entropy: 1.386
+  [step 590] loss=5.3828 tok/s=200 elapsed=26162.6s
+Step 590/19531 | Loss: 5.3828 | LR: 0.000029 | τ: 0.973 | tok/s: 11753 | entropy: 1.386
+  [step 600] loss=4.9141 tok/s=197 elapsed=26609.3s
+Step 600/19531 | Loss: 4.9141 | LR: 0.000030 | τ: 0.972 | tok/s: 11737 | entropy: 1.386
+  [step 610] loss=4.9844 tok/s=194 elapsed=27055.5s
+Step 610/19531 | Loss: 4.9844 | LR: 0.000030 | τ: 0.972 | tok/s: 11750 | entropy: 1.386
+  [step 620] loss=4.9590 tok/s=191 elapsed=27495.5s
+Step 620/19531 | Loss: 4.9590 | LR: 0.000031 | τ: 0.971 | tok/s: 11917 | entropy: 1.386
+  [step 630] loss=4.8477 tok/s=188 elapsed=27934.3s
+Step 630/19531 | Loss: 4.8477 | LR: 0.000031 | τ: 0.971 | tok/s: 11948 | entropy: 1.386
+  [step 640] loss=4.7754 tok/s=185 elapsed=28373.2s
+Step 640/19531 | Loss: 4.7754 | LR: 0.000032 | τ: 0.971 | tok/s: 11943 | entropy: 1.386
+  [step 650] loss=4.9629 tok/s=182 elapsed=28812.5s
+Step 650/19531 | Loss: 4.9629 | LR: 0.000033 | τ: 0.970 | tok/s: 11935 | entropy: 1.386
+  [step 660] loss=5.5156 tok/s=179 elapsed=29258.3s
+Step 660/19531 | Loss: 5.5156 | LR: 0.000033 | τ: 0.970 | tok/s: 11761 | entropy: 1.386
+  [step 670] loss=4.7891 tok/s=177 elapsed=29699.2s
+Step 670/19531 | Loss: 4.7891 | LR: 0.000034 | τ: 0.969 | tok/s: 11893 | entropy: 1.386
+  [step 680] loss=4.7910 tok/s=174 elapsed=30137.1s
+Step 680/19531 | Loss: 4.7910 | LR: 0.000034 | τ: 0.969 | tok/s: 11971 | entropy: 1.386
+  [step 690] loss=4.6465 tok/s=171 elapsed=30575.4s
+Step 690/19531 | Loss: 4.6465 | LR: 0.000034 | τ: 0.968 | tok/s: 11963 | entropy: 1.386
+  [step 700] loss=4.9785 tok/s=169 elapsed=31016.3s
+Step 700/19531 | Loss: 4.9785 | LR: 0.000035 | τ: 0.968 | tok/s: 11891 | entropy: 1.386
+  [step 710] loss=4.4424 tok/s=167 elapsed=31460.6s
+Step 710/19531 | Loss: 4.4424 | LR: 0.000036 | τ: 0.967 | tok/s: 11802 | entropy: 1.386
+  [step 720] loss=4.3477 tok/s=164 elapsed=31899.7s
+Step 720/19531 | Loss: 4.3477 | LR: 0.000036 | τ: 0.967 | tok/s: 11940 | entropy: 1.386
+  [step 730] loss=4.8008 tok/s=162 elapsed=32339.4s
+Step 730/19531 | Loss: 4.8008 | LR: 0.000036 | τ: 0.966 | tok/s: 11923 | entropy: 1.386
+  [step 740] loss=4.7012 tok/s=160 elapsed=32778.7s
+Step 740/19531 | Loss: 4.7012 | LR: 0.000037 | τ: 0.966 | tok/s: 11935 | entropy: 1.386
+  [step 750] loss=4.5098 tok/s=158 elapsed=33219.2s
+Step 750/19531 | Loss: 4.5098 | LR: 0.000038 | τ: 0.965 | tok/s: 11903 | entropy: 1.386
+  [step 760] loss=4.7852 tok/s=156 elapsed=33665.3s
+Step 760/19531 | Loss: 4.7852 | LR: 0.000038 | τ: 0.965 | tok/s: 11753 | entropy: 1.386
+  [step 770] loss=4.4443 tok/s=154 elapsed=34103.3s
+Step 770/19531 | Loss: 4.4443 | LR: 0.000039 | τ: 0.965 | tok/s: 11970 | entropy: 1.386
+  [step 780] loss=4.3555 tok/s=152 elapsed=34542.6s
+Step 780/19531 | Loss: 4.3555 | LR: 0.000039 | τ: 0.964 | tok/s: 11933 | entropy: 1.386
+  [step 790] loss=4.7676 tok/s=150 elapsed=34984.2s
+Step 790/19531 | Loss: 4.7676 | LR: 0.000040 | τ: 0.964 | tok/s: 11873 | entropy: 1.386
+  [step 800] loss=4.3867 tok/s=148 elapsed=35425.2s
+Step 800/19531 | Loss: 4.3867 | LR: 0.000040 | τ: 0.963 | tok/s: 11889 | entropy: 1.386
+  [step 810] loss=4.5410 tok/s=146 elapsed=35862.2s
+Step 810/19531 | Loss: 4.5410 | LR: 0.000041 | τ: 0.963 | tok/s: 11997 | entropy: 1.386
+  [step 820] loss=4.7910 tok/s=144 elapsed=36306.9s
+Step 820/19531 | Loss: 4.7910 | LR: 0.000041 | τ: 0.962 | tok/s: 11791 | entropy: 1.386
+  [step 830] loss=4.6641 tok/s=143 elapsed=36751.9s
+Step 830/19531 | Loss: 4.6641 | LR: 0.000041 | τ: 0.962 | tok/s: 11781 | entropy: 1.386
+  [step 840] loss=5.1465 tok/s=141 elapsed=37195.7s
+Step 840/19531 | Loss: 5.1465 | LR: 0.000042 | τ: 0.961 | tok/s: 11812 | entropy: 1.386
+  [step 850] loss=4.1729 tok/s=139 elapsed=37640.4s
+Step 850/19531 | Loss: 4.1729 | LR: 0.000043 | τ: 0.961 | tok/s: 11790 | entropy: 1.386
+  [step 860] loss=4.0596 tok/s=138 elapsed=38078.3s
+Step 860/19531 | Loss: 4.0596 | LR: 0.000043 | τ: 0.960 | tok/s: 11974 | entropy: 1.386
+  [step 870] loss=4.2393 tok/s=136 elapsed=38517.4s
+Step 870/19531 | Loss: 4.2393 | LR: 0.000044 | τ: 0.960 | tok/s: 11940 | entropy: 1.386
+  [step 880] loss=4.0850 tok/s=135 elapsed=38956.1s
+Step 880/19531 | Loss: 4.0850 | LR: 0.000044 | τ: 0.959 | tok/s: 11953 | entropy: 1.386
+  [step 890] loss=4.3506 tok/s=133 elapsed=39396.5s
+Step 890/19531 | Loss: 4.3506 | LR: 0.000045 | τ: 0.959 | tok/s: 11902 | entropy: 1.386
+  [step 900] loss=4.5986 tok/s=132 elapsed=39843.4s
+Step 900/19531 | Loss: 4.5986 | LR: 0.000045 | τ: 0.959 | tok/s: 11732 | entropy: 1.386
+  [step 910] loss=4.3184 tok/s=130 elapsed=40289.3s
+Step 910/19531 | Loss: 4.3184 | LR: 0.000046 | τ: 0.958 | tok/s: 11759 | entropy: 1.386
+  [step 920] loss=4.5762 tok/s=129 elapsed=40735.3s
+Step 920/19531 | Loss: 4.5762 | LR: 0.000046 | τ: 0.958 | tok/s: 11756 | entropy: 1.386
+  [step 930] loss=4.3350 tok/s=127 elapsed=41180.7s
+Step 930/19531 | Loss: 4.3350 | LR: 0.000047 | τ: 0.957 | tok/s: 11771 | entropy: 1.386
+  [step 940] loss=4.4814 tok/s=126 elapsed=41626.1s
+Step 940/19531 | Loss: 4.4814 | LR: 0.000047 | τ: 0.957 | tok/s: 11773 | entropy: 1.386
+  [step 950] loss=4.4873 tok/s=125 elapsed=42072.9s
+Step 950/19531 | Loss: 4.4873 | LR: 0.000048 | τ: 0.956 | tok/s: 11732 | entropy: 1.386
+  [step 960] loss=4.3975 tok/s=123 elapsed=42519.4s
+Step 960/19531 | Loss: 4.3975 | LR: 0.000048 | τ: 0.956 | tok/s: 11743 | entropy: 1.386
+  [step 970] loss=4.1865 tok/s=122 elapsed=42965.5s
+Step 970/19531 | Loss: 4.1865 | LR: 0.000048 | τ: 0.955 | tok/s: 11753 | entropy: 1.386
+  [step 980] loss=4.4824 tok/s=121 elapsed=43411.1s
+Step 980/19531 | Loss: 4.4824 | LR: 0.000049 | τ: 0.955 | tok/s: 11765 | entropy: 1.386
+  [step 990] loss=3.9316 tok/s=120 elapsed=43853.9s
+Step 990/19531 | Loss: 3.9316 | LR: 0.000050 | τ: 0.954 | tok/s: 11841 | entropy: 1.386
+  [step 1000] loss=4.1699 tok/s=118 elapsed=44292.0s
+Step 1000/19531 | Loss: 4.1699 | LR: 0.000050 | τ: 0.954 | tok/s: 11967 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 1000
+  [step 1010] loss=3.9395 tok/s=117 elapsed=44771.8s
+Step 1010/19531 | Loss: 3.9395 | LR: 0.000051 | τ: 0.954 | tok/s: 10929 | entropy: 1.386
+  [step 1020] loss=4.3271 tok/s=116 elapsed=45209.6s
+Step 1020/19531 | Loss: 4.3271 | LR: 0.000051 | τ: 0.953 | tok/s: 11974 | entropy: 1.386
+  [step 1030] loss=3.9199 tok/s=115 elapsed=45647.8s
+Step 1030/19531 | Loss: 3.9199 | LR: 0.000052 | τ: 0.953 | tok/s: 11966 | entropy: 1.386
+  [step 1040] loss=4.1016 tok/s=114 elapsed=46087.5s
+Step 1040/19531 | Loss: 4.1016 | LR: 0.000052 | τ: 0.952 | tok/s: 11922 | entropy: 1.386
+  [step 1050] loss=4.1992 tok/s=113 elapsed=46534.1s
+Step 1050/19531 | Loss: 4.1992 | LR: 0.000053 | τ: 0.952 | tok/s: 11740 | entropy: 1.386
+  [step 1060] loss=4.2607 tok/s=112 elapsed=46980.6s
+Step 1060/19531 | Loss: 4.2607 | LR: 0.000053 | τ: 0.951 | tok/s: 11744 | entropy: 1.386
+  [step 1070] loss=4.1162 tok/s=111 elapsed=47426.7s
+Step 1070/19531 | Loss: 4.1162 | LR: 0.000054 | τ: 0.951 | tok/s: 11752 | entropy: 1.386
+  [step 1080] loss=4.1582 tok/s=110 elapsed=47872.5s
+Step 1080/19531 | Loss: 4.1582 | LR: 0.000054 | τ: 0.950 | tok/s: 11761 | entropy: 1.386
+  [step 1090] loss=4.2822 tok/s=109 elapsed=48318.1s
+Step 1090/19531 | Loss: 4.2822 | LR: 0.000055 | τ: 0.950 | tok/s: 11765 | entropy: 1.386
+  [step 1100] loss=4.1934 tok/s=108 elapsed=48764.2s
+Step 1100/19531 | Loss: 4.1934 | LR: 0.000055 | τ: 0.949 | tok/s: 11752 | entropy: 1.386
+  [step 1110] loss=3.8174 tok/s=107 elapsed=49207.7s
+Step 1110/19531 | Loss: 3.8174 | LR: 0.000056 | τ: 0.949 | tok/s: 11823 | entropy: 1.386
+  [step 1120] loss=3.6104 tok/s=106 elapsed=49645.5s
+Step 1120/19531 | Loss: 3.6104 | LR: 0.000056 | τ: 0.948 | tok/s: 11974 | entropy: 1.386
+  [step 1130] loss=3.9033 tok/s=105 elapsed=50083.8s
+Step 1130/19531 | Loss: 3.9033 | LR: 0.000056 | τ: 0.948 | tok/s: 11962 | entropy: 1.386
+  [step 1140] loss=3.8057 tok/s=104 elapsed=50522.6s
+Step 1140/19531 | Loss: 3.8057 | LR: 0.000057 | τ: 0.948 | tok/s: 11949 | entropy: 1.386
+  [step 1150] loss=3.8750 tok/s=103 elapsed=50960.7s
+Step 1150/19531 | Loss: 3.8750 | LR: 0.000057 | τ: 0.947 | tok/s: 11967 | entropy: 1.386
+  [step 1160] loss=3.7656 tok/s=102 elapsed=51399.3s
+Step 1160/19531 | Loss: 3.7656 | LR: 0.000058 | τ: 0.947 | tok/s: 11953 | entropy: 1.386
+  [step 1170] loss=3.8057 tok/s=101 elapsed=51837.9s
+Step 1170/19531 | Loss: 3.8057 | LR: 0.000058 | τ: 0.946 | tok/s: 11954 | entropy: 1.386
+  [step 1180] loss=3.7705 tok/s=100 elapsed=52276.3s
+Step 1180/19531 | Loss: 3.7705 | LR: 0.000059 | τ: 0.946 | tok/s: 11959 | entropy: 1.386
+  [step 1190] loss=3.7812 tok/s=99 elapsed=52713.1s
+Step 1190/19531 | Loss: 3.7812 | LR: 0.000060 | τ: 0.945 | tok/s: 12004 | entropy: 1.386
+  [step 1200] loss=3.7510 tok/s=99 elapsed=53151.2s
+Step 1200/19531 | Loss: 3.7510 | LR: 0.000060 | τ: 0.945 | tok/s: 11966 | entropy: 1.386
+  [step 1210] loss=3.8418 tok/s=98 elapsed=53589.8s
+Step 1210/19531 | Loss: 3.8418 | LR: 0.000061 | τ: 0.944 | tok/s: 11954 | entropy: 1.386
+  [step 1220] loss=3.2803 tok/s=97 elapsed=54027.6s
+Step 1220/19531 | Loss: 3.2803 | LR: 0.000061 | τ: 0.944 | tok/s: 11978 | entropy: 1.386
+  [step 1230] loss=3.7939 tok/s=96 elapsed=54468.9s
+Step 1230/19531 | Loss: 3.7939 | LR: 0.000062 | τ: 0.943 | tok/s: 11879 | entropy: 1.386
+  [step 1240] loss=4.1475 tok/s=95 elapsed=54914.6s
+Step 1240/19531 | Loss: 4.1475 | LR: 0.000062 | τ: 0.943 | tok/s: 11763 | entropy: 1.386
+  [step 1250] loss=4.2725 tok/s=95 elapsed=55360.2s
+Step 1250/19531 | Loss: 4.2725 | LR: 0.000063 | τ: 0.942 | tok/s: 11767 | entropy: 1.386
+  [step 1260] loss=4.0977 tok/s=94 elapsed=55806.2s
+Step 1260/19531 | Loss: 4.0977 | LR: 0.000063 | τ: 0.942 | tok/s: 11754 | entropy: 1.386
+  [step 1270] loss=3.5547 tok/s=93 elapsed=56247.7s
+Step 1270/19531 | Loss: 3.5547 | LR: 0.000063 | τ: 0.942 | tok/s: 11877 | entropy: 1.386
+  [step 1280] loss=3.8926 tok/s=92 elapsed=56685.5s
+Step 1280/19531 | Loss: 3.8926 | LR: 0.000064 | τ: 0.941 | tok/s: 11976 | entropy: 1.386
+  [step 1290] loss=4.3633 tok/s=92 elapsed=57132.3s
+Step 1290/19531 | Loss: 4.3633 | LR: 0.000065 | τ: 0.941 | tok/s: 11733 | entropy: 1.386
+  [step 1300] loss=3.8848 tok/s=91 elapsed=57578.3s
+Step 1300/19531 | Loss: 3.8848 | LR: 0.000065 | τ: 0.940 | tok/s: 11756 | entropy: 1.386
+  [step 1310] loss=4.0967 tok/s=90 elapsed=58024.8s
+Step 1310/19531 | Loss: 4.0967 | LR: 0.000066 | τ: 0.940 | tok/s: 11743 | entropy: 1.386
+  [step 1320] loss=3.5811 tok/s=90 elapsed=58469.6s
+Step 1320/19531 | Loss: 3.5811 | LR: 0.000066 | τ: 0.939 | tok/s: 11787 | entropy: 1.386
+  [step 1330] loss=3.9043 tok/s=89 elapsed=58911.1s
+Step 1330/19531 | Loss: 3.9043 | LR: 0.000067 | τ: 0.939 | tok/s: 11876 | entropy: 1.386
+  [step 1340] loss=3.9658 tok/s=88 elapsed=59357.5s
+Step 1340/19531 | Loss: 3.9658 | LR: 0.000067 | τ: 0.938 | tok/s: 11744 | entropy: 1.386
+  [step 1350] loss=3.9414 tok/s=88 elapsed=59804.0s
+Step 1350/19531 | Loss: 3.9414 | LR: 0.000068 | τ: 0.938 | tok/s: 11742 | entropy: 1.386
+  [step 1360] loss=3.8340 tok/s=87 elapsed=60249.4s
+Step 1360/19531 | Loss: 3.8340 | LR: 0.000068 | τ: 0.937 | tok/s: 11770 | entropy: 1.386
+  [step 1370] loss=3.6475 tok/s=86 elapsed=60695.6s
+Step 1370/19531 | Loss: 3.6475 | LR: 0.000069 | τ: 0.937 | tok/s: 11751 | entropy: 1.386
+  [step 1380] loss=3.9775 tok/s=86 elapsed=61141.9s
+Step 1380/19531 | Loss: 3.9775 | LR: 0.000069 | τ: 0.936 | tok/s: 11749 | entropy: 1.386
+  [step 1390] loss=3.8857 tok/s=85 elapsed=61587.5s
+Step 1390/19531 | Loss: 3.8857 | LR: 0.000069 | τ: 0.936 | tok/s: 11764 | entropy: 1.386
+  [step 1400] loss=3.4395 tok/s=85 elapsed=62031.4s
+Step 1400/19531 | Loss: 3.4395 | LR: 0.000070 | τ: 0.936 | tok/s: 11813 | entropy: 1.386
+  [step 1410] loss=3.7168 tok/s=84 elapsed=62477.5s
+Step 1410/19531 | Loss: 3.7168 | LR: 0.000071 | τ: 0.935 | tok/s: 11751 | entropy: 1.386
+  [step 1420] loss=3.7559 tok/s=83 elapsed=62923.0s
+Step 1420/19531 | Loss: 3.7559 | LR: 0.000071 | τ: 0.935 | tok/s: 11770 | entropy: 1.386
+  [step 1430] loss=3.6748 tok/s=83 elapsed=63369.6s
+Step 1430/19531 | Loss: 3.6748 | LR: 0.000072 | τ: 0.934 | tok/s: 11737 | entropy: 1.386
+  [step 1440] loss=3.6631 tok/s=82 elapsed=63815.8s
+Step 1440/19531 | Loss: 3.6631 | LR: 0.000072 | τ: 0.934 | tok/s: 11752 | entropy: 1.386
+  [step 1450] loss=3.5635 tok/s=82 elapsed=64262.2s
+Step 1450/19531 | Loss: 3.5635 | LR: 0.000073 | τ: 0.933 | tok/s: 11746 | entropy: 1.386
+  [step 1460] loss=3.6270 tok/s=81 elapsed=64708.9s
+Step 1460/19531 | Loss: 3.6270 | LR: 0.000073 | τ: 0.933 | tok/s: 11737 | entropy: 1.386
+  [step 1470] loss=3.5361 tok/s=80 elapsed=65150.9s
+Step 1470/19531 | Loss: 3.5361 | LR: 0.000073 | τ: 0.932 | tok/s: 11860 | entropy: 1.386
+  [step 1480] loss=3.1797 tok/s=80 elapsed=65589.3s
+Step 1480/19531 | Loss: 3.1797 | LR: 0.000074 | τ: 0.932 | tok/s: 11961 | entropy: 1.386
+  [step 1490] loss=3.3018 tok/s=79 elapsed=66026.5s
+Step 1490/19531 | Loss: 3.3018 | LR: 0.000075 | τ: 0.931 | tok/s: 11991 | entropy: 1.386
+  [step 1500] loss=3.3359 tok/s=79 elapsed=66465.6s
+Step 1500/19531 | Loss: 3.3359 | LR: 0.000075 | τ: 0.931 | tok/s: 11940 | entropy: 1.386
+  [step 1510] loss=3.4248 tok/s=78 elapsed=66903.7s
+Step 1510/19531 | Loss: 3.4248 | LR: 0.000076 | τ: 0.930 | tok/s: 11968 | entropy: 1.386
+  [step 1520] loss=3.5283 tok/s=78 elapsed=67341.1s
+Step 1520/19531 | Loss: 3.5283 | LR: 0.000076 | τ: 0.930 | tok/s: 11988 | entropy: 1.386
+  [step 1530] loss=3.3633 tok/s=77 elapsed=67779.0s
+Step 1530/19531 | Loss: 3.3633 | LR: 0.000077 | τ: 0.930 | tok/s: 11973 | entropy: 1.386
+  [step 1540] loss=3.4639 tok/s=77 elapsed=68220.1s
+Step 1540/19531 | Loss: 3.4639 | LR: 0.000077 | τ: 0.929 | tok/s: 11884 | entropy: 1.386
+  [step 1550] loss=4.0068 tok/s=76 elapsed=68666.4s
+Step 1550/19531 | Loss: 4.0068 | LR: 0.000077 | τ: 0.929 | tok/s: 11749 | entropy: 1.386
+  [step 1560] loss=3.8428 tok/s=76 elapsed=69113.2s
+Step 1560/19531 | Loss: 3.8428 | LR: 0.000078 | τ: 0.928 | tok/s: 11733 | entropy: 1.386
+  [step 1570] loss=3.7363 tok/s=75 elapsed=69559.4s
+Step 1570/19531 | Loss: 3.7363 | LR: 0.000079 | τ: 0.928 | tok/s: 11751 | entropy: 1.386
+  [step 1580] loss=3.5869 tok/s=75 elapsed=70006.4s
+Step 1580/19531 | Loss: 3.5869 | LR: 0.000079 | τ: 0.927 | tok/s: 11730 | entropy: 1.386
+  [step 1590] loss=3.4600 tok/s=74 elapsed=70444.7s
+Step 1590/19531 | Loss: 3.4600 | LR: 0.000080 | τ: 0.927 | tok/s: 11964 | entropy: 1.386
+  [step 1600] loss=3.4795 tok/s=74 elapsed=70884.8s
+Step 1600/19531 | Loss: 3.4795 | LR: 0.000080 | τ: 0.926 | tok/s: 11912 | entropy: 1.386
+  [step 1610] loss=3.2207 tok/s=74 elapsed=71323.3s
+Step 1610/19531 | Loss: 3.2207 | LR: 0.000081 | τ: 0.926 | tok/s: 11956 | entropy: 1.386
+  [step 1620] loss=3.3682 tok/s=73 elapsed=71761.3s
+Step 1620/19531 | Loss: 3.3682 | LR: 0.000081 | τ: 0.925 | tok/s: 11970 | entropy: 1.386
+  [step 1630] loss=3.2822 tok/s=73 elapsed=72199.2s
+Step 1630/19531 | Loss: 3.2822 | LR: 0.000082 | τ: 0.925 | tok/s: 11975 | entropy: 1.386
+  [step 1640] loss=3.6133 tok/s=72 elapsed=72641.6s
+Step 1640/19531 | Loss: 3.6133 | LR: 0.000082 | τ: 0.924 | tok/s: 11851 | entropy: 1.386
+  [step 1650] loss=3.5791 tok/s=72 elapsed=73088.4s
+Step 1650/19531 | Loss: 3.5791 | LR: 0.000082 | τ: 0.924 | tok/s: 11734 | entropy: 1.386
+  [step 1660] loss=3.2686 tok/s=71 elapsed=73534.7s
+Step 1660/19531 | Loss: 3.2686 | LR: 0.000083 | τ: 0.924 | tok/s: 11748 | entropy: 1.386
+  [step 1670] loss=3.4668 tok/s=71 elapsed=73981.1s
+Step 1670/19531 | Loss: 3.4668 | LR: 0.000083 | τ: 0.923 | tok/s: 11744 | entropy: 1.386
+  [step 1680] loss=3.5117 tok/s=70 elapsed=74427.4s
+Step 1680/19531 | Loss: 3.5117 | LR: 0.000084 | τ: 0.923 | tok/s: 11748 | entropy: 1.386
+  [step 1690] loss=3.5703 tok/s=70 elapsed=74873.0s
+Step 1690/19531 | Loss: 3.5703 | LR: 0.000085 | τ: 0.922 | tok/s: 11765 | entropy: 1.386
+  [step 1700] loss=3.4502 tok/s=70 elapsed=75319.2s
+Step 1700/19531 | Loss: 3.4502 | LR: 0.000085 | τ: 0.922 | tok/s: 11751 | entropy: 1.386
+  [step 1710] loss=3.4268 tok/s=69 elapsed=75759.8s
+Step 1710/19531 | Loss: 3.4268 | LR: 0.000086 | τ: 0.921 | tok/s: 11899 | entropy: 1.386
+  [step 1720] loss=3.5781 tok/s=69 elapsed=76206.6s
+Step 1720/19531 | Loss: 3.5781 | LR: 0.000086 | τ: 0.921 | tok/s: 11736 | entropy: 1.386
+  [step 1730] loss=3.3916 tok/s=68 elapsed=76652.7s
+Step 1730/19531 | Loss: 3.3916 | LR: 0.000087 | τ: 0.920 | tok/s: 11753 | entropy: 1.386
+  [step 1740] loss=3.5039 tok/s=68 elapsed=77099.1s
+Step 1740/19531 | Loss: 3.5039 | LR: 0.000087 | τ: 0.920 | tok/s: 11745 | entropy: 1.386
+  [step 1750] loss=3.4658 tok/s=68 elapsed=77544.6s
+Step 1750/19531 | Loss: 3.4658 | LR: 0.000087 | τ: 0.919 | tok/s: 11768 | entropy: 1.386
+  [step 1760] loss=3.1777 tok/s=67 elapsed=77990.3s
+Step 1760/19531 | Loss: 3.1777 | LR: 0.000088 | τ: 0.919 | tok/s: 11765 | entropy: 1.386
+  [step 1770] loss=3.3350 tok/s=67 elapsed=78436.5s
+Step 1770/19531 | Loss: 3.3350 | LR: 0.000089 | τ: 0.918 | tok/s: 11749 | entropy: 1.386
+  [step 1780] loss=3.4424 tok/s=66 elapsed=78883.4s
+Step 1780/19531 | Loss: 3.4424 | LR: 0.000089 | τ: 0.918 | tok/s: 11734 | entropy: 1.386
+  [step 1790] loss=3.3975 tok/s=66 elapsed=79329.6s
+Step 1790/19531 | Loss: 3.3975 | LR: 0.000090 | τ: 0.918 | tok/s: 11750 | entropy: 1.386
+  [step 1800] loss=3.3252 tok/s=66 elapsed=79775.9s
+Step 1800/19531 | Loss: 3.3252 | LR: 0.000090 | τ: 0.917 | tok/s: 11746 | entropy: 1.386
+  [step 1810] loss=3.4756 tok/s=65 elapsed=80222.5s
+Step 1810/19531 | Loss: 3.4756 | LR: 0.000091 | τ: 0.917 | tok/s: 11740 | entropy: 1.386
+  [step 1820] loss=3.3223 tok/s=65 elapsed=80669.4s
+Step 1820/19531 | Loss: 3.3223 | LR: 0.000091 | τ: 0.916 | tok/s: 11733 | entropy: 1.386
+  [step 1830] loss=3.2422 tok/s=65 elapsed=81115.4s
+Step 1830/19531 | Loss: 3.2422 | LR: 0.000092 | τ: 0.916 | tok/s: 11755 | entropy: 1.386
+  [step 1840] loss=3.3438 tok/s=64 elapsed=81562.3s
+Step 1840/19531 | Loss: 3.3438 | LR: 0.000092 | τ: 0.915 | tok/s: 11732 | entropy: 1.386
+  [step 1850] loss=3.1699 tok/s=64 elapsed=82010.3s
+Step 1850/19531 | Loss: 3.1699 | LR: 0.000093 | τ: 0.915 | tok/s: 11703 | entropy: 1.386
+  [step 1860] loss=3.0186 tok/s=64 elapsed=82454.6s
+Step 1860/19531 | Loss: 3.0186 | LR: 0.000093 | τ: 0.914 | tok/s: 11799 | entropy: 1.386
+  [step 1870] loss=3.1172 tok/s=63 elapsed=82892.4s
+Step 1870/19531 | Loss: 3.1172 | LR: 0.000094 | τ: 0.914 | tok/s: 11977 | entropy: 1.386
+  [step 1880] loss=3.6650 tok/s=63 elapsed=83333.7s
+Step 1880/19531 | Loss: 3.6650 | LR: 0.000094 | τ: 0.913 | tok/s: 11879 | entropy: 1.386
+  [step 1890] loss=3.4385 tok/s=63 elapsed=83780.0s
+Step 1890/19531 | Loss: 3.4385 | LR: 0.000094 | τ: 0.913 | tok/s: 11748 | entropy: 1.386
+  [step 1900] loss=3.2461 tok/s=62 elapsed=84226.1s
+Step 1900/19531 | Loss: 3.2461 | LR: 0.000095 | τ: 0.912 | tok/s: 11753 | entropy: 1.386
+  [step 1910] loss=3.4346 tok/s=62 elapsed=84671.8s
+Step 1910/19531 | Loss: 3.4346 | LR: 0.000096 | τ: 0.912 | tok/s: 11763 | entropy: 1.386
+  [step 1920] loss=3.1367 tok/s=62 elapsed=85117.5s
+Step 1920/19531 | Loss: 3.1367 | LR: 0.000096 | τ: 0.912 | tok/s: 11763 | entropy: 1.386
+  [step 1930] loss=3.4355 tok/s=61 elapsed=85564.1s
+Step 1930/19531 | Loss: 3.4355 | LR: 0.000097 | τ: 0.911 | tok/s: 11741 | entropy: 1.386
+  [step 1940] loss=3.2432 tok/s=61 elapsed=86010.3s
+Step 1940/19531 | Loss: 3.2432 | LR: 0.000097 | τ: 0.911 | tok/s: 11749 | entropy: 1.386
+  [step 1950] loss=3.3643 tok/s=61 elapsed=86457.4s
+Step 1950/19531 | Loss: 3.3643 | LR: 0.000097 | τ: 0.910 | tok/s: 11726 | entropy: 1.386
+  [step 1960] loss=3.2617 tok/s=60 elapsed=86903.6s
+Step 1960/19531 | Loss: 3.2617 | LR: 0.000098 | τ: 0.910 | tok/s: 11751 | entropy: 1.386
+  [step 1970] loss=3.1045 tok/s=60 elapsed=87349.4s
+Step 1970/19531 | Loss: 3.1045 | LR: 0.000099 | τ: 0.909 | tok/s: 11760 | entropy: 1.386
+  [step 1980] loss=3.3857 tok/s=60 elapsed=87796.2s
+Step 1980/19531 | Loss: 3.3857 | LR: 0.000099 | τ: 0.909 | tok/s: 11735 | entropy: 1.386
+  [step 1990] loss=3.5400 tok/s=59 elapsed=88242.7s
+Step 1990/19531 | Loss: 3.5400 | LR: 0.000100 | τ: 0.908 | tok/s: 11742 | entropy: 1.386
+  [step 2000] loss=3.5049 tok/s=59 elapsed=88688.6s
+Step 2000/19531 | Loss: 3.5049 | LR: 0.000100 | τ: 0.908 | tok/s: 11757 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 2000
+  [step 2010] loss=3.1074 tok/s=59 elapsed=89180.5s
+Step 2010/19531 | Loss: 3.1074 | LR: 0.000100 | τ: 0.907 | tok/s: 10659 | entropy: 1.386
+  [step 2020] loss=3.0996 tok/s=58 elapsed=89623.4s
+Step 2020/19531 | Loss: 3.0996 | LR: 0.000100 | τ: 0.907 | tok/s: 11838 | entropy: 1.386
+  [step 2030] loss=2.9736 tok/s=58 elapsed=90061.5s
+Step 2030/19531 | Loss: 2.9736 | LR: 0.000100 | τ: 0.907 | tok/s: 11968 | entropy: 1.386
+  [step 2040] loss=3.1855 tok/s=58 elapsed=90500.5s
+Step 2040/19531 | Loss: 3.1855 | LR: 0.000100 | τ: 0.906 | tok/s: 11943 | entropy: 1.386
+  [step 2050] loss=2.6621 tok/s=58 elapsed=90939.2s
+Step 2050/19531 | Loss: 2.6621 | LR: 0.000100 | τ: 0.906 | tok/s: 11951 | entropy: 1.386
+  [step 2060] loss=3.4033 tok/s=57 elapsed=91382.8s
+Step 2060/19531 | Loss: 3.4033 | LR: 0.000100 | τ: 0.905 | tok/s: 11817 | entropy: 1.386
+  [step 2070] loss=3.5576 tok/s=57 elapsed=91829.6s
+Step 2070/19531 | Loss: 3.5576 | LR: 0.000100 | τ: 0.905 | tok/s: 11734 | entropy: 1.386
+  [step 2080] loss=3.0225 tok/s=57 elapsed=92273.7s
+Step 2080/19531 | Loss: 3.0225 | LR: 0.000100 | τ: 0.904 | tok/s: 11808 | entropy: 1.386
+  [step 2090] loss=2.9912 tok/s=57 elapsed=92713.0s
+Step 2090/19531 | Loss: 2.9912 | LR: 0.000100 | τ: 0.904 | tok/s: 11933 | entropy: 1.386
+  [step 2100] loss=3.2148 tok/s=56 elapsed=93155.4s
+Step 2100/19531 | Loss: 3.2148 | LR: 0.000100 | τ: 0.903 | tok/s: 11852 | entropy: 1.386
+  [step 2110] loss=3.3711 tok/s=56 elapsed=93602.1s
+Step 2110/19531 | Loss: 3.3711 | LR: 0.000100 | τ: 0.903 | tok/s: 11735 | entropy: 1.386
+  [step 2120] loss=3.2783 tok/s=56 elapsed=94046.4s
+Step 2120/19531 | Loss: 3.2783 | LR: 0.000100 | τ: 0.902 | tok/s: 11801 | entropy: 1.386
+  [step 2130] loss=3.2266 tok/s=55 elapsed=94491.3s
+Step 2130/19531 | Loss: 3.2266 | LR: 0.000100 | τ: 0.902 | tok/s: 11785 | entropy: 1.386
+  [step 2140] loss=3.3184 tok/s=55 elapsed=94936.9s
+Step 2140/19531 | Loss: 3.3184 | LR: 0.000100 | τ: 0.901 | tok/s: 11764 | entropy: 1.386
+  [step 2150] loss=3.2012 tok/s=55 elapsed=95383.4s
+Step 2150/19531 | Loss: 3.2012 | LR: 0.000100 | τ: 0.901 | tok/s: 11743 | entropy: 1.386
+  [step 2160] loss=3.1641 tok/s=55 elapsed=95830.4s
+Step 2160/19531 | Loss: 3.1641 | LR: 0.000100 | τ: 0.901 | tok/s: 11728 | entropy: 1.386
+  [step 2170] loss=2.8213 tok/s=54 elapsed=96271.4s
+Step 2170/19531 | Loss: 2.8213 | LR: 0.000100 | τ: 0.900 | tok/s: 11891 | entropy: 1.386
+  [step 2180] loss=3.1875 tok/s=54 elapsed=96710.4s
+Step 2180/19531 | Loss: 3.1875 | LR: 0.000100 | τ: 0.900 | tok/s: 11943 | entropy: 1.386
+  [step 2190] loss=2.8184 tok/s=54 elapsed=97148.0s
+Step 2190/19531 | Loss: 2.8184 | LR: 0.000100 | τ: 0.899 | tok/s: 11980 | entropy: 1.386
+  [step 2200] loss=2.7783 tok/s=54 elapsed=97586.3s
+Step 2200/19531 | Loss: 2.7783 | LR: 0.000100 | τ: 0.899 | tok/s: 11962 | entropy: 1.386
+  [step 2210] loss=3.5400 tok/s=53 elapsed=98028.0s
+Step 2210/19531 | Loss: 3.5400 | LR: 0.000100 | τ: 0.898 | tok/s: 11870 | entropy: 1.386
+  [step 2220] loss=3.0820 tok/s=53 elapsed=98474.7s
+Step 2220/19531 | Loss: 3.0820 | LR: 0.000100 | τ: 0.898 | tok/s: 11738 | entropy: 1.386
+  [step 2230] loss=3.0127 tok/s=53 elapsed=98922.1s
+Step 2230/19531 | Loss: 3.0127 | LR: 0.000100 | τ: 0.897 | tok/s: 11716 | entropy: 1.386
+  [step 2240] loss=3.3633 tok/s=53 elapsed=99369.2s
+Step 2240/19531 | Loss: 3.3633 | LR: 0.000100 | τ: 0.897 | tok/s: 11729 | entropy: 1.386
+  [step 2250] loss=3.1494 tok/s=53 elapsed=99816.4s
+Step 2250/19531 | Loss: 3.1494 | LR: 0.000100 | τ: 0.896 | tok/s: 11724 | entropy: 1.386
+  [step 2260] loss=2.8936 tok/s=52 elapsed=100261.8s
+Step 2260/19531 | Loss: 2.8936 | LR: 0.000100 | τ: 0.896 | tok/s: 11771 | entropy: 1.386
+  [step 2270] loss=3.0547 tok/s=52 elapsed=100702.7s
+Step 2270/19531 | Loss: 3.0547 | LR: 0.000100 | τ: 0.895 | tok/s: 11891 | entropy: 1.386
+  [step 2280] loss=3.3770 tok/s=52 elapsed=101149.4s
+Step 2280/19531 | Loss: 3.3770 | LR: 0.000100 | τ: 0.895 | tok/s: 11738 | entropy: 1.386
+  [step 2290] loss=3.0947 tok/s=52 elapsed=101595.4s
+Step 2290/19531 | Loss: 3.0947 | LR: 0.000100 | τ: 0.895 | tok/s: 11753 | entropy: 1.386
+  [step 2300] loss=3.2061 tok/s=51 elapsed=102041.9s
+Step 2300/19531 | Loss: 3.2061 | LR: 0.000100 | τ: 0.894 | tok/s: 11743 | entropy: 1.386
+  [step 2310] loss=3.0254 tok/s=51 elapsed=102488.2s
+Step 2310/19531 | Loss: 3.0254 | LR: 0.000100 | τ: 0.894 | tok/s: 11749 | entropy: 1.386
+  [step 2320] loss=3.1318 tok/s=51 elapsed=102933.5s
+Step 2320/19531 | Loss: 3.1318 | LR: 0.000100 | τ: 0.893 | tok/s: 11775 | entropy: 1.386
+  [step 2330] loss=3.3623 tok/s=51 elapsed=103380.4s
+Step 2330/19531 | Loss: 3.3623 | LR: 0.000100 | τ: 0.893 | tok/s: 11730 | entropy: 1.386
+  [step 2340] loss=3.1094 tok/s=50 elapsed=103827.3s
+Step 2340/19531 | Loss: 3.1094 | LR: 0.000100 | τ: 0.892 | tok/s: 11733 | entropy: 1.386
+  [step 2350] loss=3.3115 tok/s=50 elapsed=104274.3s
+Step 2350/19531 | Loss: 3.3115 | LR: 0.000100 | τ: 0.892 | tok/s: 11728 | entropy: 1.386
+  [step 2360] loss=2.9941 tok/s=50 elapsed=104721.9s
+Step 2360/19531 | Loss: 2.9941 | LR: 0.000100 | τ: 0.891 | tok/s: 11714 | entropy: 1.386
+  [step 2370] loss=3.2783 tok/s=50 elapsed=105169.3s
+Step 2370/19531 | Loss: 3.2783 | LR: 0.000100 | τ: 0.891 | tok/s: 11717 | entropy: 1.386
+  [step 2380] loss=2.9443 tok/s=50 elapsed=105615.8s
+Step 2380/19531 | Loss: 2.9443 | LR: 0.000100 | τ: 0.890 | tok/s: 11744 | entropy: 1.386
+  [step 2390] loss=3.3701 tok/s=49 elapsed=106062.6s
+Step 2390/19531 | Loss: 3.3701 | LR: 0.000100 | τ: 0.890 | tok/s: 11733 | entropy: 1.386
+  [step 2400] loss=3.1396 tok/s=49 elapsed=106501.9s
+Step 2400/19531 | Loss: 3.1396 | LR: 0.000100 | τ: 0.889 | tok/s: 11934 | entropy: 1.386
+  [step 2410] loss=2.9697 tok/s=49 elapsed=106939.7s
+Step 2410/19531 | Loss: 2.9697 | LR: 0.000100 | τ: 0.889 | tok/s: 11977 | entropy: 1.386
+  [step 2420] loss=2.9297 tok/s=49 elapsed=107378.4s
+Step 2420/19531 | Loss: 2.9297 | LR: 0.000100 | τ: 0.889 | tok/s: 11950 | entropy: 1.386
+  [step 2430] loss=3.0293 tok/s=49 elapsed=107825.5s
+Step 2430/19531 | Loss: 3.0293 | LR: 0.000100 | τ: 0.888 | tok/s: 11727 | entropy: 1.386
+  [step 2440] loss=2.9043 tok/s=48 elapsed=108265.0s
+Step 2440/19531 | Loss: 2.9043 | LR: 0.000100 | τ: 0.888 | tok/s: 11930 | entropy: 1.386
+  [step 2450] loss=2.8271 tok/s=48 elapsed=108704.1s
+Step 2450/19531 | Loss: 2.8271 | LR: 0.000100 | τ: 0.887 | tok/s: 11940 | entropy: 1.386
+  [step 2460] loss=3.5068 tok/s=48 elapsed=109150.3s
+Step 2460/19531 | Loss: 3.5068 | LR: 0.000100 | τ: 0.887 | tok/s: 11749 | entropy: 1.386
+  [step 2470] loss=2.9434 tok/s=48 elapsed=109596.9s
+Step 2470/19531 | Loss: 2.9434 | LR: 0.000100 | τ: 0.886 | tok/s: 11739 | entropy: 1.386
+  [step 2480] loss=3.1436 tok/s=48 elapsed=110043.6s
+Step 2480/19531 | Loss: 3.1436 | LR: 0.000100 | τ: 0.886 | tok/s: 11738 | entropy: 1.386
+  [step 2490] loss=3.1973 tok/s=47 elapsed=110490.2s
+Step 2490/19531 | Loss: 3.1973 | LR: 0.000100 | τ: 0.885 | tok/s: 11740 | entropy: 1.386
+  [step 2500] loss=2.7520 tok/s=47 elapsed=110931.0s
+Step 2500/19531 | Loss: 2.7520 | LR: 0.000100 | τ: 0.885 | tok/s: 11892 | entropy: 1.386
+  [step 2510] loss=2.8545 tok/s=47 elapsed=111370.6s
+Step 2510/19531 | Loss: 2.8545 | LR: 0.000100 | τ: 0.884 | tok/s: 11929 | entropy: 1.386
+  [step 2520] loss=3.0449 tok/s=47 elapsed=111808.9s
+Step 2520/19531 | Loss: 3.0449 | LR: 0.000100 | τ: 0.884 | tok/s: 11961 | entropy: 1.386
+  [step 2530] loss=2.8350 tok/s=47 elapsed=112248.6s
+Step 2530/19531 | Loss: 2.8350 | LR: 0.000100 | τ: 0.883 | tok/s: 11924 | entropy: 1.386
+  [step 2540] loss=2.7129 tok/s=47 elapsed=112687.3s
+Step 2540/19531 | Loss: 2.7129 | LR: 0.000100 | τ: 0.883 | tok/s: 11950 | entropy: 1.386
+  [step 2550] loss=2.6826 tok/s=46 elapsed=113125.7s
+Step 2550/19531 | Loss: 2.6826 | LR: 0.000100 | τ: 0.883 | tok/s: 11960 | entropy: 1.386
+  [step 2560] loss=2.8672 tok/s=46 elapsed=113566.2s
+Step 2560/19531 | Loss: 2.8672 | LR: 0.000100 | τ: 0.882 | tok/s: 11901 | entropy: 1.386
+  [step 2570] loss=2.7559 tok/s=46 elapsed=114013.6s
+Step 2570/19531 | Loss: 2.7559 | LR: 0.000100 | τ: 0.882 | tok/s: 11720 | entropy: 1.386
+  [step 2580] loss=2.6562 tok/s=46 elapsed=114460.3s
+Step 2580/19531 | Loss: 2.6562 | LR: 0.000100 | τ: 0.881 | tok/s: 11738 | entropy: 1.386
+  [step 2590] loss=3.0010 tok/s=46 elapsed=114907.5s
+Step 2590/19531 | Loss: 3.0010 | LR: 0.000100 | τ: 0.881 | tok/s: 11724 | entropy: 1.386
+  [step 2600] loss=2.8535 tok/s=45 elapsed=115354.4s
+Step 2600/19531 | Loss: 2.8535 | LR: 0.000100 | τ: 0.880 | tok/s: 11730 | entropy: 1.386
+  [step 2610] loss=2.8994 tok/s=45 elapsed=115798.0s
+Step 2610/19531 | Loss: 2.8994 | LR: 0.000100 | τ: 0.880 | tok/s: 11820 | entropy: 1.386
+  [step 2620] loss=2.7920 tok/s=45 elapsed=116237.1s
+Step 2620/19531 | Loss: 2.7920 | LR: 0.000100 | τ: 0.879 | tok/s: 11941 | entropy: 1.386
+  [step 2630] loss=2.7217 tok/s=45 elapsed=116675.9s
+Step 2630/19531 | Loss: 2.7217 | LR: 0.000100 | τ: 0.879 | tok/s: 11947 | entropy: 1.386
+  [step 2640] loss=2.9287 tok/s=45 elapsed=117122.6s
+Step 2640/19531 | Loss: 2.9287 | LR: 0.000100 | τ: 0.878 | tok/s: 11737 | entropy: 1.386
+  [step 2650] loss=2.8613 tok/s=45 elapsed=117569.0s
+Step 2650/19531 | Loss: 2.8613 | LR: 0.000100 | τ: 0.878 | tok/s: 11745 | entropy: 1.386
+  [step 2660] loss=3.3672 tok/s=44 elapsed=118015.7s
+Step 2660/19531 | Loss: 3.3672 | LR: 0.000100 | τ: 0.877 | tok/s: 11737 | entropy: 1.386
+  [step 2670] loss=3.2266 tok/s=44 elapsed=118462.7s
+Step 2670/19531 | Loss: 3.2266 | LR: 0.000100 | τ: 0.877 | tok/s: 11728 | entropy: 1.386
+  [step 2680] loss=2.6768 tok/s=44 elapsed=118907.1s
+Step 2680/19531 | Loss: 2.6768 | LR: 0.000100 | τ: 0.877 | tok/s: 11798 | entropy: 1.386
+  [step 2690] loss=2.8135 tok/s=44 elapsed=119347.1s
+Step 2690/19531 | Loss: 2.8135 | LR: 0.000100 | τ: 0.876 | tok/s: 11915 | entropy: 1.386
+  [step 2700] loss=3.0010 tok/s=44 elapsed=119784.9s
+Step 2700/19531 | Loss: 3.0010 | LR: 0.000100 | τ: 0.876 | tok/s: 11976 | entropy: 1.386
+  [step 2710] loss=2.7764 tok/s=44 elapsed=120223.6s
+Step 2710/19531 | Loss: 2.7764 | LR: 0.000100 | τ: 0.875 | tok/s: 11952 | entropy: 1.386
+  [step 2720] loss=2.9375 tok/s=43 elapsed=120663.5s
+Step 2720/19531 | Loss: 2.9375 | LR: 0.000100 | τ: 0.875 | tok/s: 11918 | entropy: 1.386
+  [step 2730] loss=3.2432 tok/s=43 elapsed=121108.1s
+Step 2730/19531 | Loss: 3.2432 | LR: 0.000100 | τ: 0.874 | tok/s: 11794 | entropy: 1.386
+  [step 2740] loss=3.0762 tok/s=43 elapsed=121554.2s
+Step 2740/19531 | Loss: 3.0762 | LR: 0.000100 | τ: 0.874 | tok/s: 11751 | entropy: 1.386
+  [step 2750] loss=2.9902 tok/s=43 elapsed=122000.4s
+Step 2750/19531 | Loss: 2.9902 | LR: 0.000100 | τ: 0.873 | tok/s: 11750 | entropy: 1.386
+  [step 2760] loss=2.8613 tok/s=43 elapsed=122439.7s
+Step 2760/19531 | Loss: 2.8613 | LR: 0.000100 | τ: 0.873 | tok/s: 11935 | entropy: 1.386
+  [step 2770] loss=2.9971 tok/s=43 elapsed=122879.9s
+Step 2770/19531 | Loss: 2.9971 | LR: 0.000100 | τ: 0.872 | tok/s: 11912 | entropy: 1.386
+  [step 2780] loss=3.1289 tok/s=43 elapsed=123327.3s
+Step 2780/19531 | Loss: 3.1289 | LR: 0.000100 | τ: 0.872 | tok/s: 11713 | entropy: 1.386
+  [step 2790] loss=2.6416 tok/s=42 elapsed=123769.8s
+Step 2790/19531 | Loss: 2.6416 | LR: 0.000099 | τ: 0.871 | tok/s: 11853 | entropy: 1.386
+  [step 2800] loss=2.9209 tok/s=42 elapsed=124208.5s
+Step 2800/19531 | Loss: 2.9209 | LR: 0.000099 | τ: 0.871 | tok/s: 11952 | entropy: 1.386
+  [step 2810] loss=3.0898 tok/s=42 elapsed=124653.5s
+Step 2810/19531 | Loss: 3.0898 | LR: 0.000099 | τ: 0.871 | tok/s: 11782 | entropy: 1.386
+  [step 2820] loss=2.8242 tok/s=42 elapsed=125097.0s
+Step 2820/19531 | Loss: 2.8242 | LR: 0.000099 | τ: 0.870 | tok/s: 11820 | entropy: 1.386
+  [step 2830] loss=2.7217 tok/s=42 elapsed=125543.2s
+Step 2830/19531 | Loss: 2.7217 | LR: 0.000099 | τ: 0.870 | tok/s: 11751 | entropy: 1.386
+  [step 2840] loss=2.6826 tok/s=42 elapsed=125982.9s
+Step 2840/19531 | Loss: 2.6826 | LR: 0.000099 | τ: 0.869 | tok/s: 11925 | entropy: 1.386
+  [step 2850] loss=2.6372 tok/s=41 elapsed=126420.8s
+Step 2850/19531 | Loss: 2.6372 | LR: 0.000099 | τ: 0.869 | tok/s: 11972 | entropy: 1.386
+  [step 2860] loss=2.6812 tok/s=41 elapsed=126859.5s
+Step 2860/19531 | Loss: 2.6812 | LR: 0.000099 | τ: 0.868 | tok/s: 11952 | entropy: 1.386
+  [step 2870] loss=2.5830 tok/s=41 elapsed=127300.0s
+Step 2870/19531 | Loss: 2.5830 | LR: 0.000099 | τ: 0.868 | tok/s: 11903 | entropy: 1.386
+  [step 2880] loss=2.7207 tok/s=41 elapsed=127738.8s
+Step 2880/19531 | Loss: 2.7207 | LR: 0.000099 | τ: 0.867 | tok/s: 11948 | entropy: 1.386
+  [step 2890] loss=2.9492 tok/s=41 elapsed=128178.2s
+Step 2890/19531 | Loss: 2.9492 | LR: 0.000099 | τ: 0.867 | tok/s: 11932 | entropy: 1.386
+  [step 2900] loss=2.6221 tok/s=41 elapsed=128617.0s
+Step 2900/19531 | Loss: 2.6221 | LR: 0.000099 | τ: 0.866 | tok/s: 11947 | entropy: 1.386
+  [step 2910] loss=2.8086 tok/s=41 elapsed=129058.2s
+Step 2910/19531 | Loss: 2.8086 | LR: 0.000099 | τ: 0.866 | tok/s: 11885 | entropy: 1.386
+  [step 2920] loss=2.7529 tok/s=40 elapsed=129504.1s
+Step 2920/19531 | Loss: 2.7529 | LR: 0.000099 | τ: 0.865 | tok/s: 11758 | entropy: 1.386
+  [step 2930] loss=2.8457 tok/s=40 elapsed=129950.6s
+Step 2930/19531 | Loss: 2.8457 | LR: 0.000099 | τ: 0.865 | tok/s: 11741 | entropy: 1.386
+  [step 2940] loss=3.0566 tok/s=40 elapsed=130396.8s
+Step 2940/19531 | Loss: 3.0566 | LR: 0.000099 | τ: 0.865 | tok/s: 11750 | entropy: 1.386
+  [step 2950] loss=2.7383 tok/s=40 elapsed=130842.6s
+Step 2950/19531 | Loss: 2.7383 | LR: 0.000099 | τ: 0.864 | tok/s: 11762 | entropy: 1.386
+  [step 2960] loss=3.3867 tok/s=40 elapsed=131289.7s
+Step 2960/19531 | Loss: 3.3867 | LR: 0.000099 | τ: 0.864 | tok/s: 11727 | entropy: 1.386
+  [step 2970] loss=2.9229 tok/s=40 elapsed=131730.2s
+Step 2970/19531 | Loss: 2.9229 | LR: 0.000099 | τ: 0.863 | tok/s: 11901 | entropy: 1.386
+  [step 2980] loss=2.8096 tok/s=40 elapsed=132170.5s
+Step 2980/19531 | Loss: 2.8096 | LR: 0.000099 | τ: 0.863 | tok/s: 11909 | entropy: 1.386
+  [step 2990] loss=2.8672 tok/s=40 elapsed=132609.7s
+Step 2990/19531 | Loss: 2.8672 | LR: 0.000099 | τ: 0.862 | tok/s: 11938 | entropy: 1.386
+  [step 3000] loss=2.7461 tok/s=39 elapsed=133055.7s
+Step 3000/19531 | Loss: 2.7461 | LR: 0.000099 | τ: 0.862 | tok/s: 11755 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 3000
+  [step 3010] loss=2.8877 tok/s=39 elapsed=133552.5s
+Step 3010/19531 | Loss: 2.8877 | LR: 0.000099 | τ: 0.861 | tok/s: 10552 | entropy: 1.386
+  [step 3020] loss=2.5078 tok/s=39 elapsed=133997.7s
+Step 3020/19531 | Loss: 2.5078 | LR: 0.000099 | τ: 0.861 | tok/s: 11778 | entropy: 1.386
+  [step 3030] loss=2.5840 tok/s=39 elapsed=134435.9s
+Step 3030/19531 | Loss: 2.5840 | LR: 0.000099 | τ: 0.860 | tok/s: 11964 | entropy: 1.386
+  [step 3040] loss=2.6318 tok/s=39 elapsed=134874.0s
+Step 3040/19531 | Loss: 2.6318 | LR: 0.000099 | τ: 0.860 | tok/s: 11968 | entropy: 1.386
+  [step 3050] loss=2.7764 tok/s=39 elapsed=135311.9s
+Step 3050/19531 | Loss: 2.7764 | LR: 0.000099 | τ: 0.860 | tok/s: 11973 | entropy: 1.386
+  [step 3060] loss=2.5791 tok/s=39 elapsed=135749.6s
+Step 3060/19531 | Loss: 2.5791 | LR: 0.000099 | τ: 0.859 | tok/s: 11977 | entropy: 1.386
+  [step 3070] loss=2.7549 tok/s=38 elapsed=136190.1s
+Step 3070/19531 | Loss: 2.7549 | LR: 0.000099 | τ: 0.859 | tok/s: 11903 | entropy: 1.386
+  [step 3080] loss=2.7090 tok/s=38 elapsed=136636.0s
+Step 3080/19531 | Loss: 2.7090 | LR: 0.000099 | τ: 0.858 | tok/s: 11758 | entropy: 1.386
+  [step 3090] loss=2.8936 tok/s=38 elapsed=137082.5s
+Step 3090/19531 | Loss: 2.8936 | LR: 0.000099 | τ: 0.858 | tok/s: 11743 | entropy: 1.386
+  [step 3100] loss=2.8145 tok/s=38 elapsed=137528.8s
+Step 3100/19531 | Loss: 2.8145 | LR: 0.000099 | τ: 0.857 | tok/s: 11747 | entropy: 1.386
+  [step 3110] loss=2.6807 tok/s=38 elapsed=137972.5s
+Step 3110/19531 | Loss: 2.6807 | LR: 0.000099 | τ: 0.857 | tok/s: 11817 | entropy: 1.386
+  [step 3120] loss=3.0410 tok/s=38 elapsed=138414.0s
+Step 3120/19531 | Loss: 3.0410 | LR: 0.000099 | τ: 0.856 | tok/s: 11875 | entropy: 1.386
+  [step 3130] loss=3.0117 tok/s=38 elapsed=138860.8s
+Step 3130/19531 | Loss: 3.0117 | LR: 0.000099 | τ: 0.856 | tok/s: 11734 | entropy: 1.386
+  [step 3140] loss=2.7061 tok/s=38 elapsed=139307.5s
+Step 3140/19531 | Loss: 2.7061 | LR: 0.000099 | τ: 0.855 | tok/s: 11738 | entropy: 1.386
+  [step 3150] loss=2.8623 tok/s=38 elapsed=139746.9s
+Step 3150/19531 | Loss: 2.8623 | LR: 0.000099 | τ: 0.855 | tok/s: 11931 | entropy: 1.386
+  [step 3160] loss=2.4482 tok/s=37 elapsed=140185.9s
+Step 3160/19531 | Loss: 2.4482 | LR: 0.000099 | τ: 0.854 | tok/s: 11943 | entropy: 1.386
+  [step 3170] loss=2.7314 tok/s=37 elapsed=140624.5s
+Step 3170/19531 | Loss: 2.7314 | LR: 0.000099 | τ: 0.854 | tok/s: 11954 | entropy: 1.386
+  [step 3180] loss=2.7354 tok/s=37 elapsed=141062.7s
+Step 3180/19531 | Loss: 2.7354 | LR: 0.000099 | τ: 0.854 | tok/s: 11964 | entropy: 1.386
+  [step 3190] loss=2.2559 tok/s=37 elapsed=141501.8s
+Step 3190/19531 | Loss: 2.2559 | LR: 0.000099 | τ: 0.853 | tok/s: 11942 | entropy: 1.386
+  [step 3200] loss=2.7822 tok/s=37 elapsed=141941.0s
+Step 3200/19531 | Loss: 2.7822 | LR: 0.000099 | τ: 0.853 | tok/s: 11937 | entropy: 1.386
+  [step 3210] loss=2.8086 tok/s=37 elapsed=142379.7s
+Step 3210/19531 | Loss: 2.8086 | LR: 0.000099 | τ: 0.852 | tok/s: 11950 | entropy: 1.386
+  [step 3220] loss=2.8145 tok/s=37 elapsed=142822.5s
+Step 3220/19531 | Loss: 2.8145 | LR: 0.000099 | τ: 0.852 | tok/s: 11841 | entropy: 1.386
+  [step 3230] loss=2.8086 tok/s=37 elapsed=143269.1s
+Step 3230/19531 | Loss: 2.8086 | LR: 0.000099 | τ: 0.851 | tok/s: 11740 | entropy: 1.386
+  [step 3240] loss=2.8496 tok/s=36 elapsed=143714.6s
+Step 3240/19531 | Loss: 2.8496 | LR: 0.000099 | τ: 0.851 | tok/s: 11768 | entropy: 1.386
+  [step 3250] loss=2.4805 tok/s=36 elapsed=144153.0s
+Step 3250/19531 | Loss: 2.4805 | LR: 0.000099 | τ: 0.850 | tok/s: 11960 | entropy: 1.386
+  [step 3260] loss=2.5898 tok/s=36 elapsed=144591.7s
+Step 3260/19531 | Loss: 2.5898 | LR: 0.000099 | τ: 0.850 | tok/s: 11951 | entropy: 1.386
+  [step 3270] loss=2.6592 tok/s=36 elapsed=145030.4s
+Step 3270/19531 | Loss: 2.6592 | LR: 0.000099 | τ: 0.849 | tok/s: 11950 | entropy: 1.386
+  [step 3280] loss=2.6729 tok/s=36 elapsed=145470.4s
+Step 3280/19531 | Loss: 2.6729 | LR: 0.000099 | τ: 0.849 | tok/s: 11917 | entropy: 1.386
+  [step 3290] loss=2.9482 tok/s=36 elapsed=145908.5s
+Step 3290/19531 | Loss: 2.9482 | LR: 0.000099 | τ: 0.848 | tok/s: 11966 | entropy: 1.386
+  [step 3300] loss=2.8701 tok/s=36 elapsed=146355.0s
+Step 3300/19531 | Loss: 2.8701 | LR: 0.000099 | τ: 0.848 | tok/s: 11743 | entropy: 1.386
+  [step 3310] loss=2.7568 tok/s=36 elapsed=146801.2s
+Step 3310/19531 | Loss: 2.7568 | LR: 0.000099 | τ: 0.848 | tok/s: 11750 | entropy: 1.386
+  [step 3320] loss=2.6875 tok/s=36 elapsed=147247.2s
+Step 3320/19531 | Loss: 2.6875 | LR: 0.000099 | τ: 0.847 | tok/s: 11755 | entropy: 1.386
+  [step 3330] loss=2.4424 tok/s=35 elapsed=147693.3s
+Step 3330/19531 | Loss: 2.4424 | LR: 0.000099 | τ: 0.847 | tok/s: 11754 | entropy: 1.386
+  [step 3340] loss=2.6436 tok/s=35 elapsed=148139.9s
+Step 3340/19531 | Loss: 2.6436 | LR: 0.000099 | τ: 0.846 | tok/s: 11741 | entropy: 1.386
+  [step 3350] loss=2.4697 tok/s=35 elapsed=148581.7s
+Step 3350/19531 | Loss: 2.4697 | LR: 0.000099 | τ: 0.846 | tok/s: 11867 | entropy: 1.386
+  [step 3360] loss=2.6758 tok/s=35 elapsed=149020.4s
+Step 3360/19531 | Loss: 2.6758 | LR: 0.000099 | τ: 0.845 | tok/s: 11952 | entropy: 1.386
+  [step 3370] loss=2.8340 tok/s=35 elapsed=149460.4s
+Step 3370/19531 | Loss: 2.8340 | LR: 0.000099 | τ: 0.845 | tok/s: 11914 | entropy: 1.386
+  [step 3380] loss=2.8311 tok/s=35 elapsed=149906.8s
+Step 3380/19531 | Loss: 2.8311 | LR: 0.000098 | τ: 0.844 | tok/s: 11746 | entropy: 1.386
+  [step 3390] loss=2.8975 tok/s=35 elapsed=150354.3s
+Step 3390/19531 | Loss: 2.8975 | LR: 0.000098 | τ: 0.844 | tok/s: 11716 | entropy: 1.386
+  [step 3400] loss=2.6826 tok/s=35 elapsed=150795.7s
+Step 3400/19531 | Loss: 2.6826 | LR: 0.000098 | τ: 0.843 | tok/s: 11877 | entropy: 1.386
+  [step 3410] loss=2.7148 tok/s=35 elapsed=151234.3s
+Step 3410/19531 | Loss: 2.7148 | LR: 0.000098 | τ: 0.843 | tok/s: 11955 | entropy: 1.386
+  [step 3420] loss=2.7832 tok/s=35 elapsed=151680.4s
+Step 3420/19531 | Loss: 2.7832 | LR: 0.000098 | τ: 0.842 | tok/s: 11752 | entropy: 1.386
+  [step 3430] loss=2.6387 tok/s=34 elapsed=152126.2s
+Step 3430/19531 | Loss: 2.6387 | LR: 0.000098 | τ: 0.842 | tok/s: 11763 | entropy: 1.386
+  [step 3440] loss=2.7939 tok/s=34 elapsed=152573.0s
+Step 3440/19531 | Loss: 2.7939 | LR: 0.000098 | τ: 0.842 | tok/s: 11735 | entropy: 1.386
+  [step 3450] loss=2.6504 tok/s=34 elapsed=153019.5s
+Step 3450/19531 | Loss: 2.6504 | LR: 0.000098 | τ: 0.841 | tok/s: 11740 | entropy: 1.386
+  [step 3460] loss=2.8623 tok/s=34 elapsed=153466.2s
+Step 3460/19531 | Loss: 2.8623 | LR: 0.000098 | τ: 0.841 | tok/s: 11739 | entropy: 1.386
+  [step 3470] loss=2.7402 tok/s=34 elapsed=153912.4s
+Step 3470/19531 | Loss: 2.7402 | LR: 0.000098 | τ: 0.840 | tok/s: 11749 | entropy: 1.386
+  [step 3480] loss=2.6533 tok/s=34 elapsed=154357.6s
+Step 3480/19531 | Loss: 2.6533 | LR: 0.000098 | τ: 0.840 | tok/s: 11777 | entropy: 1.386
+  [step 3490] loss=2.6025 tok/s=34 elapsed=154796.7s
+Step 3490/19531 | Loss: 2.6025 | LR: 0.000098 | τ: 0.839 | tok/s: 11941 | entropy: 1.386
+  [step 3500] loss=2.7144 tok/s=34 elapsed=155235.6s
+Step 3500/19531 | Loss: 2.7144 | LR: 0.000098 | τ: 0.839 | tok/s: 11944 | entropy: 1.386
+  [step 3510] loss=2.7202 tok/s=34 elapsed=155674.2s
+Step 3510/19531 | Loss: 2.7202 | LR: 0.000098 | τ: 0.838 | tok/s: 11954 | entropy: 1.386
+  [step 3520] loss=2.6777 tok/s=34 elapsed=156113.3s
+Step 3520/19531 | Loss: 2.6777 | LR: 0.000098 | τ: 0.838 | tok/s: 11940 | entropy: 1.386
+  [step 3530] loss=2.6416 tok/s=33 elapsed=156552.8s
+Step 3530/19531 | Loss: 2.6416 | LR: 0.000098 | τ: 0.837 | tok/s: 11929 | entropy: 1.386
+  [step 3540] loss=2.5547 tok/s=33 elapsed=156991.7s
+Step 3540/19531 | Loss: 2.5547 | LR: 0.000098 | τ: 0.837 | tok/s: 11946 | entropy: 1.386
+  [step 3550] loss=2.4502 tok/s=33 elapsed=157431.0s
+Step 3550/19531 | Loss: 2.4502 | LR: 0.000098 | τ: 0.836 | tok/s: 11935 | entropy: 1.386
+  [step 3560] loss=2.5957 tok/s=33 elapsed=157869.3s
+Step 3560/19531 | Loss: 2.5957 | LR: 0.000098 | τ: 0.836 | tok/s: 11962 | entropy: 1.386
+  [step 3570] loss=2.5493 tok/s=33 elapsed=158314.4s
+Step 3570/19531 | Loss: 2.5493 | LR: 0.000098 | τ: 0.836 | tok/s: 11781 | entropy: 1.386
+  [step 3580] loss=2.7227 tok/s=33 elapsed=158760.3s
+Step 3580/19531 | Loss: 2.7227 | LR: 0.000098 | τ: 0.835 | tok/s: 11758 | entropy: 1.386
+  [step 3590] loss=2.6738 tok/s=33 elapsed=159205.9s
+Step 3590/19531 | Loss: 2.6738 | LR: 0.000098 | τ: 0.835 | tok/s: 11767 | entropy: 1.386
+  [step 3600] loss=2.5757 tok/s=33 elapsed=159651.2s
+Step 3600/19531 | Loss: 2.5757 | LR: 0.000098 | τ: 0.834 | tok/s: 11773 | entropy: 1.386
+  [step 3610] loss=2.7275 tok/s=33 elapsed=160096.1s
+Step 3610/19531 | Loss: 2.7275 | LR: 0.000098 | τ: 0.834 | tok/s: 11783 | entropy: 1.386
+  [step 3620] loss=2.5879 tok/s=33 elapsed=160535.1s
+Step 3620/19531 | Loss: 2.5879 | LR: 0.000098 | τ: 0.833 | tok/s: 11944 | entropy: 1.386
+  [step 3630] loss=2.4971 tok/s=33 elapsed=160980.0s
+Step 3630/19531 | Loss: 2.4971 | LR: 0.000098 | τ: 0.833 | tok/s: 11785 | entropy: 1.386
+  [step 3640] loss=2.9990 tok/s=32 elapsed=161425.2s
+Step 3640/19531 | Loss: 2.9990 | LR: 0.000098 | τ: 0.832 | tok/s: 11777 | entropy: 1.386
+  [step 3650] loss=2.7207 tok/s=32 elapsed=161871.0s
+Step 3650/19531 | Loss: 2.7207 | LR: 0.000098 | τ: 0.832 | tok/s: 11759 | entropy: 1.386
+  [step 3660] loss=2.5469 tok/s=32 elapsed=162316.2s
+Step 3660/19531 | Loss: 2.5469 | LR: 0.000098 | τ: 0.831 | tok/s: 11778 | entropy: 1.386
+  [step 3670] loss=2.5225 tok/s=32 elapsed=162762.2s
+Step 3670/19531 | Loss: 2.5225 | LR: 0.000098 | τ: 0.831 | tok/s: 11756 | entropy: 1.386
+  [step 3680] loss=3.0117 tok/s=32 elapsed=163208.2s
+Step 3680/19531 | Loss: 3.0117 | LR: 0.000098 | τ: 0.830 | tok/s: 11754 | entropy: 1.386
+  [step 3690] loss=2.8301 tok/s=32 elapsed=163654.9s
+Step 3690/19531 | Loss: 2.8301 | LR: 0.000098 | τ: 0.830 | tok/s: 11737 | entropy: 1.386
+  [step 3700] loss=2.6484 tok/s=32 elapsed=164100.7s
+Step 3700/19531 | Loss: 2.6484 | LR: 0.000098 | τ: 0.830 | tok/s: 11762 | entropy: 1.386
+  [step 3710] loss=2.5039 tok/s=32 elapsed=164546.2s
+Step 3710/19531 | Loss: 2.5039 | LR: 0.000098 | τ: 0.829 | tok/s: 11768 | entropy: 1.386
+  [step 3720] loss=2.7119 tok/s=32 elapsed=164991.3s
+Step 3720/19531 | Loss: 2.7119 | LR: 0.000098 | τ: 0.829 | tok/s: 11778 | entropy: 1.386
+  [step 3730] loss=2.5801 tok/s=32 elapsed=165431.3s
+Step 3730/19531 | Loss: 2.5801 | LR: 0.000098 | τ: 0.828 | tok/s: 11917 | entropy: 1.386
+  [step 3740] loss=2.5518 tok/s=32 elapsed=165872.5s
+Step 3740/19531 | Loss: 2.5518 | LR: 0.000098 | τ: 0.828 | tok/s: 11884 | entropy: 1.386
+  [step 3750] loss=2.7490 tok/s=32 elapsed=166317.7s
+Step 3750/19531 | Loss: 2.7490 | LR: 0.000098 | τ: 0.827 | tok/s: 11777 | entropy: 1.386
+  [step 3760] loss=2.5342 tok/s=31 elapsed=166761.8s
+Step 3760/19531 | Loss: 2.5342 | LR: 0.000098 | τ: 0.827 | tok/s: 11804 | entropy: 1.386
+  [step 3770] loss=2.5000 tok/s=31 elapsed=167207.2s
+Step 3770/19531 | Loss: 2.5000 | LR: 0.000098 | τ: 0.826 | tok/s: 11772 | entropy: 1.386
+  [step 3780] loss=2.6914 tok/s=31 elapsed=167650.7s
+Step 3780/19531 | Loss: 2.6914 | LR: 0.000097 | τ: 0.826 | tok/s: 11821 | entropy: 1.386
+  [step 3790] loss=2.8369 tok/s=31 elapsed=168087.9s
+Step 3790/19531 | Loss: 2.8369 | LR: 0.000097 | τ: 0.825 | tok/s: 11993 | entropy: 1.386
+  [step 3800] loss=2.7578 tok/s=31 elapsed=168529.9s
+Step 3800/19531 | Loss: 2.7578 | LR: 0.000097 | τ: 0.825 | tok/s: 11861 | entropy: 1.386
+  [step 3810] loss=2.7744 tok/s=31 elapsed=168976.1s
+Step 3810/19531 | Loss: 2.7744 | LR: 0.000097 | τ: 0.824 | tok/s: 11752 | entropy: 1.386
+  [step 3820] loss=2.3613 tok/s=31 elapsed=169421.8s
+Step 3820/19531 | Loss: 2.3613 | LR: 0.000097 | τ: 0.824 | tok/s: 11761 | entropy: 1.386
+  [step 3830] loss=2.6143 tok/s=31 elapsed=169868.1s
+Step 3830/19531 | Loss: 2.6143 | LR: 0.000097 | τ: 0.824 | tok/s: 11748 | entropy: 1.386
+  [step 3840] loss=2.5801 tok/s=31 elapsed=170313.6s
+Step 3840/19531 | Loss: 2.5801 | LR: 0.000097 | τ: 0.823 | tok/s: 11769 | entropy: 1.386
+  [step 3850] loss=2.6406 tok/s=31 elapsed=170759.5s
+Step 3850/19531 | Loss: 2.6406 | LR: 0.000097 | τ: 0.823 | tok/s: 11758 | entropy: 1.386
+  [step 3860] loss=2.6641 tok/s=31 elapsed=171205.2s
+Step 3860/19531 | Loss: 2.6641 | LR: 0.000097 | τ: 0.822 | tok/s: 11764 | entropy: 1.386
+  [step 3870] loss=2.4775 tok/s=31 elapsed=171651.1s
+Step 3870/19531 | Loss: 2.4775 | LR: 0.000097 | τ: 0.822 | tok/s: 11757 | entropy: 1.386
+  [step 3880] loss=2.6758 tok/s=30 elapsed=172096.4s
+Step 3880/19531 | Loss: 2.6758 | LR: 0.000097 | τ: 0.821 | tok/s: 11776 | entropy: 1.386
+  [step 3890] loss=2.5537 tok/s=30 elapsed=172542.2s
+Step 3890/19531 | Loss: 2.5537 | LR: 0.000097 | τ: 0.821 | tok/s: 11760 | entropy: 1.386
+  [step 3900] loss=2.5166 tok/s=30 elapsed=172987.8s
+Step 3900/19531 | Loss: 2.5166 | LR: 0.000097 | τ: 0.820 | tok/s: 11766 | entropy: 1.386
+  [step 3910] loss=2.4570 tok/s=30 elapsed=173430.4s
+Step 3910/19531 | Loss: 2.4570 | LR: 0.000097 | τ: 0.820 | tok/s: 11846 | entropy: 1.386
+  [step 3920] loss=2.6777 tok/s=30 elapsed=173868.9s
+Step 3920/19531 | Loss: 2.6777 | LR: 0.000097 | τ: 0.819 | tok/s: 11959 | entropy: 1.386
+  [step 3930] loss=2.6172 tok/s=30 elapsed=174308.0s
+Step 3930/19531 | Loss: 2.6172 | LR: 0.000097 | τ: 0.819 | tok/s: 11938 | entropy: 1.386
+  [step 3940] loss=2.5645 tok/s=30 elapsed=174753.2s
+Step 3940/19531 | Loss: 2.5645 | LR: 0.000097 | τ: 0.818 | tok/s: 11776 | entropy: 1.386
+  [step 3950] loss=2.4106 tok/s=30 elapsed=175198.6s
+Step 3950/19531 | Loss: 2.4106 | LR: 0.000097 | τ: 0.818 | tok/s: 11773 | entropy: 1.386
+  [step 3960] loss=2.5225 tok/s=30 elapsed=175645.0s
+Step 3960/19531 | Loss: 2.5225 | LR: 0.000097 | τ: 0.818 | tok/s: 11744 | entropy: 1.386
+  [step 3970] loss=3.0771 tok/s=30 elapsed=176090.9s
+Step 3970/19531 | Loss: 3.0771 | LR: 0.000097 | τ: 0.817 | tok/s: 11759 | entropy: 1.386
+  [step 3980] loss=2.7559 tok/s=30 elapsed=176536.7s
+Step 3980/19531 | Loss: 2.7559 | LR: 0.000097 | τ: 0.817 | tok/s: 11760 | entropy: 1.386
+  [step 3990] loss=2.6431 tok/s=30 elapsed=176978.0s
+Step 3990/19531 | Loss: 2.6431 | LR: 0.000097 | τ: 0.816 | tok/s: 11880 | entropy: 1.386
+  [step 4000] loss=2.6025 tok/s=30 elapsed=177424.4s
+Step 4000/19531 | Loss: 2.6025 | LR: 0.000097 | τ: 0.816 | tok/s: 11746 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 4000
+  [step 4010] loss=2.5005 tok/s=29 elapsed=177907.1s
+Step 4010/19531 | Loss: 2.5005 | LR: 0.000097 | τ: 0.815 | tok/s: 10862 | entropy: 1.386
+  [step 4020] loss=2.5869 tok/s=29 elapsed=178353.8s
+Step 4020/19531 | Loss: 2.5869 | LR: 0.000097 | τ: 0.815 | tok/s: 11738 | entropy: 1.386
+  [step 4030] loss=2.6846 tok/s=29 elapsed=178799.4s
+Step 4030/19531 | Loss: 2.6846 | LR: 0.000097 | τ: 0.814 | tok/s: 11764 | entropy: 1.386
+  [step 4040] loss=2.6035 tok/s=29 elapsed=179245.1s
+Step 4040/19531 | Loss: 2.6035 | LR: 0.000097 | τ: 0.814 | tok/s: 11764 | entropy: 1.386
+  [step 4050] loss=2.4746 tok/s=29 elapsed=179690.8s
+Step 4050/19531 | Loss: 2.4746 | LR: 0.000097 | τ: 0.813 | tok/s: 11763 | entropy: 1.386
+  [step 4060] loss=2.9453 tok/s=29 elapsed=180137.1s
+Step 4060/19531 | Loss: 2.9453 | LR: 0.000097 | τ: 0.813 | tok/s: 11749 | entropy: 1.386
+  [step 4070] loss=2.6680 tok/s=29 elapsed=180583.1s
+Step 4070/19531 | Loss: 2.6680 | LR: 0.000097 | τ: 0.812 | tok/s: 11755 | entropy: 1.386
+  [step 4080] loss=2.5781 tok/s=29 elapsed=181029.6s
+Step 4080/19531 | Loss: 2.5781 | LR: 0.000097 | τ: 0.812 | tok/s: 11741 | entropy: 1.386
+  [step 4090] loss=2.6289 tok/s=29 elapsed=181476.1s
+Step 4090/19531 | Loss: 2.6289 | LR: 0.000097 | τ: 0.812 | tok/s: 11743 | entropy: 1.386
+  [step 4100] loss=2.8511 tok/s=29 elapsed=181923.1s
+Step 4100/19531 | Loss: 2.8511 | LR: 0.000097 | τ: 0.811 | tok/s: 11730 | entropy: 1.386
+  [step 4110] loss=2.4824 tok/s=29 elapsed=182364.7s
+Step 4110/19531 | Loss: 2.4824 | LR: 0.000096 | τ: 0.811 | tok/s: 11873 | entropy: 1.386
+  [step 4120] loss=2.4976 tok/s=29 elapsed=182803.4s
+Step 4120/19531 | Loss: 2.4976 | LR: 0.000096 | τ: 0.810 | tok/s: 11951 | entropy: 1.386
+  [step 4130] loss=2.4639 tok/s=29 elapsed=183241.7s
+Step 4130/19531 | Loss: 2.4639 | LR: 0.000096 | τ: 0.810 | tok/s: 11961 | entropy: 1.386
+  [step 4140] loss=2.1567 tok/s=29 elapsed=183679.5s
+Step 4140/19531 | Loss: 2.1567 | LR: 0.000096 | τ: 0.809 | tok/s: 11977 | entropy: 1.386
+  [step 4150] loss=2.5303 tok/s=28 elapsed=184123.1s
+Step 4150/19531 | Loss: 2.5303 | LR: 0.000096 | τ: 0.809 | tok/s: 11818 | entropy: 1.386
+  [step 4160] loss=2.7324 tok/s=28 elapsed=184569.5s
+Step 4160/19531 | Loss: 2.7324 | LR: 0.000096 | τ: 0.808 | tok/s: 11745 | entropy: 1.386
+  [step 4170] loss=2.4482 tok/s=28 elapsed=185015.8s
+Step 4170/19531 | Loss: 2.4482 | LR: 0.000096 | τ: 0.808 | tok/s: 11748 | entropy: 1.386
+  [step 4180] loss=2.4355 tok/s=28 elapsed=185462.7s
+Step 4180/19531 | Loss: 2.4355 | LR: 0.000096 | τ: 0.807 | tok/s: 11733 | entropy: 1.386
+  [step 4190] loss=2.3599 tok/s=28 elapsed=185910.0s
+Step 4190/19531 | Loss: 2.3599 | LR: 0.000096 | τ: 0.807 | tok/s: 11720 | entropy: 1.386
+  [step 4200] loss=2.3188 tok/s=28 elapsed=186351.6s
+Step 4200/19531 | Loss: 2.3188 | LR: 0.000096 | τ: 0.807 | tok/s: 11875 | entropy: 1.386
+  [step 4210] loss=2.4219 tok/s=28 elapsed=186789.4s
+Step 4210/19531 | Loss: 2.4219 | LR: 0.000096 | τ: 0.806 | tok/s: 11975 | entropy: 1.386
+  [step 4220] loss=2.6157 tok/s=28 elapsed=187233.7s
+Step 4220/19531 | Loss: 2.6157 | LR: 0.000096 | τ: 0.806 | tok/s: 11801 | entropy: 1.386
+  [step 4230] loss=2.4731 tok/s=28 elapsed=187679.1s
+Step 4230/19531 | Loss: 2.4731 | LR: 0.000096 | τ: 0.805 | tok/s: 11772 | entropy: 1.386
+  [step 4240] loss=2.4248 tok/s=28 elapsed=188117.1s
+Step 4240/19531 | Loss: 2.4248 | LR: 0.000096 | τ: 0.805 | tok/s: 11969 | entropy: 1.386
+  [step 4250] loss=2.4927 tok/s=28 elapsed=188556.1s
+Step 4250/19531 | Loss: 2.4927 | LR: 0.000096 | τ: 0.804 | tok/s: 11942 | entropy: 1.386
+  [step 4260] loss=2.6006 tok/s=28 elapsed=188997.6s
+Step 4260/19531 | Loss: 2.6006 | LR: 0.000096 | τ: 0.804 | tok/s: 11875 | entropy: 1.386
+  [step 4270] loss=2.7080 tok/s=28 elapsed=189443.4s
+Step 4270/19531 | Loss: 2.7080 | LR: 0.000096 | τ: 0.803 | tok/s: 11761 | entropy: 1.386
+  [step 4280] loss=2.5420 tok/s=28 elapsed=189889.5s
+Step 4280/19531 | Loss: 2.5420 | LR: 0.000096 | τ: 0.803 | tok/s: 11755 | entropy: 1.386
+  [step 4290] loss=2.5029 tok/s=28 elapsed=190329.4s
+Step 4290/19531 | Loss: 2.5029 | LR: 0.000096 | τ: 0.802 | tok/s: 11916 | entropy: 1.386
+  [step 4300] loss=2.5308 tok/s=27 elapsed=190767.4s
+Step 4300/19531 | Loss: 2.5308 | LR: 0.000096 | τ: 0.802 | tok/s: 11972 | entropy: 1.386
+  [step 4310] loss=2.3994 tok/s=27 elapsed=191206.5s
+Step 4310/19531 | Loss: 2.3994 | LR: 0.000096 | τ: 0.801 | tok/s: 11940 | entropy: 1.386
+  [step 4320] loss=2.4639 tok/s=27 elapsed=191651.8s
+Step 4320/19531 | Loss: 2.4639 | LR: 0.000096 | τ: 0.801 | tok/s: 11773 | entropy: 1.386
+  [step 4330] loss=2.3936 tok/s=27 elapsed=192090.7s
+Step 4330/19531 | Loss: 2.3936 | LR: 0.000096 | τ: 0.801 | tok/s: 11947 | entropy: 1.386
+  [step 4340] loss=2.4482 tok/s=27 elapsed=192529.6s
+Step 4340/19531 | Loss: 2.4482 | LR: 0.000096 | τ: 0.800 | tok/s: 11944 | entropy: 1.386
+  [step 4350] loss=2.5459 tok/s=27 elapsed=192968.6s
+Step 4350/19531 | Loss: 2.5459 | LR: 0.000096 | τ: 0.800 | tok/s: 11945 | entropy: 1.386
+  [step 4360] loss=2.4663 tok/s=27 elapsed=193411.1s
+Step 4360/19531 | Loss: 2.4663 | LR: 0.000096 | τ: 0.799 | tok/s: 11846 | entropy: 1.386
+  [step 4370] loss=2.4619 tok/s=27 elapsed=193857.9s
+Step 4370/19531 | Loss: 2.4619 | LR: 0.000096 | τ: 0.799 | tok/s: 11736 | entropy: 1.386
+  [step 4380] loss=2.4746 tok/s=27 elapsed=194305.1s
+Step 4380/19531 | Loss: 2.4746 | LR: 0.000096 | τ: 0.798 | tok/s: 11724 | entropy: 1.386
+  [step 4390] loss=2.4854 tok/s=27 elapsed=194751.4s
+Step 4390/19531 | Loss: 2.4854 | LR: 0.000095 | τ: 0.798 | tok/s: 11746 | entropy: 1.386
+  [step 4400] loss=2.4448 tok/s=27 elapsed=195193.2s
+Step 4400/19531 | Loss: 2.4448 | LR: 0.000095 | τ: 0.797 | tok/s: 11868 | entropy: 1.386
+  [step 4410] loss=2.4595 tok/s=27 elapsed=195632.4s
+Step 4410/19531 | Loss: 2.4595 | LR: 0.000095 | τ: 0.797 | tok/s: 11939 | entropy: 1.386
+  [step 4420] loss=2.5898 tok/s=27 elapsed=196071.7s
+Step 4420/19531 | Loss: 2.5898 | LR: 0.000095 | τ: 0.796 | tok/s: 11933 | entropy: 1.386
+  [step 4430] loss=2.4805 tok/s=27 elapsed=196518.7s
+Step 4430/19531 | Loss: 2.4805 | LR: 0.000095 | τ: 0.796 | tok/s: 11730 | entropy: 1.386
+  [step 4440] loss=2.7300 tok/s=27 elapsed=196964.8s
+Step 4440/19531 | Loss: 2.7300 | LR: 0.000095 | τ: 0.795 | tok/s: 11753 | entropy: 1.386
+  [step 4450] loss=2.4893 tok/s=27 elapsed=197411.2s
+Step 4450/19531 | Loss: 2.4893 | LR: 0.000095 | τ: 0.795 | tok/s: 11744 | entropy: 1.386
+  [step 4460] loss=2.3281 tok/s=26 elapsed=197857.8s
+Step 4460/19531 | Loss: 2.3281 | LR: 0.000095 | τ: 0.795 | tok/s: 11742 | entropy: 1.386
+  [step 4470] loss=2.6064 tok/s=26 elapsed=198305.1s
+Step 4470/19531 | Loss: 2.6064 | LR: 0.000095 | τ: 0.794 | tok/s: 11719 | entropy: 1.386
+  [step 4480] loss=2.5547 tok/s=26 elapsed=198752.8s
+Step 4480/19531 | Loss: 2.5547 | LR: 0.000095 | τ: 0.794 | tok/s: 11711 | entropy: 1.386
+  [step 4490] loss=2.5146 tok/s=26 elapsed=199199.3s
+Step 4490/19531 | Loss: 2.5146 | LR: 0.000095 | τ: 0.793 | tok/s: 11742 | entropy: 1.386
+  [step 4500] loss=2.3965 tok/s=26 elapsed=199646.0s
+Step 4500/19531 | Loss: 2.3965 | LR: 0.000095 | τ: 0.793 | tok/s: 11738 | entropy: 1.386
+  [step 4510] loss=2.5542 tok/s=26 elapsed=200092.4s
+Step 4510/19531 | Loss: 2.5542 | LR: 0.000095 | τ: 0.792 | tok/s: 11745 | entropy: 1.386
+  [step 4520] loss=2.5117 tok/s=26 elapsed=200539.3s
+Step 4520/19531 | Loss: 2.5117 | LR: 0.000095 | τ: 0.792 | tok/s: 11731 | entropy: 1.386
+  [step 4530] loss=3.0703 tok/s=26 elapsed=200986.2s
+Step 4530/19531 | Loss: 3.0703 | LR: 0.000095 | τ: 0.791 | tok/s: 11732 | entropy: 1.386
+  [step 4540] loss=2.1519 tok/s=26 elapsed=201428.3s
+Step 4540/19531 | Loss: 2.1519 | LR: 0.000095 | τ: 0.791 | tok/s: 11858 | entropy: 1.386
+  [step 4550] loss=2.0420 tok/s=26 elapsed=201868.2s
+Step 4550/19531 | Loss: 2.0420 | LR: 0.000095 | τ: 0.790 | tok/s: 11920 | entropy: 1.386
+  [step 4560] loss=2.0352 tok/s=26 elapsed=202307.1s
+Step 4560/19531 | Loss: 2.0352 | LR: 0.000095 | τ: 0.790 | tok/s: 11946 | entropy: 1.386
+  [step 4570] loss=2.4727 tok/s=26 elapsed=202745.9s
+Step 4570/19531 | Loss: 2.4727 | LR: 0.000095 | τ: 0.789 | tok/s: 11948 | entropy: 1.386
+  [step 4580] loss=2.4033 tok/s=26 elapsed=203184.7s
+Step 4580/19531 | Loss: 2.4033 | LR: 0.000095 | τ: 0.789 | tok/s: 11947 | entropy: 1.386
+  [step 4590] loss=2.2959 tok/s=26 elapsed=203623.7s
+Step 4590/19531 | Loss: 2.2959 | LR: 0.000095 | τ: 0.789 | tok/s: 11943 | entropy: 1.386
+  [step 4600] loss=2.2090 tok/s=26 elapsed=204062.8s
+Step 4600/19531 | Loss: 2.2090 | LR: 0.000095 | τ: 0.788 | tok/s: 11941 | entropy: 1.386
+  [step 4610] loss=2.5239 tok/s=26 elapsed=204501.1s
+Step 4610/19531 | Loss: 2.5239 | LR: 0.000095 | τ: 0.788 | tok/s: 11960 | entropy: 1.386
+  [step 4620] loss=2.4131 tok/s=26 elapsed=204939.2s
+Step 4620/19531 | Loss: 2.4131 | LR: 0.000095 | τ: 0.787 | tok/s: 11968 | entropy: 1.386
+  [step 4630] loss=2.3647 tok/s=26 elapsed=205377.0s
+Step 4630/19531 | Loss: 2.3647 | LR: 0.000095 | τ: 0.787 | tok/s: 11978 | entropy: 1.386
+  [step 4640] loss=2.4170 tok/s=25 elapsed=205816.1s
+Step 4640/19531 | Loss: 2.4170 | LR: 0.000095 | τ: 0.786 | tok/s: 11933 | entropy: 1.386
+  [step 4650] loss=2.5762 tok/s=25 elapsed=206255.9s
+Step 4650/19531 | Loss: 2.5762 | LR: 0.000094 | τ: 0.786 | tok/s: 11928 | entropy: 1.386
+  [step 4660] loss=2.5557 tok/s=25 elapsed=206701.9s
+Step 4660/19531 | Loss: 2.5557 | LR: 0.000094 | τ: 0.785 | tok/s: 11755 | entropy: 1.386
+  [step 4670] loss=2.4502 tok/s=25 elapsed=207148.0s
+Step 4670/19531 | Loss: 2.4502 | LR: 0.000094 | τ: 0.785 | tok/s: 11751 | entropy: 1.386
+  [step 4680] loss=2.4292 tok/s=25 elapsed=207594.1s
+Step 4680/19531 | Loss: 2.4292 | LR: 0.000094 | τ: 0.784 | tok/s: 11753 | entropy: 1.386
+  [step 4690] loss=2.8428 tok/s=25 elapsed=208040.8s
+Step 4690/19531 | Loss: 2.8428 | LR: 0.000094 | τ: 0.784 | tok/s: 11738 | entropy: 1.386
+  [step 4700] loss=2.4902 tok/s=25 elapsed=208488.0s
+Step 4700/19531 | Loss: 2.4902 | LR: 0.000094 | τ: 0.783 | tok/s: 11724 | entropy: 1.386
+  [step 4710] loss=2.4536 tok/s=25 elapsed=208934.0s
+Step 4710/19531 | Loss: 2.4536 | LR: 0.000094 | τ: 0.783 | tok/s: 11755 | entropy: 1.386
+  [step 4720] loss=2.5898 tok/s=25 elapsed=209380.0s
+Step 4720/19531 | Loss: 2.5898 | LR: 0.000094 | τ: 0.783 | tok/s: 11754 | entropy: 1.386
+  [step 4730] loss=2.4443 tok/s=25 elapsed=209818.1s
+Step 4730/19531 | Loss: 2.4443 | LR: 0.000094 | τ: 0.782 | tok/s: 11969 | entropy: 1.386
+  [step 4740] loss=2.4370 tok/s=25 elapsed=210256.0s
+Step 4740/19531 | Loss: 2.4370 | LR: 0.000094 | τ: 0.782 | tok/s: 11973 | entropy: 1.386
+  [step 4750] loss=2.5908 tok/s=25 elapsed=210697.9s
+Step 4750/19531 | Loss: 2.5908 | LR: 0.000094 | τ: 0.781 | tok/s: 11865 | entropy: 1.386
+  [step 4760] loss=2.7642 tok/s=25 elapsed=211144.0s
+Step 4760/19531 | Loss: 2.7642 | LR: 0.000094 | τ: 0.781 | tok/s: 11751 | entropy: 1.386
+  [step 4770] loss=2.6084 tok/s=25 elapsed=211590.5s
+Step 4770/19531 | Loss: 2.6084 | LR: 0.000094 | τ: 0.780 | tok/s: 11744 | entropy: 1.386
+  [step 4780] loss=2.4004 tok/s=25 elapsed=212031.7s
+Step 4780/19531 | Loss: 2.4004 | LR: 0.000094 | τ: 0.780 | tok/s: 11882 | entropy: 1.386
+  [step 4790] loss=2.4346 tok/s=25 elapsed=212469.2s
+Step 4790/19531 | Loss: 2.4346 | LR: 0.000094 | τ: 0.779 | tok/s: 11984 | entropy: 1.386
+  [step 4800] loss=2.4302 tok/s=25 elapsed=212907.3s
+Step 4800/19531 | Loss: 2.4302 | LR: 0.000094 | τ: 0.779 | tok/s: 11967 | entropy: 1.386
+  [step 4810] loss=2.4971 tok/s=25 elapsed=213351.9s
+Step 4810/19531 | Loss: 2.4971 | LR: 0.000094 | τ: 0.778 | tok/s: 11791 | entropy: 1.386
+  [step 4820] loss=2.2568 tok/s=25 elapsed=213807.1s
+Step 4820/19531 | Loss: 2.2568 | LR: 0.000094 | τ: 0.778 | tok/s: 11519 | entropy: 1.386
+  [step 4830] loss=2.4565 tok/s=24 elapsed=214245.3s
+Step 4830/19531 | Loss: 2.4565 | LR: 0.000094 | τ: 0.777 | tok/s: 11965 | entropy: 1.386
+  [step 4840] loss=2.4268 tok/s=24 elapsed=214684.8s
+Step 4840/19531 | Loss: 2.4268 | LR: 0.000094 | τ: 0.777 | tok/s: 11930 | entropy: 1.386
+  [step 4850] loss=2.5352 tok/s=24 elapsed=215123.6s
+Step 4850/19531 | Loss: 2.5352 | LR: 0.000094 | τ: 0.777 | tok/s: 11949 | entropy: 1.386
+  [step 4860] loss=2.4365 tok/s=24 elapsed=215562.5s
+Step 4860/19531 | Loss: 2.4365 | LR: 0.000094 | τ: 0.776 | tok/s: 11944 | entropy: 1.386
+  [step 4870] loss=2.3320 tok/s=24 elapsed=216001.4s
+Step 4870/19531 | Loss: 2.3320 | LR: 0.000094 | τ: 0.776 | tok/s: 11946 | entropy: 1.386
+  [step 4880] loss=2.5708 tok/s=24 elapsed=216442.0s
+Step 4880/19531 | Loss: 2.5708 | LR: 0.000093 | τ: 0.775 | tok/s: 11899 | entropy: 1.386
+  [step 4890] loss=2.6562 tok/s=24 elapsed=216888.0s
+Step 4890/19531 | Loss: 2.6562 | LR: 0.000093 | τ: 0.775 | tok/s: 11756 | entropy: 1.386
+  [step 4900] loss=2.3320 tok/s=24 elapsed=217334.0s
+Step 4900/19531 | Loss: 2.3320 | LR: 0.000093 | τ: 0.774 | tok/s: 11757 | entropy: 1.386
+  [step 4910] loss=2.0913 tok/s=24 elapsed=217774.3s
+Step 4910/19531 | Loss: 2.0913 | LR: 0.000093 | τ: 0.774 | tok/s: 11907 | entropy: 1.386
+  [step 4920] loss=2.3438 tok/s=24 elapsed=218211.9s
+Step 4920/19531 | Loss: 2.3438 | LR: 0.000093 | τ: 0.773 | tok/s: 11982 | entropy: 1.386
+  [step 4930] loss=2.8232 tok/s=24 elapsed=218656.7s
+Step 4930/19531 | Loss: 2.8232 | LR: 0.000093 | τ: 0.773 | tok/s: 11785 | entropy: 1.386
+  [step 4940] loss=2.5713 tok/s=24 elapsed=219102.4s
+Step 4940/19531 | Loss: 2.5713 | LR: 0.000093 | τ: 0.772 | tok/s: 11763 | entropy: 1.386
+  [step 4950] loss=2.5371 tok/s=24 elapsed=219549.2s
+Step 4950/19531 | Loss: 2.5371 | LR: 0.000093 | τ: 0.772 | tok/s: 11736 | entropy: 1.386
+  [step 4960] loss=2.3320 tok/s=24 elapsed=219994.9s
+Step 4960/19531 | Loss: 2.3320 | LR: 0.000093 | τ: 0.771 | tok/s: 11763 | entropy: 1.386
+  [step 4970] loss=2.6807 tok/s=24 elapsed=220441.2s
+Step 4970/19531 | Loss: 2.6807 | LR: 0.000093 | τ: 0.771 | tok/s: 11747 | entropy: 1.386
+  [step 4980] loss=2.8867 tok/s=24 elapsed=220887.8s
+Step 4980/19531 | Loss: 2.8867 | LR: 0.000093 | τ: 0.771 | tok/s: 11738 | entropy: 1.386
+  [step 4990] loss=2.3999 tok/s=24 elapsed=221329.3s
+Step 4990/19531 | Loss: 2.3999 | LR: 0.000093 | τ: 0.770 | tok/s: 11876 | entropy: 1.386
+  [step 5000] loss=2.2500 tok/s=24 elapsed=221772.5s
+Step 5000/19531 | Loss: 2.2500 | LR: 0.000093 | τ: 0.770 | tok/s: 11829 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 5000
+Saved portable checkpoint at step 5000
+  [step 5010] loss=2.4795 tok/s=24 elapsed=222299.9s
+Step 5010/19531 | Loss: 2.4795 | LR: 0.000093 | τ: 0.769 | tok/s: 9941 | entropy: 1.386
+  [step 5020] loss=2.6445 tok/s=24 elapsed=222742.9s
+Step 5020/19531 | Loss: 2.6445 | LR: 0.000093 | τ: 0.769 | tok/s: 11836 | entropy: 1.386
+  [step 5030] loss=2.4575 tok/s=23 elapsed=223190.1s
+Step 5030/19531 | Loss: 2.4575 | LR: 0.000093 | τ: 0.768 | tok/s: 11725 | entropy: 1.386
+  [step 5040] loss=2.5010 tok/s=23 elapsed=223636.6s
+Step 5040/19531 | Loss: 2.5010 | LR: 0.000093 | τ: 0.768 | tok/s: 11741 | entropy: 1.386
+  [step 5050] loss=2.5049 tok/s=23 elapsed=224083.1s
+Step 5050/19531 | Loss: 2.5049 | LR: 0.000093 | τ: 0.767 | tok/s: 11742 | entropy: 1.386
+  [step 5060] loss=2.0405 tok/s=23 elapsed=224524.9s
+Step 5060/19531 | Loss: 2.0405 | LR: 0.000093 | τ: 0.767 | tok/s: 11869 | entropy: 1.386
+  [step 5070] loss=2.2100 tok/s=23 elapsed=224964.0s
+Step 5070/19531 | Loss: 2.2100 | LR: 0.000093 | τ: 0.766 | tok/s: 11940 | entropy: 1.386
+  [step 5080] loss=2.2988 tok/s=23 elapsed=225402.1s
+Step 5080/19531 | Loss: 2.2988 | LR: 0.000093 | τ: 0.766 | tok/s: 11965 | entropy: 1.386
+  [step 5090] loss=2.6992 tok/s=23 elapsed=225843.1s
+Step 5090/19531 | Loss: 2.6992 | LR: 0.000093 | τ: 0.765 | tok/s: 11889 | entropy: 1.386
+  [step 5100] loss=3.0254 tok/s=23 elapsed=226290.4s
+Step 5100/19531 | Loss: 3.0254 | LR: 0.000092 | τ: 0.765 | tok/s: 11721 | entropy: 1.386
+  [step 5110] loss=2.3887 tok/s=23 elapsed=226737.8s
+Step 5110/19531 | Loss: 2.3887 | LR: 0.000092 | τ: 0.765 | tok/s: 11721 | entropy: 1.386
+  [step 5120] loss=2.6270 tok/s=23 elapsed=227184.1s
+Step 5120/19531 | Loss: 2.6270 | LR: 0.000092 | τ: 0.764 | tok/s: 11746 | entropy: 1.386
+  [step 5130] loss=2.2090 tok/s=23 elapsed=227630.8s
+Step 5130/19531 | Loss: 2.2090 | LR: 0.000092 | τ: 0.764 | tok/s: 11737 | entropy: 1.386
+  [step 5140] loss=2.3701 tok/s=23 elapsed=228070.5s
+Step 5140/19531 | Loss: 2.3701 | LR: 0.000092 | τ: 0.763 | tok/s: 11924 | entropy: 1.386
+  [step 5150] loss=2.1309 tok/s=23 elapsed=228509.2s
+Step 5150/19531 | Loss: 2.1309 | LR: 0.000092 | τ: 0.763 | tok/s: 11952 | entropy: 1.386
+  [step 5160] loss=2.4199 tok/s=23 elapsed=228946.3s
+Step 5160/19531 | Loss: 2.4199 | LR: 0.000092 | τ: 0.762 | tok/s: 11993 | entropy: 1.386
+  [step 5170] loss=2.4805 tok/s=23 elapsed=229384.4s
+Step 5170/19531 | Loss: 2.4805 | LR: 0.000092 | τ: 0.762 | tok/s: 11969 | entropy: 1.386
+  [step 5180] loss=2.4351 tok/s=23 elapsed=229822.8s
+Step 5180/19531 | Loss: 2.4351 | LR: 0.000092 | τ: 0.761 | tok/s: 11958 | entropy: 1.386
+  [step 5190] loss=2.3149 tok/s=23 elapsed=230261.9s
+Step 5190/19531 | Loss: 2.3149 | LR: 0.000092 | τ: 0.761 | tok/s: 11942 | entropy: 1.386
+  [step 5200] loss=2.4961 tok/s=23 elapsed=230701.6s
+Step 5200/19531 | Loss: 2.4961 | LR: 0.000092 | τ: 0.760 | tok/s: 11923 | entropy: 1.386
+  [step 5210] loss=2.4316 tok/s=23 elapsed=231140.5s
+Step 5210/19531 | Loss: 2.4316 | LR: 0.000092 | τ: 0.760 | tok/s: 11945 | entropy: 1.386
+  [step 5220] loss=2.3252 tok/s=23 elapsed=231582.7s
+Step 5220/19531 | Loss: 2.3252 | LR: 0.000092 | τ: 0.760 | tok/s: 11857 | entropy: 1.386
+  [step 5230] loss=2.9492 tok/s=23 elapsed=232029.2s
+Step 5230/19531 | Loss: 2.9492 | LR: 0.000092 | τ: 0.759 | tok/s: 11742 | entropy: 1.386
+  [step 5240] loss=2.3354 tok/s=23 elapsed=232475.9s
+Step 5240/19531 | Loss: 2.3354 | LR: 0.000092 | τ: 0.759 | tok/s: 11737 | entropy: 1.386
+  [step 5250] loss=2.5625 tok/s=23 elapsed=232921.4s
+Step 5250/19531 | Loss: 2.5625 | LR: 0.000092 | τ: 0.758 | tok/s: 11768 | entropy: 1.386
+  [step 5260] loss=2.4819 tok/s=22 elapsed=233367.3s
+Step 5260/19531 | Loss: 2.4819 | LR: 0.000092 | τ: 0.758 | tok/s: 11760 | entropy: 1.386
+  [step 5270] loss=2.3525 tok/s=22 elapsed=233812.7s
+Step 5270/19531 | Loss: 2.3525 | LR: 0.000092 | τ: 0.757 | tok/s: 11770 | entropy: 1.386
+  [step 5280] loss=2.3115 tok/s=22 elapsed=234250.9s
+Step 5280/19531 | Loss: 2.3115 | LR: 0.000092 | τ: 0.757 | tok/s: 11966 | entropy: 1.386
+  [step 5290] loss=2.2007 tok/s=22 elapsed=234688.8s
+Step 5290/19531 | Loss: 2.2007 | LR: 0.000092 | τ: 0.756 | tok/s: 11971 | entropy: 1.386
+  [step 5300] loss=2.4219 tok/s=22 elapsed=235135.2s
+Step 5300/19531 | Loss: 2.4219 | LR: 0.000092 | τ: 0.756 | tok/s: 11746 | entropy: 1.386
+  [step 5310] loss=2.4307 tok/s=22 elapsed=235581.6s
+Step 5310/19531 | Loss: 2.4307 | LR: 0.000091 | τ: 0.755 | tok/s: 11744 | entropy: 1.386
+  [step 5320] loss=2.5732 tok/s=22 elapsed=236027.5s
+Step 5320/19531 | Loss: 2.5732 | LR: 0.000091 | τ: 0.755 | tok/s: 11758 | entropy: 1.386
+  [step 5330] loss=2.5859 tok/s=22 elapsed=236473.4s
+Step 5330/19531 | Loss: 2.5859 | LR: 0.000091 | τ: 0.754 | tok/s: 11759 | entropy: 1.386
+  [step 5340] loss=2.5020 tok/s=22 elapsed=236911.4s
+Step 5340/19531 | Loss: 2.5020 | LR: 0.000091 | τ: 0.754 | tok/s: 11970 | entropy: 1.386
+  [step 5350] loss=2.3594 tok/s=22 elapsed=237350.9s
+Step 5350/19531 | Loss: 2.3594 | LR: 0.000091 | τ: 0.754 | tok/s: 11928 | entropy: 1.386
+  [step 5360] loss=2.2358 tok/s=22 elapsed=237793.4s
+Step 5360/19531 | Loss: 2.2358 | LR: 0.000091 | τ: 0.753 | tok/s: 11849 | entropy: 1.386
+  [step 5370] loss=2.3687 tok/s=22 elapsed=238239.5s
+Step 5370/19531 | Loss: 2.3687 | LR: 0.000091 | τ: 0.753 | tok/s: 11753 | entropy: 1.386
+  [step 5380] loss=2.3164 tok/s=22 elapsed=238686.4s
+Step 5380/19531 | Loss: 2.3164 | LR: 0.000091 | τ: 0.752 | tok/s: 11733 | entropy: 1.386
+  [step 5390] loss=2.7607 tok/s=22 elapsed=239132.5s
+Step 5390/19531 | Loss: 2.7607 | LR: 0.000091 | τ: 0.752 | tok/s: 11753 | entropy: 1.386
+  [step 5400] loss=2.5537 tok/s=22 elapsed=239579.0s
+Step 5400/19531 | Loss: 2.5537 | LR: 0.000091 | τ: 0.751 | tok/s: 11741 | entropy: 1.386
+  [step 5410] loss=2.3701 tok/s=22 elapsed=240025.4s
+Step 5410/19531 | Loss: 2.3701 | LR: 0.000091 | τ: 0.751 | tok/s: 11748 | entropy: 1.386
+  [step 5420] loss=2.2729 tok/s=22 elapsed=240468.5s
+Step 5420/19531 | Loss: 2.2729 | LR: 0.000091 | τ: 0.750 | tok/s: 11832 | entropy: 1.386
+  [step 5430] loss=2.1719 tok/s=22 elapsed=240909.0s
+Step 5430/19531 | Loss: 2.1719 | LR: 0.000091 | τ: 0.750 | tok/s: 11901 | entropy: 1.386
+  [step 5440] loss=2.2944 tok/s=22 elapsed=241347.4s
+Step 5440/19531 | Loss: 2.2944 | LR: 0.000091 | τ: 0.749 | tok/s: 11959 | entropy: 1.386
+  [step 5450] loss=2.3525 tok/s=22 elapsed=241790.7s
+Step 5450/19531 | Loss: 2.3525 | LR: 0.000091 | τ: 0.749 | tok/s: 11828 | entropy: 1.386
+  [step 5460] loss=2.4521 tok/s=22 elapsed=242229.9s
+Step 5460/19531 | Loss: 2.4521 | LR: 0.000091 | τ: 0.748 | tok/s: 11938 | entropy: 1.386
+  [step 5470] loss=2.4854 tok/s=22 elapsed=242672.1s
+Step 5470/19531 | Loss: 2.4854 | LR: 0.000091 | τ: 0.748 | tok/s: 11854 | entropy: 1.386
+  [step 5480] loss=2.2563 tok/s=22 elapsed=243117.0s
+Step 5480/19531 | Loss: 2.2563 | LR: 0.000091 | τ: 0.748 | tok/s: 11786 | entropy: 1.386
+  [step 5490] loss=2.6509 tok/s=22 elapsed=243563.0s
+Step 5490/19531 | Loss: 2.6509 | LR: 0.000091 | τ: 0.747 | tok/s: 11755 | entropy: 1.386
+  [step 5500] loss=2.4854 tok/s=21 elapsed=244009.2s
+Step 5500/19531 | Loss: 2.4854 | LR: 0.000090 | τ: 0.747 | tok/s: 11749 | entropy: 1.386
+  [step 5510] loss=2.4941 tok/s=21 elapsed=244455.5s
+Step 5510/19531 | Loss: 2.4941 | LR: 0.000090 | τ: 0.746 | tok/s: 11748 | entropy: 1.386
+  [step 5520] loss=2.2808 tok/s=21 elapsed=244902.1s
+Step 5520/19531 | Loss: 2.2808 | LR: 0.000090 | τ: 0.746 | tok/s: 11742 | entropy: 1.386
+  [step 5530] loss=2.5469 tok/s=21 elapsed=245343.7s
+Step 5530/19531 | Loss: 2.5469 | LR: 0.000090 | τ: 0.745 | tok/s: 11872 | entropy: 1.386
+  [step 5540] loss=2.5298 tok/s=21 elapsed=245786.0s
+Step 5540/19531 | Loss: 2.5298 | LR: 0.000090 | τ: 0.745 | tok/s: 11853 | entropy: 1.386
+  [step 5550] loss=2.4663 tok/s=21 elapsed=246232.4s
+Step 5550/19531 | Loss: 2.4663 | LR: 0.000090 | τ: 0.744 | tok/s: 11744 | entropy: 1.386
+  [step 5560] loss=2.2910 tok/s=21 elapsed=246675.2s
+Step 5560/19531 | Loss: 2.2910 | LR: 0.000090 | τ: 0.744 | tok/s: 11842 | entropy: 1.386
+  [step 5570] loss=2.4150 tok/s=21 elapsed=247115.1s
+Step 5570/19531 | Loss: 2.4150 | LR: 0.000090 | τ: 0.743 | tok/s: 11918 | entropy: 1.386
+  [step 5580] loss=2.5010 tok/s=21 elapsed=247561.2s
+Step 5580/19531 | Loss: 2.5010 | LR: 0.000090 | τ: 0.743 | tok/s: 11753 | entropy: 1.386
+  [step 5590] loss=2.0864 tok/s=21 elapsed=248002.0s
+Step 5590/19531 | Loss: 2.0864 | LR: 0.000090 | τ: 0.742 | tok/s: 11894 | entropy: 1.386
+  [step 5600] loss=2.3740 tok/s=21 elapsed=248444.2s
+Step 5600/19531 | Loss: 2.3740 | LR: 0.000090 | τ: 0.742 | tok/s: 11856 | entropy: 1.386
+  [step 5610] loss=2.4604 tok/s=21 elapsed=248890.8s
+Step 5610/19531 | Loss: 2.4604 | LR: 0.000090 | τ: 0.742 | tok/s: 11740 | entropy: 1.386
+  [step 5620] loss=2.3145 tok/s=21 elapsed=249337.0s
+Step 5620/19531 | Loss: 2.3145 | LR: 0.000090 | τ: 0.741 | tok/s: 11750 | entropy: 1.386
+  [step 5630] loss=2.4912 tok/s=21 elapsed=249783.0s
+Step 5630/19531 | Loss: 2.4912 | LR: 0.000090 | τ: 0.741 | tok/s: 11755 | entropy: 1.386
+  [step 5640] loss=2.5063 tok/s=21 elapsed=250229.1s
+Step 5640/19531 | Loss: 2.5063 | LR: 0.000090 | τ: 0.740 | tok/s: 11754 | entropy: 1.386
+  [step 5650] loss=2.2178 tok/s=21 elapsed=250672.6s
+Step 5650/19531 | Loss: 2.2178 | LR: 0.000090 | τ: 0.740 | tok/s: 11821 | entropy: 1.386
+  [step 5660] loss=2.4570 tok/s=21 elapsed=251111.5s
+Step 5660/19531 | Loss: 2.4570 | LR: 0.000090 | τ: 0.739 | tok/s: 11945 | entropy: 1.386
+  [step 5670] loss=2.4834 tok/s=21 elapsed=251550.4s
+Step 5670/19531 | Loss: 2.4834 | LR: 0.000090 | τ: 0.739 | tok/s: 11945 | entropy: 1.386
+  [step 5680] loss=2.3184 tok/s=21 elapsed=251988.9s
+Step 5680/19531 | Loss: 2.3184 | LR: 0.000090 | τ: 0.738 | tok/s: 11958 | entropy: 1.386
+  [step 5690] loss=2.3354 tok/s=21 elapsed=252427.9s
+Step 5690/19531 | Loss: 2.3354 | LR: 0.000089 | τ: 0.738 | tok/s: 11943 | entropy: 1.386
+  [step 5700] loss=2.3110 tok/s=21 elapsed=252866.6s
+Step 5700/19531 | Loss: 2.3110 | LR: 0.000089 | τ: 0.737 | tok/s: 11950 | entropy: 1.386
+  [step 5710] loss=2.2729 tok/s=21 elapsed=253304.4s
+Step 5710/19531 | Loss: 2.2729 | LR: 0.000089 | τ: 0.737 | tok/s: 11975 | entropy: 1.386
+  [step 5720] loss=2.5220 tok/s=21 elapsed=253746.2s
+Step 5720/19531 | Loss: 2.5220 | LR: 0.000089 | τ: 0.736 | tok/s: 11867 | entropy: 1.386
+  [step 5730] loss=2.5322 tok/s=21 elapsed=254184.3s
+Step 5730/19531 | Loss: 2.5322 | LR: 0.000089 | τ: 0.736 | tok/s: 11969 | entropy: 1.386
+  [step 5740] loss=2.4121 tok/s=21 elapsed=254630.2s
+Step 5740/19531 | Loss: 2.4121 | LR: 0.000089 | τ: 0.736 | tok/s: 11757 | entropy: 1.386
+  [step 5750] loss=2.3062 tok/s=21 elapsed=255076.7s
+Step 5750/19531 | Loss: 2.3062 | LR: 0.000089 | τ: 0.735 | tok/s: 11743 | entropy: 1.386
+  [step 5760] loss=2.5713 tok/s=21 elapsed=255523.3s
+Step 5760/19531 | Loss: 2.5713 | LR: 0.000089 | τ: 0.735 | tok/s: 11740 | entropy: 1.386
+  [step 5770] loss=2.1006 tok/s=20 elapsed=255966.6s
+Step 5770/19531 | Loss: 2.1006 | LR: 0.000089 | τ: 0.734 | tok/s: 11826 | entropy: 1.386
+  [step 5780] loss=2.3032 tok/s=20 elapsed=256404.7s
+Step 5780/19531 | Loss: 2.3032 | LR: 0.000089 | τ: 0.734 | tok/s: 11969 | entropy: 1.386
+  [step 5790] loss=2.3320 tok/s=20 elapsed=256843.0s
+Step 5790/19531 | Loss: 2.3320 | LR: 0.000089 | τ: 0.733 | tok/s: 11960 | entropy: 1.386
+  [step 5800] loss=2.0952 tok/s=20 elapsed=257281.0s
+Step 5800/19531 | Loss: 2.0952 | LR: 0.000089 | τ: 0.733 | tok/s: 11971 | entropy: 1.386
+  [step 5810] loss=2.3623 tok/s=20 elapsed=257719.3s
+Step 5810/19531 | Loss: 2.3623 | LR: 0.000089 | τ: 0.732 | tok/s: 11962 | entropy: 1.386
+  [step 5820] loss=2.2397 tok/s=20 elapsed=258157.9s
+Step 5820/19531 | Loss: 2.2397 | LR: 0.000089 | τ: 0.732 | tok/s: 11955 | entropy: 1.386
+  [step 5830] loss=2.4326 tok/s=20 elapsed=258603.4s
+Step 5830/19531 | Loss: 2.4326 | LR: 0.000089 | τ: 0.731 | tok/s: 11767 | entropy: 1.386
+  [step 5840] loss=2.3535 tok/s=20 elapsed=259046.5s
+Step 5840/19531 | Loss: 2.3535 | LR: 0.000089 | τ: 0.731 | tok/s: 11834 | entropy: 1.386
+  [step 5850] loss=2.3618 tok/s=20 elapsed=259489.0s
+Step 5850/19531 | Loss: 2.3618 | LR: 0.000089 | τ: 0.730 | tok/s: 11846 | entropy: 1.386
+  [step 5860] loss=2.5107 tok/s=20 elapsed=259935.3s
+Step 5860/19531 | Loss: 2.5107 | LR: 0.000089 | τ: 0.730 | tok/s: 11749 | entropy: 1.386
+  [step 5870] loss=2.2231 tok/s=20 elapsed=260381.4s
+Step 5870/19531 | Loss: 2.2231 | LR: 0.000088 | τ: 0.730 | tok/s: 11751 | entropy: 1.386
+  [step 5880] loss=2.2212 tok/s=20 elapsed=260828.8s
+Step 5880/19531 | Loss: 2.2212 | LR: 0.000088 | τ: 0.729 | tok/s: 11720 | entropy: 1.386
+  [step 5890] loss=2.2144 tok/s=20 elapsed=261275.9s
+Step 5890/19531 | Loss: 2.2144 | LR: 0.000088 | τ: 0.729 | tok/s: 11725 | entropy: 1.386
+  [step 5900] loss=2.6904 tok/s=20 elapsed=261722.5s
+Step 5900/19531 | Loss: 2.6904 | LR: 0.000088 | τ: 0.728 | tok/s: 11741 | entropy: 1.386
+  [step 5910] loss=2.4277 tok/s=20 elapsed=262169.0s
+Step 5910/19531 | Loss: 2.4277 | LR: 0.000088 | τ: 0.728 | tok/s: 11743 | entropy: 1.386
+  [step 5920] loss=2.5586 tok/s=20 elapsed=262615.0s
+Step 5920/19531 | Loss: 2.5586 | LR: 0.000088 | τ: 0.727 | tok/s: 11754 | entropy: 1.386
+  [step 5930] loss=2.2832 tok/s=20 elapsed=263060.5s
+Step 5930/19531 | Loss: 2.2832 | LR: 0.000088 | τ: 0.727 | tok/s: 11768 | entropy: 1.386
+  [step 5940] loss=2.5459 tok/s=20 elapsed=263506.3s
+Step 5940/19531 | Loss: 2.5459 | LR: 0.000088 | τ: 0.726 | tok/s: 11761 | entropy: 1.386
+  [step 5950] loss=2.3711 tok/s=20 elapsed=263952.5s
+Step 5950/19531 | Loss: 2.3711 | LR: 0.000088 | τ: 0.726 | tok/s: 11752 | entropy: 1.386
+  [step 5960] loss=2.4453 tok/s=20 elapsed=264398.7s
+Step 5960/19531 | Loss: 2.4453 | LR: 0.000088 | τ: 0.725 | tok/s: 11749 | entropy: 1.386
+  [step 5970] loss=2.0205 tok/s=20 elapsed=264844.0s
+Step 5970/19531 | Loss: 2.0205 | LR: 0.000088 | τ: 0.725 | tok/s: 11775 | entropy: 1.386
+  [step 5980] loss=2.3145 tok/s=20 elapsed=265282.0s
+Step 5980/19531 | Loss: 2.3145 | LR: 0.000088 | τ: 0.724 | tok/s: 11970 | entropy: 1.386
+  [step 5990] loss=2.3184 tok/s=20 elapsed=265721.2s
+Step 5990/19531 | Loss: 2.3184 | LR: 0.000088 | τ: 0.724 | tok/s: 11936 | entropy: 1.386
+  [step 6000] loss=2.4941 tok/s=20 elapsed=266166.9s
+Step 6000/19531 | Loss: 2.4941 | LR: 0.000088 | τ: 0.724 | tok/s: 11764 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 6000
+  [step 6010] loss=2.3140 tok/s=20 elapsed=266643.9s
+Step 6010/19531 | Loss: 2.3140 | LR: 0.000088 | τ: 0.723 | tok/s: 10991 | entropy: 1.386
+  [step 6020] loss=2.1470 tok/s=20 elapsed=267088.2s
+Step 6020/19531 | Loss: 2.1470 | LR: 0.000088 | τ: 0.723 | tok/s: 11801 | entropy: 1.386
+  [step 6030] loss=2.4834 tok/s=20 elapsed=267532.2s
+Step 6030/19531 | Loss: 2.4834 | LR: 0.000088 | τ: 0.722 | tok/s: 11807 | entropy: 1.386
+  [step 6040] loss=2.6396 tok/s=20 elapsed=267979.0s
+Step 6040/19531 | Loss: 2.6396 | LR: 0.000087 | τ: 0.722 | tok/s: 11734 | entropy: 1.386
+  [step 6050] loss=2.1587 tok/s=20 elapsed=268425.4s
+Step 6050/19531 | Loss: 2.1587 | LR: 0.000087 | τ: 0.721 | tok/s: 11745 | entropy: 1.386
+  [step 6060] loss=2.5327 tok/s=19 elapsed=268872.4s
+Step 6060/19531 | Loss: 2.5327 | LR: 0.000087 | τ: 0.721 | tok/s: 11731 | entropy: 1.386
+  [step 6070] loss=2.3721 tok/s=19 elapsed=269318.5s
+Step 6070/19531 | Loss: 2.3721 | LR: 0.000087 | τ: 0.720 | tok/s: 11752 | entropy: 1.386
+  [step 6080] loss=2.3003 tok/s=19 elapsed=269761.5s
+Step 6080/19531 | Loss: 2.3003 | LR: 0.000087 | τ: 0.720 | tok/s: 11836 | entropy: 1.386
+  [step 6090] loss=2.5303 tok/s=19 elapsed=270206.6s
+Step 6090/19531 | Loss: 2.5303 | LR: 0.000087 | τ: 0.719 | tok/s: 11779 | entropy: 1.386
+  [step 6100] loss=2.3569 tok/s=19 elapsed=270653.1s
+Step 6100/19531 | Loss: 2.3569 | LR: 0.000087 | τ: 0.719 | tok/s: 11741 | entropy: 1.386
+  [step 6110] loss=2.3735 tok/s=19 elapsed=271099.8s
+Step 6110/19531 | Loss: 2.3735 | LR: 0.000087 | τ: 0.718 | tok/s: 11737 | entropy: 1.386
+  [step 6120] loss=2.3696 tok/s=19 elapsed=271546.4s
+Step 6120/19531 | Loss: 2.3696 | LR: 0.000087 | τ: 0.718 | tok/s: 11742 | entropy: 1.386
+  [step 6130] loss=2.4175 tok/s=19 elapsed=271992.3s
+Step 6130/19531 | Loss: 2.4175 | LR: 0.000087 | τ: 0.718 | tok/s: 11756 | entropy: 1.386
+  [step 6140] loss=2.2148 tok/s=19 elapsed=272438.7s
+Step 6140/19531 | Loss: 2.2148 | LR: 0.000087 | τ: 0.717 | tok/s: 11746 | entropy: 1.386
+  [step 6150] loss=2.3936 tok/s=19 elapsed=272884.6s
+Step 6150/19531 | Loss: 2.3936 | LR: 0.000087 | τ: 0.717 | tok/s: 11758 | entropy: 1.386
+  [step 6160] loss=2.5146 tok/s=19 elapsed=273327.0s
+Step 6160/19531 | Loss: 2.5146 | LR: 0.000087 | τ: 0.716 | tok/s: 11850 | entropy: 1.386
+  [step 6170] loss=2.2417 tok/s=19 elapsed=273765.5s
+Step 6170/19531 | Loss: 2.2417 | LR: 0.000087 | τ: 0.716 | tok/s: 11956 | entropy: 1.386
+  [step 6180] loss=2.3433 tok/s=19 elapsed=274204.7s
+Step 6180/19531 | Loss: 2.3433 | LR: 0.000087 | τ: 0.715 | tok/s: 11939 | entropy: 1.386
+  [step 6190] loss=2.5488 tok/s=19 elapsed=274648.8s
+Step 6190/19531 | Loss: 2.5488 | LR: 0.000087 | τ: 0.715 | tok/s: 11805 | entropy: 1.386
+  [step 6200] loss=2.4976 tok/s=19 elapsed=275094.9s
+Step 6200/19531 | Loss: 2.4976 | LR: 0.000086 | τ: 0.714 | tok/s: 11752 | entropy: 1.386
+  [step 6210] loss=2.3208 tok/s=19 elapsed=275541.3s
+Step 6210/19531 | Loss: 2.3208 | LR: 0.000086 | τ: 0.714 | tok/s: 11746 | entropy: 1.386
+  [step 6220] loss=2.2935 tok/s=19 elapsed=275987.7s
+Step 6220/19531 | Loss: 2.2935 | LR: 0.000086 | τ: 0.713 | tok/s: 11745 | entropy: 1.386
+  [step 6230] loss=2.4585 tok/s=19 elapsed=276427.0s
+Step 6230/19531 | Loss: 2.4585 | LR: 0.000086 | τ: 0.713 | tok/s: 11935 | entropy: 1.386
+  [step 6240] loss=2.2720 tok/s=19 elapsed=276866.9s
+Step 6240/19531 | Loss: 2.2720 | LR: 0.000086 | τ: 0.713 | tok/s: 11916 | entropy: 1.386
+  [step 6250] loss=2.3618 tok/s=19 elapsed=277306.2s
+Step 6250/19531 | Loss: 2.3618 | LR: 0.000086 | τ: 0.712 | tok/s: 11935 | entropy: 1.386
+  [step 6260] loss=2.2397 tok/s=19 elapsed=277745.9s
+Step 6260/19531 | Loss: 2.2397 | LR: 0.000086 | τ: 0.712 | tok/s: 11926 | entropy: 1.386
+  [step 6270] loss=2.1694 tok/s=19 elapsed=278186.9s
+Step 6270/19531 | Loss: 2.1694 | LR: 0.000086 | τ: 0.711 | tok/s: 11888 | entropy: 1.386
+  [step 6280] loss=2.3848 tok/s=19 elapsed=278627.1s
+Step 6280/19531 | Loss: 2.3848 | LR: 0.000086 | τ: 0.711 | tok/s: 11911 | entropy: 1.386
+  [step 6290] loss=2.4639 tok/s=19 elapsed=279074.2s
+Step 6290/19531 | Loss: 2.4639 | LR: 0.000086 | τ: 0.710 | tok/s: 11726 | entropy: 1.386
+  [step 6300] loss=2.2061 tok/s=19 elapsed=279513.7s
+Step 6300/19531 | Loss: 2.2061 | LR: 0.000086 | τ: 0.710 | tok/s: 11930 | entropy: 1.386
+  [step 6310] loss=2.2686 tok/s=19 elapsed=279953.3s
+Step 6310/19531 | Loss: 2.2686 | LR: 0.000086 | τ: 0.709 | tok/s: 11927 | entropy: 1.386
+  [step 6320] loss=2.4219 tok/s=19 elapsed=280391.6s
+Step 6320/19531 | Loss: 2.4219 | LR: 0.000086 | τ: 0.709 | tok/s: 11960 | entropy: 1.386
+  [step 6330] loss=2.1733 tok/s=19 elapsed=280830.4s
+Step 6330/19531 | Loss: 2.1733 | LR: 0.000086 | τ: 0.708 | tok/s: 11950 | entropy: 1.386
+  [step 6340] loss=2.3555 tok/s=19 elapsed=281275.1s
+Step 6340/19531 | Loss: 2.3555 | LR: 0.000086 | τ: 0.708 | tok/s: 11789 | entropy: 1.386
+  [step 6350] loss=2.5068 tok/s=19 elapsed=281721.0s
+Step 6350/19531 | Loss: 2.5068 | LR: 0.000086 | τ: 0.707 | tok/s: 11759 | entropy: 1.386
+  [step 6360] loss=2.3804 tok/s=19 elapsed=282167.0s
+Step 6360/19531 | Loss: 2.3804 | LR: 0.000085 | τ: 0.707 | tok/s: 11755 | entropy: 1.386
+  [step 6370] loss=2.3252 tok/s=19 elapsed=282613.3s
+Step 6370/19531 | Loss: 2.3252 | LR: 0.000085 | τ: 0.707 | tok/s: 11749 | entropy: 1.386
+  [step 6380] loss=2.4023 tok/s=19 elapsed=283059.9s
+Step 6380/19531 | Loss: 2.4023 | LR: 0.000085 | τ: 0.706 | tok/s: 11740 | entropy: 1.386
+  [step 6390] loss=2.2964 tok/s=18 elapsed=283501.2s
+Step 6390/19531 | Loss: 2.2964 | LR: 0.000085 | τ: 0.706 | tok/s: 11879 | entropy: 1.386
+  [step 6400] loss=2.1855 tok/s=18 elapsed=283942.5s
+Step 6400/19531 | Loss: 2.1855 | LR: 0.000085 | τ: 0.705 | tok/s: 11881 | entropy: 1.386
+  [step 6410] loss=2.5640 tok/s=18 elapsed=284389.2s
+Step 6410/19531 | Loss: 2.5640 | LR: 0.000085 | τ: 0.705 | tok/s: 11739 | entropy: 1.386
+  [step 6420] loss=2.1177 tok/s=18 elapsed=284835.6s
+Step 6420/19531 | Loss: 2.1177 | LR: 0.000085 | τ: 0.704 | tok/s: 11745 | entropy: 1.386
+  [step 6430] loss=2.3862 tok/s=18 elapsed=285282.0s
+Step 6430/19531 | Loss: 2.3862 | LR: 0.000085 | τ: 0.704 | tok/s: 11745 | entropy: 1.386
+  [step 6440] loss=2.5015 tok/s=18 elapsed=285728.0s
+Step 6440/19531 | Loss: 2.5015 | LR: 0.000085 | τ: 0.703 | tok/s: 11753 | entropy: 1.386
+  [step 6450] loss=2.2480 tok/s=18 elapsed=286174.2s
+Step 6450/19531 | Loss: 2.2480 | LR: 0.000085 | τ: 0.703 | tok/s: 11750 | entropy: 1.386
+  [step 6460] loss=2.2583 tok/s=18 elapsed=286620.5s
+Step 6460/19531 | Loss: 2.2583 | LR: 0.000085 | τ: 0.702 | tok/s: 11749 | entropy: 1.386
+  [step 6470] loss=2.2549 tok/s=18 elapsed=287066.7s
+Step 6470/19531 | Loss: 2.2549 | LR: 0.000085 | τ: 0.702 | tok/s: 11749 | entropy: 1.386
+  [step 6480] loss=2.3306 tok/s=18 elapsed=287511.2s
+Step 6480/19531 | Loss: 2.3306 | LR: 0.000085 | τ: 0.701 | tok/s: 11797 | entropy: 1.386
+  [step 6490] loss=2.3188 tok/s=18 elapsed=287950.3s
+Step 6490/19531 | Loss: 2.3188 | LR: 0.000085 | τ: 0.701 | tok/s: 11941 | entropy: 1.386
+  [step 6500] loss=2.2964 tok/s=18 elapsed=288388.5s
+Step 6500/19531 | Loss: 2.2964 | LR: 0.000085 | τ: 0.701 | tok/s: 11964 | entropy: 1.386
+  [step 6510] loss=2.1948 tok/s=18 elapsed=288827.2s
+Step 6510/19531 | Loss: 2.1948 | LR: 0.000085 | τ: 0.700 | tok/s: 11950 | entropy: 1.386
+  [step 6520] loss=2.2646 tok/s=18 elapsed=289265.7s
+Step 6520/19531 | Loss: 2.2646 | LR: 0.000084 | τ: 0.700 | tok/s: 11957 | entropy: 1.386
+  [step 6530] loss=2.3354 tok/s=18 elapsed=289704.3s
+Step 6530/19531 | Loss: 2.3354 | LR: 0.000084 | τ: 0.699 | tok/s: 11954 | entropy: 1.386
+  [step 6540] loss=2.4893 tok/s=18 elapsed=290144.7s
+Step 6540/19531 | Loss: 2.4893 | LR: 0.000084 | τ: 0.699 | tok/s: 11904 | entropy: 1.386
+  [step 6550] loss=2.0869 tok/s=18 elapsed=290591.6s
+Step 6550/19531 | Loss: 2.0869 | LR: 0.000084 | τ: 0.698 | tok/s: 11731 | entropy: 1.386
+  [step 6560] loss=2.1753 tok/s=18 elapsed=291032.2s
+Step 6560/19531 | Loss: 2.1753 | LR: 0.000084 | τ: 0.698 | tok/s: 11901 | entropy: 1.386
+  [step 6570] loss=2.4136 tok/s=18 elapsed=291478.1s
+Step 6570/19531 | Loss: 2.4136 | LR: 0.000084 | τ: 0.697 | tok/s: 11756 | entropy: 1.386
+  [step 6580] loss=2.3564 tok/s=18 elapsed=291925.5s
+Step 6580/19531 | Loss: 2.3564 | LR: 0.000084 | τ: 0.697 | tok/s: 11720 | entropy: 1.386
+  [step 6590] loss=2.2603 tok/s=18 elapsed=292373.0s
+Step 6590/19531 | Loss: 2.2603 | LR: 0.000084 | τ: 0.696 | tok/s: 11714 | entropy: 1.386
+  [step 6600] loss=2.4355 tok/s=18 elapsed=292819.1s
+Step 6600/19531 | Loss: 2.4355 | LR: 0.000084 | τ: 0.696 | tok/s: 11753 | entropy: 1.386
+  [step 6610] loss=2.2036 tok/s=18 elapsed=293265.2s
+Step 6610/19531 | Loss: 2.2036 | LR: 0.000084 | τ: 0.695 | tok/s: 11754 | entropy: 1.386
+  [step 6620] loss=2.3735 tok/s=18 elapsed=293712.0s
+Step 6620/19531 | Loss: 2.3735 | LR: 0.000084 | τ: 0.695 | tok/s: 11735 | entropy: 1.386
+  [step 6630] loss=2.5879 tok/s=18 elapsed=294158.4s
+Step 6630/19531 | Loss: 2.5879 | LR: 0.000084 | τ: 0.695 | tok/s: 11745 | entropy: 1.386
+  [step 6640] loss=2.1460 tok/s=18 elapsed=294602.6s
+Step 6640/19531 | Loss: 2.1460 | LR: 0.000084 | τ: 0.694 | tok/s: 11802 | entropy: 1.386
+  [step 6650] loss=2.3091 tok/s=18 elapsed=295042.9s
+Step 6650/19531 | Loss: 2.3091 | LR: 0.000084 | τ: 0.694 | tok/s: 11908 | entropy: 1.386
+  [step 6660] loss=2.2529 tok/s=18 elapsed=295482.6s
+Step 6660/19531 | Loss: 2.2529 | LR: 0.000084 | τ: 0.693 | tok/s: 11924 | entropy: 1.386
+  [step 6670] loss=2.3604 tok/s=18 elapsed=295921.9s
+Step 6670/19531 | Loss: 2.3604 | LR: 0.000083 | τ: 0.693 | tok/s: 11936 | entropy: 1.386
+  [step 6680] loss=2.3198 tok/s=18 elapsed=296361.7s
+Step 6680/19531 | Loss: 2.3198 | LR: 0.000083 | τ: 0.692 | tok/s: 11920 | entropy: 1.386
+  [step 6690] loss=2.2207 tok/s=18 elapsed=296805.1s
+Step 6690/19531 | Loss: 2.2207 | LR: 0.000083 | τ: 0.692 | tok/s: 11825 | entropy: 1.386
+  [step 6700] loss=2.1079 tok/s=18 elapsed=297244.0s
+Step 6700/19531 | Loss: 2.1079 | LR: 0.000083 | τ: 0.691 | tok/s: 11945 | entropy: 1.386
+  [step 6710] loss=2.5415 tok/s=18 elapsed=297689.8s
+Step 6710/19531 | Loss: 2.5415 | LR: 0.000083 | τ: 0.691 | tok/s: 11760 | entropy: 1.386
+  [step 6720] loss=2.3521 tok/s=18 elapsed=298136.9s
+Step 6720/19531 | Loss: 2.3521 | LR: 0.000083 | τ: 0.690 | tok/s: 11728 | entropy: 1.386
+  [step 6730] loss=2.9365 tok/s=18 elapsed=298583.4s
+Step 6730/19531 | Loss: 2.9365 | LR: 0.000083 | τ: 0.690 | tok/s: 11743 | entropy: 1.386
+  [step 6740] loss=2.1772 tok/s=18 elapsed=299030.8s
+Step 6740/19531 | Loss: 2.1772 | LR: 0.000083 | τ: 0.689 | tok/s: 11717 | entropy: 1.386
+  [step 6750] loss=2.2983 tok/s=18 elapsed=299477.5s
+Step 6750/19531 | Loss: 2.2983 | LR: 0.000083 | τ: 0.689 | tok/s: 11738 | entropy: 1.386
+  [step 6760] loss=2.2285 tok/s=17 elapsed=299924.1s
+Step 6760/19531 | Loss: 2.2285 | LR: 0.000083 | τ: 0.689 | tok/s: 11741 | entropy: 1.386
+  [step 6770] loss=2.3369 tok/s=17 elapsed=300370.3s
+Step 6770/19531 | Loss: 2.3369 | LR: 0.000083 | τ: 0.688 | tok/s: 11749 | entropy: 1.386
+  [step 6780] loss=2.1421 tok/s=17 elapsed=300816.8s
+Step 6780/19531 | Loss: 2.1421 | LR: 0.000083 | τ: 0.688 | tok/s: 11742 | entropy: 1.386
+  [step 6790] loss=2.3687 tok/s=17 elapsed=301263.6s
+Step 6790/19531 | Loss: 2.3687 | LR: 0.000083 | τ: 0.687 | tok/s: 11735 | entropy: 1.386
+  [step 6800] loss=2.4194 tok/s=17 elapsed=301710.3s
+Step 6800/19531 | Loss: 2.4194 | LR: 0.000083 | τ: 0.687 | tok/s: 11731 | entropy: 1.386
+  [step 6810] loss=2.2266 tok/s=17 elapsed=302153.0s
+Step 6810/19531 | Loss: 2.2266 | LR: 0.000083 | τ: 0.686 | tok/s: 11848 | entropy: 1.386
+  [step 6820] loss=2.4873 tok/s=17 elapsed=302598.2s
+Step 6820/19531 | Loss: 2.4873 | LR: 0.000082 | τ: 0.686 | tok/s: 11776 | entropy: 1.386
+  [step 6830] loss=2.6309 tok/s=17 elapsed=303042.6s
+Step 6830/19531 | Loss: 2.6309 | LR: 0.000082 | τ: 0.685 | tok/s: 11799 | entropy: 1.386
+  [step 6840] loss=2.4756 tok/s=17 elapsed=303490.0s
+Step 6840/19531 | Loss: 2.4756 | LR: 0.000082 | τ: 0.685 | tok/s: 11719 | entropy: 1.386
+  [step 6850] loss=2.1079 tok/s=17 elapsed=303936.3s
+Step 6850/19531 | Loss: 2.1079 | LR: 0.000082 | τ: 0.684 | tok/s: 11746 | entropy: 1.386
+  [step 6860] loss=2.0776 tok/s=17 elapsed=304382.6s
+Step 6860/19531 | Loss: 2.0776 | LR: 0.000082 | τ: 0.684 | tok/s: 11748 | entropy: 1.386
+  [step 6870] loss=2.2031 tok/s=17 elapsed=304824.6s
+Step 6870/19531 | Loss: 2.2031 | LR: 0.000082 | τ: 0.683 | tok/s: 11864 | entropy: 1.386
+  [step 6880] loss=2.3359 tok/s=17 elapsed=305263.5s
+Step 6880/19531 | Loss: 2.3359 | LR: 0.000082 | τ: 0.683 | tok/s: 11943 | entropy: 1.386
+  [step 6890] loss=2.1675 tok/s=17 elapsed=305734.3s
+Step 6890/19531 | Loss: 2.1675 | LR: 0.000082 | τ: 0.683 | tok/s: 11138 | entropy: 1.386
+  [step 6900] loss=2.4443 tok/s=17 elapsed=306245.1s
+Step 6900/19531 | Loss: 2.4443 | LR: 0.000082 | τ: 0.682 | tok/s: 10263 | entropy: 1.386
+  [step 6910] loss=2.1309 tok/s=17 elapsed=306686.2s
+Step 6910/19531 | Loss: 2.1309 | LR: 0.000082 | τ: 0.682 | tok/s: 11886 | entropy: 1.386
+  [step 6920] loss=2.1470 tok/s=17 elapsed=307125.4s
+Step 6920/19531 | Loss: 2.1470 | LR: 0.000082 | τ: 0.681 | tok/s: 11938 | entropy: 1.386
+  [step 6930] loss=2.1211 tok/s=17 elapsed=307563.9s
+Step 6930/19531 | Loss: 2.1211 | LR: 0.000082 | τ: 0.681 | tok/s: 11955 | entropy: 1.386
+  [step 6940] loss=2.4189 tok/s=17 elapsed=308003.5s
+Step 6940/19531 | Loss: 2.4189 | LR: 0.000082 | τ: 0.680 | tok/s: 11928 | entropy: 1.386
+  [step 6950] loss=2.2583 tok/s=17 elapsed=308445.1s
+Step 6950/19531 | Loss: 2.2583 | LR: 0.000082 | τ: 0.680 | tok/s: 11873 | entropy: 1.386
+  [step 6960] loss=2.3135 tok/s=17 elapsed=308891.2s
+Step 6960/19531 | Loss: 2.3135 | LR: 0.000082 | τ: 0.679 | tok/s: 11753 | entropy: 1.386
+  [step 6970] loss=2.2324 tok/s=17 elapsed=309336.9s
+Step 6970/19531 | Loss: 2.2324 | LR: 0.000081 | τ: 0.679 | tok/s: 11763 | entropy: 1.386
+  [step 6980] loss=2.3438 tok/s=17 elapsed=309781.4s
+Step 6980/19531 | Loss: 2.3438 | LR: 0.000081 | τ: 0.678 | tok/s: 11795 | entropy: 1.386
+  [step 6990] loss=2.2554 tok/s=17 elapsed=310219.1s
+Step 6990/19531 | Loss: 2.2554 | LR: 0.000081 | τ: 0.678 | tok/s: 11979 | entropy: 1.386
+  [step 7000] loss=2.5244 tok/s=17 elapsed=310661.6s
+Step 7000/19531 | Loss: 2.5244 | LR: 0.000081 | τ: 0.677 | tok/s: 11848 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 7000
+  [step 7010] loss=2.3311 tok/s=17 elapsed=311135.9s
+Step 7010/19531 | Loss: 2.3311 | LR: 0.000081 | τ: 0.677 | tok/s: 11054 | entropy: 1.386
+  [step 7020] loss=2.1045 tok/s=17 elapsed=311583.2s
+Step 7020/19531 | Loss: 2.1045 | LR: 0.000081 | τ: 0.677 | tok/s: 11720 | entropy: 1.386
+  [step 7030] loss=2.1099 tok/s=17 elapsed=312023.6s
+Step 7030/19531 | Loss: 2.1099 | LR: 0.000081 | τ: 0.676 | tok/s: 11906 | entropy: 1.386
+  [step 7040] loss=2.2456 tok/s=17 elapsed=312463.1s
+Step 7040/19531 | Loss: 2.2456 | LR: 0.000081 | τ: 0.676 | tok/s: 11929 | entropy: 1.386
+  [step 7050] loss=2.0845 tok/s=17 elapsed=312901.6s
+Step 7050/19531 | Loss: 2.0845 | LR: 0.000081 | τ: 0.675 | tok/s: 11957 | entropy: 1.386
+  [step 7060] loss=2.1880 tok/s=17 elapsed=313339.2s
+Step 7060/19531 | Loss: 2.1880 | LR: 0.000081 | τ: 0.675 | tok/s: 11981 | entropy: 1.386
+  [step 7070] loss=2.3491 tok/s=17 elapsed=313776.9s
+Step 7070/19531 | Loss: 2.3491 | LR: 0.000081 | τ: 0.674 | tok/s: 11979 | entropy: 1.386
+  [step 7080] loss=2.2725 tok/s=17 elapsed=314216.7s
+Step 7080/19531 | Loss: 2.2725 | LR: 0.000081 | τ: 0.674 | tok/s: 11920 | entropy: 1.386
+  [step 7090] loss=2.4258 tok/s=17 elapsed=314663.1s
+Step 7090/19531 | Loss: 2.4258 | LR: 0.000081 | τ: 0.673 | tok/s: 11745 | entropy: 1.386
+  [step 7100] loss=2.3730 tok/s=17 elapsed=315109.5s
+Step 7100/19531 | Loss: 2.3730 | LR: 0.000081 | τ: 0.673 | tok/s: 11746 | entropy: 1.386
+  [step 7110] loss=2.3818 tok/s=17 elapsed=315556.5s
+Step 7110/19531 | Loss: 2.3818 | LR: 0.000080 | τ: 0.672 | tok/s: 11730 | entropy: 1.386
+  [step 7120] loss=2.3228 tok/s=17 elapsed=316003.1s
+Step 7120/19531 | Loss: 2.3228 | LR: 0.000080 | τ: 0.672 | tok/s: 11739 | entropy: 1.386
+  [step 7130] loss=2.2119 tok/s=17 elapsed=316441.7s
+Step 7130/19531 | Loss: 2.2119 | LR: 0.000080 | τ: 0.671 | tok/s: 11953 | entropy: 1.386
+  [step 7140] loss=2.0386 tok/s=17 elapsed=316879.8s
+Step 7140/19531 | Loss: 2.0386 | LR: 0.000080 | τ: 0.671 | tok/s: 11968 | entropy: 1.386
+  [step 7150] loss=2.1753 tok/s=17 elapsed=317318.4s
+Step 7150/19531 | Loss: 2.1753 | LR: 0.000080 | τ: 0.671 | tok/s: 11955 | entropy: 1.386
+  [step 7160] loss=2.5923 tok/s=16 elapsed=317762.5s
+Step 7160/19531 | Loss: 2.5923 | LR: 0.000080 | τ: 0.670 | tok/s: 11806 | entropy: 1.386
+  [step 7170] loss=1.9756 tok/s=16 elapsed=318209.7s
+Step 7170/19531 | Loss: 1.9756 | LR: 0.000080 | τ: 0.670 | tok/s: 11723 | entropy: 1.386
+  [step 7180] loss=2.4434 tok/s=16 elapsed=318656.4s
+Step 7180/19531 | Loss: 2.4434 | LR: 0.000080 | τ: 0.669 | tok/s: 11736 | entropy: 1.386
+  [step 7190] loss=2.2910 tok/s=16 elapsed=319097.9s
+Step 7190/19531 | Loss: 2.2910 | LR: 0.000080 | τ: 0.669 | tok/s: 11877 | entropy: 1.386
+  [step 7200] loss=2.3042 tok/s=16 elapsed=319536.9s
+Step 7200/19531 | Loss: 2.3042 | LR: 0.000080 | τ: 0.668 | tok/s: 11941 | entropy: 1.386
+  [step 7210] loss=2.1973 tok/s=16 elapsed=319978.0s
+Step 7210/19531 | Loss: 2.1973 | LR: 0.000080 | τ: 0.668 | tok/s: 11888 | entropy: 1.386
+  [step 7220] loss=2.4824 tok/s=16 elapsed=320423.5s
+Step 7220/19531 | Loss: 2.4824 | LR: 0.000080 | τ: 0.667 | tok/s: 11768 | entropy: 1.386
+  [step 7230] loss=2.1279 tok/s=16 elapsed=320869.8s
+Step 7230/19531 | Loss: 2.1279 | LR: 0.000080 | τ: 0.667 | tok/s: 11747 | entropy: 1.386
+  [step 7240] loss=2.3906 tok/s=16 elapsed=321315.7s
+Step 7240/19531 | Loss: 2.3906 | LR: 0.000080 | τ: 0.666 | tok/s: 11757 | entropy: 1.386
+  [step 7250] loss=2.4771 tok/s=16 elapsed=321754.7s
+Step 7250/19531 | Loss: 2.4771 | LR: 0.000079 | τ: 0.666 | tok/s: 11944 | entropy: 1.386
+  [step 7260] loss=2.5190 tok/s=16 elapsed=322197.5s
+Step 7260/19531 | Loss: 2.5190 | LR: 0.000079 | τ: 0.666 | tok/s: 11841 | entropy: 1.386
+  [step 7270] loss=2.1152 tok/s=16 elapsed=322638.8s
+Step 7270/19531 | Loss: 2.1152 | LR: 0.000079 | τ: 0.665 | tok/s: 11881 | entropy: 1.386
+  [step 7280] loss=2.1826 tok/s=16 elapsed=323078.0s
+Step 7280/19531 | Loss: 2.1826 | LR: 0.000079 | τ: 0.665 | tok/s: 11936 | entropy: 1.386
+  [step 7290] loss=2.2354 tok/s=16 elapsed=323519.1s
+Step 7290/19531 | Loss: 2.2354 | LR: 0.000079 | τ: 0.664 | tok/s: 11888 | entropy: 1.386
+  [step 7300] loss=2.4707 tok/s=16 elapsed=323966.0s
+Step 7300/19531 | Loss: 2.4707 | LR: 0.000079 | τ: 0.664 | tok/s: 11732 | entropy: 1.386
+  [step 7310] loss=2.6709 tok/s=16 elapsed=324412.6s
+Step 7310/19531 | Loss: 2.6709 | LR: 0.000079 | τ: 0.663 | tok/s: 11740 | entropy: 1.386
+  [step 7320] loss=2.2075 tok/s=16 elapsed=324859.4s
+Step 7320/19531 | Loss: 2.2075 | LR: 0.000079 | τ: 0.663 | tok/s: 11733 | entropy: 1.386
+  [step 7330] loss=2.2095 tok/s=16 elapsed=325299.3s
+Step 7330/19531 | Loss: 2.2095 | LR: 0.000079 | τ: 0.662 | tok/s: 11919 | entropy: 1.386
+  [step 7340] loss=2.3018 tok/s=16 elapsed=325745.1s
+Step 7340/19531 | Loss: 2.3018 | LR: 0.000079 | τ: 0.662 | tok/s: 11762 | entropy: 1.386
+  [step 7350] loss=2.3916 tok/s=16 elapsed=326191.7s
+Step 7350/19531 | Loss: 2.3916 | LR: 0.000079 | τ: 0.661 | tok/s: 11740 | entropy: 1.386
+  [step 7360] loss=2.1636 tok/s=16 elapsed=326637.7s
+Step 7360/19531 | Loss: 2.1636 | LR: 0.000079 | τ: 0.661 | tok/s: 11755 | entropy: 1.386
+  [step 7370] loss=2.0327 tok/s=16 elapsed=327082.8s
+Step 7370/19531 | Loss: 2.0327 | LR: 0.000079 | τ: 0.660 | tok/s: 11780 | entropy: 1.386
+  [step 7380] loss=2.2407 tok/s=16 elapsed=327528.4s
+Step 7380/19531 | Loss: 2.2407 | LR: 0.000079 | τ: 0.660 | tok/s: 11766 | entropy: 1.386
+  [step 7390] loss=2.4800 tok/s=16 elapsed=327974.1s
+Step 7390/19531 | Loss: 2.4800 | LR: 0.000078 | τ: 0.660 | tok/s: 11762 | entropy: 1.386
+  [step 7400] loss=2.3149 tok/s=16 elapsed=328420.9s
+Step 7400/19531 | Loss: 2.3149 | LR: 0.000078 | τ: 0.659 | tok/s: 11735 | entropy: 1.386
+  [step 7410] loss=2.4751 tok/s=16 elapsed=328868.0s
+Step 7410/19531 | Loss: 2.4751 | LR: 0.000078 | τ: 0.659 | tok/s: 11726 | entropy: 1.386
+  [step 7420] loss=2.1641 tok/s=16 elapsed=329319.4s
+Step 7420/19531 | Loss: 2.1641 | LR: 0.000078 | τ: 0.658 | tok/s: 11614 | entropy: 1.386
+  [step 7430] loss=2.2456 tok/s=16 elapsed=329758.9s
+Step 7430/19531 | Loss: 2.2456 | LR: 0.000078 | τ: 0.658 | tok/s: 11931 | entropy: 1.386
+  [step 7440] loss=2.1733 tok/s=16 elapsed=330204.0s
+Step 7440/19531 | Loss: 2.1733 | LR: 0.000078 | τ: 0.657 | tok/s: 11779 | entropy: 1.386
+  [step 7450] loss=2.2095 tok/s=16 elapsed=330650.0s
+Step 7450/19531 | Loss: 2.2095 | LR: 0.000078 | τ: 0.657 | tok/s: 11757 | entropy: 1.386
+  [step 7460] loss=2.5371 tok/s=16 elapsed=331097.1s
+Step 7460/19531 | Loss: 2.5371 | LR: 0.000078 | τ: 0.656 | tok/s: 11724 | entropy: 1.386
+  [step 7470] loss=2.3110 tok/s=16 elapsed=331543.1s
+Step 7470/19531 | Loss: 2.3110 | LR: 0.000078 | τ: 0.656 | tok/s: 11756 | entropy: 1.386
+  [step 7480] loss=2.2910 tok/s=16 elapsed=331989.2s
+Step 7480/19531 | Loss: 2.2910 | LR: 0.000078 | τ: 0.655 | tok/s: 11754 | entropy: 1.386
+  [step 7490] loss=2.2085 tok/s=16 elapsed=332427.7s
+Step 7490/19531 | Loss: 2.2085 | LR: 0.000078 | τ: 0.655 | tok/s: 11955 | entropy: 1.386
+  [step 7500] loss=2.1104 tok/s=16 elapsed=332866.6s
+Step 7500/19531 | Loss: 2.1104 | LR: 0.000078 | τ: 0.654 | tok/s: 11946 | entropy: 1.386
+  [step 7510] loss=2.2500 tok/s=16 elapsed=333305.6s
+Step 7510/19531 | Loss: 2.2500 | LR: 0.000078 | τ: 0.654 | tok/s: 11943 | entropy: 1.386
+  [step 7520] loss=2.2998 tok/s=16 elapsed=333749.3s
+Step 7520/19531 | Loss: 2.2998 | LR: 0.000077 | τ: 0.654 | tok/s: 11816 | entropy: 1.386
+  [step 7530] loss=2.4116 tok/s=16 elapsed=334195.2s
+Step 7530/19531 | Loss: 2.4116 | LR: 0.000077 | τ: 0.653 | tok/s: 11758 | entropy: 1.386
+  [step 7540] loss=2.3857 tok/s=16 elapsed=334642.0s
+Step 7540/19531 | Loss: 2.3857 | LR: 0.000077 | τ: 0.653 | tok/s: 11736 | entropy: 1.386
+  [step 7550] loss=2.2041 tok/s=16 elapsed=335084.5s
+Step 7550/19531 | Loss: 2.2041 | LR: 0.000077 | τ: 0.652 | tok/s: 11848 | entropy: 1.386
+  [step 7560] loss=2.0332 tok/s=16 elapsed=335527.3s
+Step 7560/19531 | Loss: 2.0332 | LR: 0.000077 | τ: 0.652 | tok/s: 11840 | entropy: 1.386
+  [step 7570] loss=2.1436 tok/s=16 elapsed=335965.9s
+Step 7570/19531 | Loss: 2.1436 | LR: 0.000077 | τ: 0.651 | tok/s: 11955 | entropy: 1.386
+  [step 7580] loss=2.1714 tok/s=16 elapsed=336404.6s
+Step 7580/19531 | Loss: 2.1714 | LR: 0.000077 | τ: 0.651 | tok/s: 11950 | entropy: 1.386
+  [step 7590] loss=2.2490 tok/s=16 elapsed=336842.5s
+Step 7590/19531 | Loss: 2.2490 | LR: 0.000077 | τ: 0.650 | tok/s: 11972 | entropy: 1.386
+  [step 7600] loss=1.9570 tok/s=16 elapsed=337281.2s
+Step 7600/19531 | Loss: 1.9570 | LR: 0.000077 | τ: 0.650 | tok/s: 11953 | entropy: 1.386
+  [step 7610] loss=2.1343 tok/s=16 elapsed=337719.3s
+Step 7610/19531 | Loss: 2.1343 | LR: 0.000077 | τ: 0.649 | tok/s: 11967 | entropy: 1.386
+  [step 7620] loss=2.1851 tok/s=16 elapsed=338160.4s
+Step 7620/19531 | Loss: 2.1851 | LR: 0.000077 | τ: 0.649 | tok/s: 11886 | entropy: 1.386
+  [step 7630] loss=2.5059 tok/s=15 elapsed=338606.8s
+Step 7630/19531 | Loss: 2.5059 | LR: 0.000077 | τ: 0.648 | tok/s: 11745 | entropy: 1.386
+  [step 7640] loss=2.5996 tok/s=15 elapsed=339052.6s
+Step 7640/19531 | Loss: 2.5996 | LR: 0.000077 | τ: 0.648 | tok/s: 11761 | entropy: 1.386
+  [step 7650] loss=2.3110 tok/s=15 elapsed=339493.9s
+Step 7650/19531 | Loss: 2.3110 | LR: 0.000076 | τ: 0.648 | tok/s: 11882 | entropy: 1.386
+  [step 7660] loss=2.2173 tok/s=15 elapsed=339932.8s
+Step 7660/19531 | Loss: 2.2173 | LR: 0.000076 | τ: 0.647 | tok/s: 11943 | entropy: 1.386
+  [step 7670] loss=2.2925 tok/s=15 elapsed=340372.9s
+Step 7670/19531 | Loss: 2.2925 | LR: 0.000076 | τ: 0.647 | tok/s: 11913 | entropy: 1.386
+  [step 7680] loss=2.2524 tok/s=15 elapsed=340819.4s
+Step 7680/19531 | Loss: 2.2524 | LR: 0.000076 | τ: 0.646 | tok/s: 11744 | entropy: 1.386
+  [step 7690] loss=2.3110 tok/s=15 elapsed=341265.5s
+Step 7690/19531 | Loss: 2.3110 | LR: 0.000076 | τ: 0.646 | tok/s: 11751 | entropy: 1.386
+  [step 7700] loss=2.3438 tok/s=15 elapsed=341709.2s
+Step 7700/19531 | Loss: 2.3438 | LR: 0.000076 | τ: 0.645 | tok/s: 11817 | entropy: 1.386
+  [step 7710] loss=2.1465 tok/s=15 elapsed=342155.8s
+Step 7710/19531 | Loss: 2.1465 | LR: 0.000076 | τ: 0.645 | tok/s: 11742 | entropy: 1.386
+  [step 7720] loss=2.0586 tok/s=15 elapsed=342603.0s
+Step 7720/19531 | Loss: 2.0586 | LR: 0.000076 | τ: 0.644 | tok/s: 11722 | entropy: 1.386
+  [step 7730] loss=2.3706 tok/s=15 elapsed=343049.9s
+Step 7730/19531 | Loss: 2.3706 | LR: 0.000076 | τ: 0.644 | tok/s: 11734 | entropy: 1.386
+  [step 7740] loss=2.4102 tok/s=15 elapsed=343496.8s
+Step 7740/19531 | Loss: 2.4102 | LR: 0.000076 | τ: 0.643 | tok/s: 11731 | entropy: 1.386
+  [step 7750] loss=2.3154 tok/s=15 elapsed=343944.0s
+Step 7750/19531 | Loss: 2.3154 | LR: 0.000076 | τ: 0.643 | tok/s: 11724 | entropy: 1.386
+  [step 7760] loss=1.9912 tok/s=15 elapsed=344386.3s
+Step 7760/19531 | Loss: 1.9912 | LR: 0.000076 | τ: 0.642 | tok/s: 11853 | entropy: 1.386
+  [step 7770] loss=2.2314 tok/s=15 elapsed=344830.1s
+Step 7770/19531 | Loss: 2.2314 | LR: 0.000076 | τ: 0.642 | tok/s: 11812 | entropy: 1.386
+  [step 7780] loss=2.2168 tok/s=15 elapsed=345276.3s
+Step 7780/19531 | Loss: 2.2168 | LR: 0.000075 | τ: 0.642 | tok/s: 11752 | entropy: 1.386
+  [step 7790] loss=2.3589 tok/s=15 elapsed=345723.1s
+Step 7790/19531 | Loss: 2.3589 | LR: 0.000075 | τ: 0.641 | tok/s: 11735 | entropy: 1.386
+  [step 7800] loss=2.3179 tok/s=15 elapsed=346169.4s
+Step 7800/19531 | Loss: 2.3179 | LR: 0.000075 | τ: 0.641 | tok/s: 11746 | entropy: 1.386
+  [step 7810] loss=2.1011 tok/s=15 elapsed=346616.0s
+Step 7810/19531 | Loss: 2.1011 | LR: 0.000075 | τ: 0.640 | tok/s: 11741 | entropy: 1.386
+  [step 7820] loss=2.3184 tok/s=15 elapsed=347062.7s
+Step 7820/19531 | Loss: 2.3184 | LR: 0.000075 | τ: 0.640 | tok/s: 11736 | entropy: 1.386
+  [step 7830] loss=2.2671 tok/s=15 elapsed=347508.7s
+Step 7830/19531 | Loss: 2.2671 | LR: 0.000075 | τ: 0.639 | tok/s: 11754 | entropy: 1.386
+  [step 7840] loss=2.2285 tok/s=15 elapsed=347948.2s
+Step 7840/19531 | Loss: 2.2285 | LR: 0.000075 | τ: 0.639 | tok/s: 11931 | entropy: 1.386
+  [step 7850] loss=2.1587 tok/s=15 elapsed=348387.0s
+Step 7850/19531 | Loss: 2.1587 | LR: 0.000075 | τ: 0.638 | tok/s: 11948 | entropy: 1.386
+  [step 7860] loss=2.1567 tok/s=15 elapsed=348826.0s
+Step 7860/19531 | Loss: 2.1567 | LR: 0.000075 | τ: 0.638 | tok/s: 11942 | entropy: 1.386
+  [step 7870] loss=2.1743 tok/s=15 elapsed=349265.1s
+Step 7870/19531 | Loss: 2.1743 | LR: 0.000075 | τ: 0.637 | tok/s: 11941 | entropy: 1.386
+  [step 7880] loss=2.0757 tok/s=15 elapsed=349711.4s
+Step 7880/19531 | Loss: 2.0757 | LR: 0.000075 | τ: 0.637 | tok/s: 11748 | entropy: 1.386
+  [step 7890] loss=2.3008 tok/s=15 elapsed=350151.5s
+Step 7890/19531 | Loss: 2.3008 | LR: 0.000075 | τ: 0.636 | tok/s: 11912 | entropy: 1.386
+  [step 7900] loss=2.0845 tok/s=15 elapsed=350598.4s
+Step 7900/19531 | Loss: 2.0845 | LR: 0.000075 | τ: 0.636 | tok/s: 11734 | entropy: 1.386
+  [step 7910] loss=2.2036 tok/s=15 elapsed=351045.2s
+Step 7910/19531 | Loss: 2.2036 | LR: 0.000074 | τ: 0.636 | tok/s: 11735 | entropy: 1.386
+  [step 7920] loss=2.1626 tok/s=15 elapsed=351492.1s
+Step 7920/19531 | Loss: 2.1626 | LR: 0.000074 | τ: 0.635 | tok/s: 11731 | entropy: 1.386
+  [step 7930] loss=2.2339 tok/s=15 elapsed=351939.7s
+Step 7930/19531 | Loss: 2.2339 | LR: 0.000074 | τ: 0.635 | tok/s: 11714 | entropy: 1.386
+  [step 7940] loss=2.2188 tok/s=15 elapsed=352386.4s
+Step 7940/19531 | Loss: 2.2188 | LR: 0.000074 | τ: 0.634 | tok/s: 11735 | entropy: 1.386
+  [step 7950] loss=2.4258 tok/s=15 elapsed=352834.0s
+Step 7950/19531 | Loss: 2.4258 | LR: 0.000074 | τ: 0.634 | tok/s: 11714 | entropy: 1.386
+  [step 7960] loss=2.3511 tok/s=15 elapsed=353281.8s
+Step 7960/19531 | Loss: 2.3511 | LR: 0.000074 | τ: 0.633 | tok/s: 11708 | entropy: 1.386
+  [step 7970] loss=2.1885 tok/s=15 elapsed=353729.1s
+Step 7970/19531 | Loss: 2.1885 | LR: 0.000074 | τ: 0.633 | tok/s: 11723 | entropy: 1.386
+  [step 7980] loss=2.1045 tok/s=15 elapsed=354175.8s
+Step 7980/19531 | Loss: 2.1045 | LR: 0.000074 | τ: 0.632 | tok/s: 11735 | entropy: 1.386
+  [step 7990] loss=2.1177 tok/s=15 elapsed=354622.8s
+Step 7990/19531 | Loss: 2.1177 | LR: 0.000074 | τ: 0.632 | tok/s: 11731 | entropy: 1.386
+  [step 8000] loss=2.1504 tok/s=15 elapsed=355070.2s
+Step 8000/19531 | Loss: 2.1504 | LR: 0.000074 | τ: 0.631 | tok/s: 11717 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 8000
+  [step 8010] loss=2.0840 tok/s=15 elapsed=355545.9s
+Step 8010/19531 | Loss: 2.0840 | LR: 0.000074 | τ: 0.631 | tok/s: 11022 | entropy: 1.386
+  [step 8020] loss=2.2437 tok/s=15 elapsed=355992.1s
+Step 8020/19531 | Loss: 2.2437 | LR: 0.000074 | τ: 0.630 | tok/s: 11750 | entropy: 1.386
+  [step 8030] loss=2.2686 tok/s=15 elapsed=356438.5s
+Step 8030/19531 | Loss: 2.2686 | LR: 0.000074 | τ: 0.630 | tok/s: 11744 | entropy: 1.386
+  [step 8040] loss=2.0820 tok/s=15 elapsed=356883.6s
+Step 8040/19531 | Loss: 2.0820 | LR: 0.000073 | τ: 0.630 | tok/s: 11782 | entropy: 1.386
+  [step 8050] loss=2.0342 tok/s=15 elapsed=357323.0s
+Step 8050/19531 | Loss: 2.0342 | LR: 0.000073 | τ: 0.629 | tok/s: 11930 | entropy: 1.386
+  [step 8060] loss=2.1270 tok/s=15 elapsed=357762.5s
+Step 8060/19531 | Loss: 2.1270 | LR: 0.000073 | τ: 0.629 | tok/s: 11924 | entropy: 1.386
+  [step 8070] loss=2.3330 tok/s=15 elapsed=358207.0s
+Step 8070/19531 | Loss: 2.3330 | LR: 0.000073 | τ: 0.628 | tok/s: 11801 | entropy: 1.386
+  [step 8080] loss=2.0537 tok/s=15 elapsed=358653.6s
+Step 8080/19531 | Loss: 2.0537 | LR: 0.000073 | τ: 0.628 | tok/s: 11740 | entropy: 1.386
+  [step 8090] loss=2.2017 tok/s=15 elapsed=359099.8s
+Step 8090/19531 | Loss: 2.2017 | LR: 0.000073 | τ: 0.627 | tok/s: 11749 | entropy: 1.386
+  [step 8100] loss=2.1597 tok/s=15 elapsed=359543.6s
+Step 8100/19531 | Loss: 2.1597 | LR: 0.000073 | τ: 0.627 | tok/s: 11816 | entropy: 1.386
+  [step 8110] loss=2.1338 tok/s=15 elapsed=359982.3s
+Step 8110/19531 | Loss: 2.1338 | LR: 0.000073 | τ: 0.626 | tok/s: 11950 | entropy: 1.386
+  [step 8120] loss=2.1572 tok/s=15 elapsed=360421.4s
+Step 8120/19531 | Loss: 2.1572 | LR: 0.000073 | τ: 0.626 | tok/s: 11940 | entropy: 1.386
+  [step 8130] loss=2.0088 tok/s=15 elapsed=360860.8s
+Step 8130/19531 | Loss: 2.0088 | LR: 0.000073 | τ: 0.625 | tok/s: 11933 | entropy: 1.386
+  [step 8140] loss=2.0425 tok/s=15 elapsed=361299.9s
+Step 8140/19531 | Loss: 2.0425 | LR: 0.000073 | τ: 0.625 | tok/s: 11940 | entropy: 1.386
+  [step 8150] loss=2.1953 tok/s=14 elapsed=361742.7s
+Step 8150/19531 | Loss: 2.1953 | LR: 0.000073 | τ: 0.624 | tok/s: 11841 | entropy: 1.386
+  [step 8160] loss=2.1421 tok/s=14 elapsed=362189.4s
+Step 8160/19531 | Loss: 2.1421 | LR: 0.000073 | τ: 0.624 | tok/s: 11736 | entropy: 1.386
+  [step 8170] loss=2.1006 tok/s=14 elapsed=362636.4s
+Step 8170/19531 | Loss: 2.1006 | LR: 0.000072 | τ: 0.624 | tok/s: 11730 | entropy: 1.386
+  [step 8180] loss=2.1870 tok/s=14 elapsed=363078.5s
+Step 8180/19531 | Loss: 2.1870 | LR: 0.000072 | τ: 0.623 | tok/s: 11858 | entropy: 1.386
+  [step 8190] loss=2.1313 tok/s=14 elapsed=363525.1s
+Step 8190/19531 | Loss: 2.1313 | LR: 0.000072 | τ: 0.623 | tok/s: 11739 | entropy: 1.386
+  [step 8200] loss=2.0356 tok/s=14 elapsed=363971.1s
+Step 8200/19531 | Loss: 2.0356 | LR: 0.000072 | τ: 0.622 | tok/s: 11756 | entropy: 1.386
+  [step 8210] loss=2.1284 tok/s=14 elapsed=364417.3s
+Step 8210/19531 | Loss: 2.1284 | LR: 0.000072 | τ: 0.622 | tok/s: 11751 | entropy: 1.386
+  [step 8220] loss=2.1304 tok/s=14 elapsed=364862.1s
+Step 8220/19531 | Loss: 2.1304 | LR: 0.000072 | τ: 0.621 | tok/s: 11786 | entropy: 1.386
+  [step 8230] loss=2.1958 tok/s=14 elapsed=365306.6s
+Step 8230/19531 | Loss: 2.1958 | LR: 0.000072 | τ: 0.621 | tok/s: 11795 | entropy: 1.386
+  [step 8240] loss=2.1680 tok/s=14 elapsed=365752.8s
+Step 8240/19531 | Loss: 2.1680 | LR: 0.000072 | τ: 0.620 | tok/s: 11751 | entropy: 1.386
+  [step 8250] loss=2.0684 tok/s=14 elapsed=366199.2s
+Step 8250/19531 | Loss: 2.0684 | LR: 0.000072 | τ: 0.620 | tok/s: 11745 | entropy: 1.386
+  [step 8260] loss=1.9951 tok/s=14 elapsed=366641.1s
+Step 8260/19531 | Loss: 1.9951 | LR: 0.000072 | τ: 0.619 | tok/s: 11865 | entropy: 1.386
+  [step 8270] loss=1.9585 tok/s=14 elapsed=367079.7s
+Step 8270/19531 | Loss: 1.9585 | LR: 0.000072 | τ: 0.619 | tok/s: 11953 | entropy: 1.386
+  [step 8280] loss=2.2036 tok/s=14 elapsed=367518.4s
+Step 8280/19531 | Loss: 2.2036 | LR: 0.000072 | τ: 0.618 | tok/s: 11950 | entropy: 1.386
+  [step 8290] loss=2.1123 tok/s=14 elapsed=367958.4s
+Step 8290/19531 | Loss: 2.1123 | LR: 0.000071 | τ: 0.618 | tok/s: 11916 | entropy: 1.386
+  [step 8300] loss=2.4990 tok/s=14 elapsed=368405.1s
+Step 8300/19531 | Loss: 2.4990 | LR: 0.000071 | τ: 0.618 | tok/s: 11738 | entropy: 1.386
+  [step 8310] loss=2.3403 tok/s=14 elapsed=368851.1s
+Step 8310/19531 | Loss: 2.3403 | LR: 0.000071 | τ: 0.617 | tok/s: 11755 | entropy: 1.386
+  [step 8320] loss=2.6069 tok/s=14 elapsed=369297.8s
+Step 8320/19531 | Loss: 2.6069 | LR: 0.000071 | τ: 0.617 | tok/s: 11736 | entropy: 1.386
+  [step 8330] loss=2.3105 tok/s=14 elapsed=369744.1s
+Step 8330/19531 | Loss: 2.3105 | LR: 0.000071 | τ: 0.616 | tok/s: 11748 | entropy: 1.386
+  [step 8340] loss=2.2456 tok/s=14 elapsed=370189.9s
+Step 8340/19531 | Loss: 2.2456 | LR: 0.000071 | τ: 0.616 | tok/s: 11760 | entropy: 1.386
+  [step 8350] loss=2.3584 tok/s=14 elapsed=370628.6s
+Step 8350/19531 | Loss: 2.3584 | LR: 0.000071 | τ: 0.615 | tok/s: 11951 | entropy: 1.386
+  [step 8360] loss=2.1265 tok/s=14 elapsed=371066.0s
+Step 8360/19531 | Loss: 2.1265 | LR: 0.000071 | τ: 0.615 | tok/s: 11986 | entropy: 1.386
+  [step 8370] loss=2.0996 tok/s=14 elapsed=371504.7s
+Step 8370/19531 | Loss: 2.0996 | LR: 0.000071 | τ: 0.614 | tok/s: 11952 | entropy: 1.386
+  [step 8380] loss=2.1006 tok/s=14 elapsed=371945.9s
+Step 8380/19531 | Loss: 2.1006 | LR: 0.000071 | τ: 0.614 | tok/s: 11883 | entropy: 1.386
+  [step 8390] loss=2.1899 tok/s=14 elapsed=372392.7s
+Step 8390/19531 | Loss: 2.1899 | LR: 0.000071 | τ: 0.613 | tok/s: 11733 | entropy: 1.386
+  [step 8400] loss=2.2158 tok/s=14 elapsed=372832.7s
+Step 8400/19531 | Loss: 2.2158 | LR: 0.000071 | τ: 0.613 | tok/s: 11917 | entropy: 1.386
+  [step 8410] loss=2.2402 tok/s=14 elapsed=373272.3s
+Step 8410/19531 | Loss: 2.2402 | LR: 0.000070 | τ: 0.613 | tok/s: 11927 | entropy: 1.386
+  [step 8420] loss=2.2261 tok/s=14 elapsed=373714.1s
+Step 8420/19531 | Loss: 2.2261 | LR: 0.000070 | τ: 0.612 | tok/s: 11866 | entropy: 1.386
+  [step 8430] loss=2.0806 tok/s=14 elapsed=374159.2s
+Step 8430/19531 | Loss: 2.0806 | LR: 0.000070 | τ: 0.612 | tok/s: 11779 | entropy: 1.386
+  [step 8440] loss=2.0054 tok/s=14 elapsed=374597.4s
+Step 8440/19531 | Loss: 2.0054 | LR: 0.000070 | τ: 0.611 | tok/s: 11964 | entropy: 1.386
+  [step 8450] loss=2.2173 tok/s=14 elapsed=375042.9s
+Step 8450/19531 | Loss: 2.2173 | LR: 0.000070 | τ: 0.611 | tok/s: 11769 | entropy: 1.386
+  [step 8460] loss=2.2061 tok/s=14 elapsed=375481.7s
+Step 8460/19531 | Loss: 2.2061 | LR: 0.000070 | τ: 0.610 | tok/s: 11947 | entropy: 1.386
+  [step 8470] loss=1.9360 tok/s=14 elapsed=375919.8s
+Step 8470/19531 | Loss: 1.9360 | LR: 0.000070 | τ: 0.610 | tok/s: 11968 | entropy: 1.386
+  [step 8480] loss=2.2329 tok/s=14 elapsed=376361.2s
+Step 8480/19531 | Loss: 2.2329 | LR: 0.000070 | τ: 0.609 | tok/s: 11877 | entropy: 1.386
+  [step 8490] loss=2.1489 tok/s=14 elapsed=376808.3s
+Step 8490/19531 | Loss: 2.1489 | LR: 0.000070 | τ: 0.609 | tok/s: 11727 | entropy: 1.386
+  [step 8500] loss=2.1064 tok/s=14 elapsed=377255.2s
+Step 8500/19531 | Loss: 2.1064 | LR: 0.000070 | τ: 0.608 | tok/s: 11733 | entropy: 1.386
+  [step 8510] loss=2.0288 tok/s=14 elapsed=377693.9s
+Step 8510/19531 | Loss: 2.0288 | LR: 0.000070 | τ: 0.608 | tok/s: 11950 | entropy: 1.386
+  [step 8520] loss=2.3760 tok/s=14 elapsed=378134.3s
+Step 8520/19531 | Loss: 2.3760 | LR: 0.000070 | τ: 0.607 | tok/s: 11905 | entropy: 1.386
+  [step 8530] loss=2.2124 tok/s=14 elapsed=378580.2s
+Step 8530/19531 | Loss: 2.2124 | LR: 0.000069 | τ: 0.607 | tok/s: 11759 | entropy: 1.386
+  [step 8540] loss=2.2109 tok/s=14 elapsed=379027.1s
+Step 8540/19531 | Loss: 2.2109 | LR: 0.000069 | τ: 0.607 | tok/s: 11730 | entropy: 1.386
+  [step 8550] loss=2.2456 tok/s=14 elapsed=379467.8s
+Step 8550/19531 | Loss: 2.2456 | LR: 0.000069 | τ: 0.606 | tok/s: 11898 | entropy: 1.386
+  [step 8560] loss=2.2329 tok/s=14 elapsed=379914.2s
+Step 8560/19531 | Loss: 2.2329 | LR: 0.000069 | τ: 0.606 | tok/s: 11744 | entropy: 1.386
+  [step 8570] loss=2.3408 tok/s=14 elapsed=380360.4s
+Step 8570/19531 | Loss: 2.3408 | LR: 0.000069 | τ: 0.605 | tok/s: 11751 | entropy: 1.386
+  [step 8580] loss=2.1655 tok/s=14 elapsed=380806.7s
+Step 8580/19531 | Loss: 2.1655 | LR: 0.000069 | τ: 0.605 | tok/s: 11748 | entropy: 1.386
+  [step 8590] loss=2.2495 tok/s=14 elapsed=381253.6s
+Step 8590/19531 | Loss: 2.2495 | LR: 0.000069 | τ: 0.604 | tok/s: 11730 | entropy: 1.386
+  [step 8600] loss=2.2554 tok/s=14 elapsed=381702.0s
+Step 8600/19531 | Loss: 2.2554 | LR: 0.000069 | τ: 0.604 | tok/s: 11694 | entropy: 1.386
+  [step 8610] loss=2.2441 tok/s=14 elapsed=382149.2s
+Step 8610/19531 | Loss: 2.2441 | LR: 0.000069 | τ: 0.603 | tok/s: 11724 | entropy: 1.386
+  [step 8620] loss=2.1494 tok/s=14 elapsed=382595.9s
+Step 8620/19531 | Loss: 2.1494 | LR: 0.000069 | τ: 0.603 | tok/s: 11735 | entropy: 1.386
+  [step 8630] loss=2.2617 tok/s=14 elapsed=383041.6s
+Step 8630/19531 | Loss: 2.2617 | LR: 0.000069 | τ: 0.602 | tok/s: 11764 | entropy: 1.386
+  [step 8640] loss=2.1611 tok/s=14 elapsed=383487.5s
+Step 8640/19531 | Loss: 2.1611 | LR: 0.000069 | τ: 0.602 | tok/s: 11758 | entropy: 1.386
+  [step 8650] loss=2.3164 tok/s=14 elapsed=383933.9s
+Step 8650/19531 | Loss: 2.3164 | LR: 0.000069 | τ: 0.601 | tok/s: 11744 | entropy: 1.386
+  [step 8660] loss=2.2578 tok/s=14 elapsed=384380.7s
+Step 8660/19531 | Loss: 2.2578 | LR: 0.000068 | τ: 0.601 | tok/s: 11737 | entropy: 1.386
+  [step 8670] loss=2.5259 tok/s=14 elapsed=384827.3s
+Step 8670/19531 | Loss: 2.5259 | LR: 0.000068 | τ: 0.601 | tok/s: 11738 | entropy: 1.386
+  [step 8680] loss=2.4395 tok/s=14 elapsed=385274.1s
+Step 8680/19531 | Loss: 2.4395 | LR: 0.000068 | τ: 0.600 | tok/s: 11736 | entropy: 1.386
+  [step 8690] loss=2.1455 tok/s=14 elapsed=385715.8s
+Step 8690/19531 | Loss: 2.1455 | LR: 0.000068 | τ: 0.600 | tok/s: 11869 | entropy: 1.386
+  [step 8700] loss=2.4053 tok/s=14 elapsed=386158.7s
+Step 8700/19531 | Loss: 2.4053 | LR: 0.000068 | τ: 0.599 | tok/s: 11838 | entropy: 1.386
+  [step 8710] loss=2.4219 tok/s=14 elapsed=386607.6s
+Step 8710/19531 | Loss: 2.4219 | LR: 0.000068 | τ: 0.599 | tok/s: 11679 | entropy: 1.386
+  [step 8720] loss=2.3311 tok/s=14 elapsed=387054.4s
+Step 8720/19531 | Loss: 2.3311 | LR: 0.000068 | τ: 0.598 | tok/s: 11733 | entropy: 1.386
+  [step 8730] loss=2.2598 tok/s=14 elapsed=387501.2s
+Step 8730/19531 | Loss: 2.2598 | LR: 0.000068 | τ: 0.598 | tok/s: 11736 | entropy: 1.386
+  [step 8740] loss=2.2939 tok/s=14 elapsed=387947.7s
+Step 8740/19531 | Loss: 2.2939 | LR: 0.000068 | τ: 0.597 | tok/s: 11741 | entropy: 1.386
+  [step 8750] loss=2.4033 tok/s=13 elapsed=388389.1s
+Step 8750/19531 | Loss: 2.4033 | LR: 0.000068 | τ: 0.597 | tok/s: 11879 | entropy: 1.386
+  [step 8760] loss=2.3975 tok/s=13 elapsed=388830.5s
+Step 8760/19531 | Loss: 2.3975 | LR: 0.000068 | τ: 0.596 | tok/s: 11878 | entropy: 1.386
+  [step 8770] loss=2.3975 tok/s=13 elapsed=389277.5s
+Step 8770/19531 | Loss: 2.3975 | LR: 0.000068 | τ: 0.596 | tok/s: 11728 | entropy: 1.386
+  [step 8780] loss=2.4883 tok/s=13 elapsed=389724.1s
+Step 8780/19531 | Loss: 2.4883 | LR: 0.000067 | τ: 0.595 | tok/s: 11741 | entropy: 1.386
+  [step 8790] loss=2.2886 tok/s=13 elapsed=390170.8s
+Step 8790/19531 | Loss: 2.2886 | LR: 0.000067 | τ: 0.595 | tok/s: 11736 | entropy: 1.386
+  [step 8800] loss=2.2979 tok/s=13 elapsed=390617.5s
+Step 8800/19531 | Loss: 2.2979 | LR: 0.000067 | τ: 0.595 | tok/s: 11739 | entropy: 1.386
+  [step 8810] loss=2.3193 tok/s=13 elapsed=391060.1s
+Step 8810/19531 | Loss: 2.3193 | LR: 0.000067 | τ: 0.594 | tok/s: 11846 | entropy: 1.386
+  [step 8820] loss=2.2271 tok/s=13 elapsed=391499.0s
+Step 8820/19531 | Loss: 2.2271 | LR: 0.000067 | τ: 0.594 | tok/s: 11943 | entropy: 1.386
+  [step 8830] loss=2.2617 tok/s=13 elapsed=391938.2s
+Step 8830/19531 | Loss: 2.2617 | LR: 0.000067 | τ: 0.593 | tok/s: 11940 | entropy: 1.386
+  [step 8840] loss=2.0308 tok/s=13 elapsed=392384.4s
+Step 8840/19531 | Loss: 2.0308 | LR: 0.000067 | τ: 0.593 | tok/s: 11749 | entropy: 1.386
+  [step 8850] loss=2.3726 tok/s=13 elapsed=392829.6s
+Step 8850/19531 | Loss: 2.3726 | LR: 0.000067 | τ: 0.592 | tok/s: 11775 | entropy: 1.386
+  [step 8860] loss=2.4536 tok/s=13 elapsed=393278.9s
+Step 8860/19531 | Loss: 2.4536 | LR: 0.000067 | τ: 0.592 | tok/s: 11670 | entropy: 1.386
+  [step 8870] loss=2.3813 tok/s=13 elapsed=393724.8s
+Step 8870/19531 | Loss: 2.3813 | LR: 0.000067 | τ: 0.591 | tok/s: 11759 | entropy: 1.386
+  [step 8880] loss=2.2188 tok/s=13 elapsed=394171.2s
+Step 8880/19531 | Loss: 2.2188 | LR: 0.000067 | τ: 0.591 | tok/s: 11744 | entropy: 1.386
+  [step 8890] loss=2.3701 tok/s=13 elapsed=394618.5s
+Step 8890/19531 | Loss: 2.3701 | LR: 0.000066 | τ: 0.590 | tok/s: 11722 | entropy: 1.386
+  [step 8900] loss=2.1436 tok/s=13 elapsed=395064.4s
+Step 8900/19531 | Loss: 2.1436 | LR: 0.000066 | τ: 0.590 | tok/s: 11757 | entropy: 1.386
+  [step 8910] loss=2.0293 tok/s=13 elapsed=395506.8s
+Step 8910/19531 | Loss: 2.0293 | LR: 0.000066 | τ: 0.589 | tok/s: 11852 | entropy: 1.386
+  [step 8920] loss=2.2119 tok/s=13 elapsed=395953.2s
+Step 8920/19531 | Loss: 2.2119 | LR: 0.000066 | τ: 0.589 | tok/s: 11743 | entropy: 1.386
+  [step 8930] loss=2.1812 tok/s=13 elapsed=396401.8s
+Step 8930/19531 | Loss: 2.1812 | LR: 0.000066 | τ: 0.589 | tok/s: 11687 | entropy: 1.386
+  [step 8940] loss=2.0840 tok/s=13 elapsed=396848.6s
+Step 8940/19531 | Loss: 2.0840 | LR: 0.000066 | τ: 0.588 | tok/s: 11734 | entropy: 1.386
+  [step 8950] loss=2.0708 tok/s=13 elapsed=397295.4s
+Step 8950/19531 | Loss: 2.0708 | LR: 0.000066 | τ: 0.588 | tok/s: 11736 | entropy: 1.386
+  [step 8960] loss=2.0884 tok/s=13 elapsed=397741.3s
+Step 8960/19531 | Loss: 2.0884 | LR: 0.000066 | τ: 0.587 | tok/s: 11757 | entropy: 1.386
+  [step 8970] loss=2.2017 tok/s=13 elapsed=398236.4s
+Step 8970/19531 | Loss: 2.2017 | LR: 0.000066 | τ: 0.587 | tok/s: 10590 | entropy: 1.386
+  [step 8980] loss=2.0376 tok/s=13 elapsed=398689.6s
+Step 8980/19531 | Loss: 2.0376 | LR: 0.000066 | τ: 0.586 | tok/s: 11568 | entropy: 1.386
+  [step 8990] loss=2.0835 tok/s=13 elapsed=399134.5s
+Step 8990/19531 | Loss: 2.0835 | LR: 0.000066 | τ: 0.586 | tok/s: 11785 | entropy: 1.386
+  [step 9000] loss=2.3022 tok/s=13 elapsed=399572.3s
+Step 9000/19531 | Loss: 2.3022 | LR: 0.000066 | τ: 0.585 | tok/s: 11976 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 9000
+  [step 9010] loss=2.1333 tok/s=13 elapsed=400046.0s
+Step 9010/19531 | Loss: 2.1333 | LR: 0.000065 | τ: 0.585 | tok/s: 11068 | entropy: 1.386
+  [step 9020] loss=2.0908 tok/s=13 elapsed=400484.6s
+Step 9020/19531 | Loss: 2.0908 | LR: 0.000065 | τ: 0.584 | tok/s: 11954 | entropy: 1.386
+  [step 9030] loss=2.2319 tok/s=13 elapsed=400926.0s
+Step 9030/19531 | Loss: 2.2319 | LR: 0.000065 | τ: 0.584 | tok/s: 11878 | entropy: 1.386
+  [step 9040] loss=2.1025 tok/s=13 elapsed=401363.8s
+Step 9040/19531 | Loss: 2.1025 | LR: 0.000065 | τ: 0.583 | tok/s: 11977 | entropy: 1.386
+  [step 9050] loss=2.0195 tok/s=13 elapsed=401802.6s
+Step 9050/19531 | Loss: 2.0195 | LR: 0.000065 | τ: 0.583 | tok/s: 11950 | entropy: 1.386
+  [step 9060] loss=2.0415 tok/s=13 elapsed=402241.8s
+Step 9060/19531 | Loss: 2.0415 | LR: 0.000065 | τ: 0.583 | tok/s: 11935 | entropy: 1.386
+  [step 9070] loss=2.3716 tok/s=13 elapsed=402686.1s
+Step 9070/19531 | Loss: 2.3716 | LR: 0.000065 | τ: 0.582 | tok/s: 11802 | entropy: 1.386
+  [step 9080] loss=2.4121 tok/s=13 elapsed=403132.3s
+Step 9080/19531 | Loss: 2.4121 | LR: 0.000065 | τ: 0.582 | tok/s: 11748 | entropy: 1.386
+  [step 9090] loss=2.1572 tok/s=13 elapsed=403578.5s
+Step 9090/19531 | Loss: 2.1572 | LR: 0.000065 | τ: 0.581 | tok/s: 11752 | entropy: 1.386
+  [step 9100] loss=2.4121 tok/s=13 elapsed=404029.3s
+Step 9100/19531 | Loss: 2.4121 | LR: 0.000065 | τ: 0.581 | tok/s: 11631 | entropy: 1.386
+  [step 9110] loss=2.3638 tok/s=13 elapsed=404476.3s
+Step 9110/19531 | Loss: 2.3638 | LR: 0.000065 | τ: 0.580 | tok/s: 11727 | entropy: 1.386
+  [step 9120] loss=2.1294 tok/s=13 elapsed=404924.2s
+Step 9120/19531 | Loss: 2.1294 | LR: 0.000065 | τ: 0.580 | tok/s: 11708 | entropy: 1.386
+  [step 9130] loss=2.5254 tok/s=13 elapsed=405370.4s
+Step 9130/19531 | Loss: 2.5254 | LR: 0.000064 | τ: 0.579 | tok/s: 11749 | entropy: 1.386
+  [step 9140] loss=2.2578 tok/s=13 elapsed=405817.0s
+Step 9140/19531 | Loss: 2.2578 | LR: 0.000064 | τ: 0.579 | tok/s: 11741 | entropy: 1.386
+  [step 9150] loss=2.3696 tok/s=13 elapsed=406270.6s
+Step 9150/19531 | Loss: 2.3696 | LR: 0.000064 | τ: 0.578 | tok/s: 11557 | entropy: 1.386
+  [step 9160] loss=2.3379 tok/s=13 elapsed=406716.3s
+Step 9160/19531 | Loss: 2.3379 | LR: 0.000064 | τ: 0.578 | tok/s: 11764 | entropy: 1.386
+  [step 9170] loss=2.2070 tok/s=13 elapsed=407162.7s
+Step 9170/19531 | Loss: 2.2070 | LR: 0.000064 | τ: 0.577 | tok/s: 11746 | entropy: 1.386
+  [step 9180] loss=2.1309 tok/s=13 elapsed=407626.5s
+Step 9180/19531 | Loss: 2.1309 | LR: 0.000064 | τ: 0.577 | tok/s: 11305 | entropy: 1.386
+  [step 9190] loss=2.2524 tok/s=13 elapsed=408072.9s
+Step 9190/19531 | Loss: 2.2524 | LR: 0.000064 | τ: 0.577 | tok/s: 11744 | entropy: 1.386
+  [step 9200] loss=2.5645 tok/s=13 elapsed=408522.4s
+Step 9200/19531 | Loss: 2.5645 | LR: 0.000064 | τ: 0.576 | tok/s: 11664 | entropy: 1.386
+  [step 9210] loss=2.3008 tok/s=13 elapsed=408968.7s
+Step 9210/19531 | Loss: 2.3008 | LR: 0.000064 | τ: 0.576 | tok/s: 11749 | entropy: 1.386
+  [step 9220] loss=1.9678 tok/s=13 elapsed=409414.1s
+Step 9220/19531 | Loss: 1.9678 | LR: 0.000064 | τ: 0.575 | tok/s: 11770 | entropy: 1.386
+  [step 9230] loss=1.9053 tok/s=13 elapsed=409853.0s
+Step 9230/19531 | Loss: 1.9053 | LR: 0.000064 | τ: 0.575 | tok/s: 11946 | entropy: 1.386
+  [step 9240] loss=2.1558 tok/s=13 elapsed=410291.1s
+Step 9240/19531 | Loss: 2.1558 | LR: 0.000063 | τ: 0.574 | tok/s: 11967 | entropy: 1.386
+  [step 9250] loss=1.9653 tok/s=13 elapsed=410730.1s
+Step 9250/19531 | Loss: 1.9653 | LR: 0.000063 | τ: 0.574 | tok/s: 11943 | entropy: 1.386
+  [step 9260] loss=2.1289 tok/s=13 elapsed=411171.6s
+Step 9260/19531 | Loss: 2.1289 | LR: 0.000063 | τ: 0.573 | tok/s: 11876 | entropy: 1.386
+  [step 9270] loss=2.1318 tok/s=13 elapsed=411615.1s
+Step 9270/19531 | Loss: 2.1318 | LR: 0.000063 | τ: 0.573 | tok/s: 11821 | entropy: 1.386
+  [step 9280] loss=2.1406 tok/s=13 elapsed=412061.7s
+Step 9280/19531 | Loss: 2.1406 | LR: 0.000063 | τ: 0.572 | tok/s: 11740 | entropy: 1.386
+  [step 9290] loss=2.2271 tok/s=13 elapsed=412507.7s
+Step 9290/19531 | Loss: 2.2271 | LR: 0.000063 | τ: 0.572 | tok/s: 11754 | entropy: 1.386
+  [step 9300] loss=1.9229 tok/s=13 elapsed=412954.8s
+Step 9300/19531 | Loss: 1.9229 | LR: 0.000063 | τ: 0.571 | tok/s: 11727 | entropy: 1.386
+  [step 9310] loss=2.0161 tok/s=13 elapsed=413395.2s
+Step 9310/19531 | Loss: 2.0161 | LR: 0.000063 | τ: 0.571 | tok/s: 11905 | entropy: 1.386
+  [step 9320] loss=2.1401 tok/s=13 elapsed=413838.1s
+Step 9320/19531 | Loss: 2.1401 | LR: 0.000063 | τ: 0.571 | tok/s: 11839 | entropy: 1.386
+  [step 9330] loss=2.0337 tok/s=13 elapsed=414284.6s
+Step 9330/19531 | Loss: 2.0337 | LR: 0.000063 | τ: 0.570 | tok/s: 11742 | entropy: 1.386
+  [step 9340] loss=1.9180 tok/s=13 elapsed=414725.4s
+Step 9340/19531 | Loss: 1.9180 | LR: 0.000063 | τ: 0.570 | tok/s: 11895 | entropy: 1.386
+  [step 9350] loss=1.8853 tok/s=13 elapsed=415167.2s
+Step 9350/19531 | Loss: 1.8853 | LR: 0.000063 | τ: 0.569 | tok/s: 11865 | entropy: 1.386
+  [step 9360] loss=2.3242 tok/s=13 elapsed=415613.8s
+Step 9360/19531 | Loss: 2.3242 | LR: 0.000062 | τ: 0.569 | tok/s: 11741 | entropy: 1.386
+  [step 9370] loss=2.0825 tok/s=13 elapsed=416061.0s
+Step 9370/19531 | Loss: 2.0825 | LR: 0.000062 | τ: 0.568 | tok/s: 11723 | entropy: 1.386
+  [step 9380] loss=2.2051 tok/s=13 elapsed=416507.6s
+Step 9380/19531 | Loss: 2.2051 | LR: 0.000062 | τ: 0.568 | tok/s: 11741 | entropy: 1.386
+  [step 9390] loss=2.0796 tok/s=13 elapsed=416954.2s
+Step 9390/19531 | Loss: 2.0796 | LR: 0.000062 | τ: 0.567 | tok/s: 11738 | entropy: 1.386
+  [step 9400] loss=2.6064 tok/s=13 elapsed=417401.0s
+Step 9400/19531 | Loss: 2.6064 | LR: 0.000062 | τ: 0.567 | tok/s: 11735 | entropy: 1.386
+  [step 9410] loss=1.9785 tok/s=13 elapsed=417848.4s
+Step 9410/19531 | Loss: 1.9785 | LR: 0.000062 | τ: 0.566 | tok/s: 11718 | entropy: 1.386
+  [step 9420] loss=2.1831 tok/s=13 elapsed=418295.7s
+Step 9420/19531 | Loss: 2.1831 | LR: 0.000062 | τ: 0.566 | tok/s: 11721 | entropy: 1.386
+  [step 9430] loss=2.2837 tok/s=13 elapsed=418741.1s
+Step 9430/19531 | Loss: 2.2837 | LR: 0.000062 | τ: 0.566 | tok/s: 11771 | entropy: 1.386
+  [step 9440] loss=2.1431 tok/s=13 elapsed=419184.4s
+Step 9440/19531 | Loss: 2.1431 | LR: 0.000062 | τ: 0.565 | tok/s: 11827 | entropy: 1.386
+  [step 9450] loss=2.0464 tok/s=12 elapsed=419643.5s
+Step 9450/19531 | Loss: 2.0464 | LR: 0.000062 | τ: 0.565 | tok/s: 11420 | entropy: 1.386
+  [step 9460] loss=2.2485 tok/s=12 elapsed=420086.2s
+Step 9460/19531 | Loss: 2.2485 | LR: 0.000062 | τ: 0.564 | tok/s: 11845 | entropy: 1.386
+  [step 9470] loss=2.2153 tok/s=12 elapsed=420532.8s
+Step 9470/19531 | Loss: 2.2153 | LR: 0.000062 | τ: 0.564 | tok/s: 11738 | entropy: 1.386
+  [step 9480] loss=2.1108 tok/s=12 elapsed=420979.5s
+Step 9480/19531 | Loss: 2.1108 | LR: 0.000061 | τ: 0.563 | tok/s: 11739 | entropy: 1.386
+  [step 9490] loss=2.2959 tok/s=12 elapsed=421426.0s
+Step 9490/19531 | Loss: 2.2959 | LR: 0.000061 | τ: 0.563 | tok/s: 11743 | entropy: 1.386
+  [step 9500] loss=2.3979 tok/s=12 elapsed=421872.2s
+Step 9500/19531 | Loss: 2.3979 | LR: 0.000061 | τ: 0.562 | tok/s: 11750 | entropy: 1.386
+  [step 9510] loss=2.1758 tok/s=12 elapsed=422316.5s
+Step 9510/19531 | Loss: 2.1758 | LR: 0.000061 | τ: 0.562 | tok/s: 11801 | entropy: 1.386
+  [step 9520] loss=2.1484 tok/s=12 elapsed=422763.3s
+Step 9520/19531 | Loss: 2.1484 | LR: 0.000061 | τ: 0.561 | tok/s: 11733 | entropy: 1.386
+  [step 9530] loss=2.2251 tok/s=12 elapsed=423210.3s
+Step 9530/19531 | Loss: 2.2251 | LR: 0.000061 | τ: 0.561 | tok/s: 11729 | entropy: 1.386
+  [step 9540] loss=2.3862 tok/s=12 elapsed=423656.2s
+Step 9540/19531 | Loss: 2.3862 | LR: 0.000061 | τ: 0.560 | tok/s: 11759 | entropy: 1.386
+  [step 9550] loss=1.9429 tok/s=12 elapsed=424102.3s
+Step 9550/19531 | Loss: 1.9429 | LR: 0.000061 | τ: 0.560 | tok/s: 11752 | entropy: 1.386
+  [step 9560] loss=2.4238 tok/s=12 elapsed=424550.1s
+Step 9560/19531 | Loss: 2.4238 | LR: 0.000061 | τ: 0.560 | tok/s: 11710 | entropy: 1.386
+  [step 9570] loss=2.2095 tok/s=12 elapsed=424993.1s
+Step 9570/19531 | Loss: 2.2095 | LR: 0.000061 | τ: 0.559 | tok/s: 11834 | entropy: 1.386
+  [step 9580] loss=2.1841 tok/s=12 elapsed=425440.6s
+Step 9580/19531 | Loss: 2.1841 | LR: 0.000061 | τ: 0.559 | tok/s: 11717 | entropy: 1.386
+  [step 9590] loss=2.3062 tok/s=12 elapsed=425887.6s
+Step 9590/19531 | Loss: 2.3062 | LR: 0.000060 | τ: 0.558 | tok/s: 11729 | entropy: 1.386
+  [step 9600] loss=2.2222 tok/s=12 elapsed=426326.6s
+Step 9600/19531 | Loss: 2.2222 | LR: 0.000060 | τ: 0.558 | tok/s: 11941 | entropy: 1.386
+  [step 9610] loss=2.0996 tok/s=12 elapsed=426765.7s
+Step 9610/19531 | Loss: 2.0996 | LR: 0.000060 | τ: 0.557 | tok/s: 11941 | entropy: 1.386
+  [step 9620] loss=2.0454 tok/s=12 elapsed=427205.5s
+Step 9620/19531 | Loss: 2.0454 | LR: 0.000060 | τ: 0.557 | tok/s: 11921 | entropy: 1.386
+  [step 9630] loss=2.0195 tok/s=12 elapsed=427643.3s
+Step 9630/19531 | Loss: 2.0195 | LR: 0.000060 | τ: 0.556 | tok/s: 11976 | entropy: 1.386
+  [step 9640] loss=2.0039 tok/s=12 elapsed=428081.7s
+Step 9640/19531 | Loss: 2.0039 | LR: 0.000060 | τ: 0.556 | tok/s: 11958 | entropy: 1.386
+  [step 9650] loss=2.2139 tok/s=12 elapsed=428520.8s
+Step 9650/19531 | Loss: 2.2139 | LR: 0.000060 | τ: 0.555 | tok/s: 11942 | entropy: 1.386
+  [step 9660] loss=2.2407 tok/s=12 elapsed=428966.8s
+Step 9660/19531 | Loss: 2.2407 | LR: 0.000060 | τ: 0.555 | tok/s: 11754 | entropy: 1.386
+  [step 9670] loss=2.0376 tok/s=12 elapsed=429413.6s
+Step 9670/19531 | Loss: 2.0376 | LR: 0.000060 | τ: 0.554 | tok/s: 11734 | entropy: 1.386
+  [step 9680] loss=2.1411 tok/s=12 elapsed=429859.9s
+Step 9680/19531 | Loss: 2.1411 | LR: 0.000060 | τ: 0.554 | tok/s: 11749 | entropy: 1.386
+  [step 9690] loss=2.0601 tok/s=12 elapsed=430306.3s
+Step 9690/19531 | Loss: 2.0601 | LR: 0.000060 | τ: 0.554 | tok/s: 11744 | entropy: 1.386
+  [step 9700] loss=2.2026 tok/s=12 elapsed=430752.3s
+Step 9700/19531 | Loss: 2.2026 | LR: 0.000059 | τ: 0.553 | tok/s: 11757 | entropy: 1.386
+  [step 9710] loss=2.0576 tok/s=12 elapsed=431198.7s
+Step 9710/19531 | Loss: 2.0576 | LR: 0.000059 | τ: 0.553 | tok/s: 11743 | entropy: 1.386
+  [step 9720] loss=2.3394 tok/s=12 elapsed=431644.8s
+Step 9720/19531 | Loss: 2.3394 | LR: 0.000059 | τ: 0.552 | tok/s: 11754 | entropy: 1.386
+  [step 9730] loss=2.1304 tok/s=12 elapsed=432083.8s
+Step 9730/19531 | Loss: 2.1304 | LR: 0.000059 | τ: 0.552 | tok/s: 11943 | entropy: 1.386
+  [step 9740] loss=2.2246 tok/s=12 elapsed=432524.9s
+Step 9740/19531 | Loss: 2.2246 | LR: 0.000059 | τ: 0.551 | tok/s: 11885 | entropy: 1.386
+  [step 9750] loss=2.2046 tok/s=12 elapsed=432971.6s
+Step 9750/19531 | Loss: 2.2046 | LR: 0.000059 | τ: 0.551 | tok/s: 11737 | entropy: 1.386
+  [step 9760] loss=2.3950 tok/s=12 elapsed=433418.8s
+Step 9760/19531 | Loss: 2.3950 | LR: 0.000059 | τ: 0.550 | tok/s: 11723 | entropy: 1.386
+  [step 9770] loss=2.2607 tok/s=12 elapsed=433865.1s
+Step 9770/19531 | Loss: 2.2607 | LR: 0.000059 | τ: 0.550 | tok/s: 11749 | entropy: 1.386
+  [step 9780] loss=2.0952 tok/s=12 elapsed=434308.9s
+Step 9780/19531 | Loss: 2.0952 | LR: 0.000059 | τ: 0.549 | tok/s: 11812 | entropy: 1.386
+  [step 9790] loss=2.2178 tok/s=12 elapsed=434755.1s
+Step 9790/19531 | Loss: 2.2178 | LR: 0.000059 | τ: 0.549 | tok/s: 11751 | entropy: 1.386
+  [step 9800] loss=2.2734 tok/s=12 elapsed=435201.1s
+Step 9800/19531 | Loss: 2.2734 | LR: 0.000059 | τ: 0.548 | tok/s: 11756 | entropy: 1.386
+  [step 9810] loss=2.0244 tok/s=12 elapsed=435644.7s
+Step 9810/19531 | Loss: 2.0244 | LR: 0.000059 | τ: 0.548 | tok/s: 11820 | entropy: 1.386
+  [step 9820] loss=2.0620 tok/s=12 elapsed=436084.0s
+Step 9820/19531 | Loss: 2.0620 | LR: 0.000058 | τ: 0.548 | tok/s: 11935 | entropy: 1.386
+  [step 9830] loss=2.0098 tok/s=12 elapsed=436528.0s
+Step 9830/19531 | Loss: 2.0098 | LR: 0.000058 | τ: 0.547 | tok/s: 11807 | entropy: 1.386
+  [step 9840] loss=2.0923 tok/s=12 elapsed=436967.6s
+Step 9840/19531 | Loss: 2.0923 | LR: 0.000058 | τ: 0.547 | tok/s: 11927 | entropy: 1.386
+  [step 9850] loss=2.3965 tok/s=12 elapsed=437414.5s
+Step 9850/19531 | Loss: 2.3965 | LR: 0.000058 | τ: 0.546 | tok/s: 11733 | entropy: 1.386
+  [step 9860] loss=2.1636 tok/s=12 elapsed=437860.9s
+Step 9860/19531 | Loss: 2.1636 | LR: 0.000058 | τ: 0.546 | tok/s: 11744 | entropy: 1.386
+  [step 9870] loss=2.2324 tok/s=12 elapsed=438308.2s
+Step 9870/19531 | Loss: 2.2324 | LR: 0.000058 | τ: 0.545 | tok/s: 11720 | entropy: 1.386
+  [step 9880] loss=2.0562 tok/s=12 elapsed=438755.4s
+Step 9880/19531 | Loss: 2.0562 | LR: 0.000058 | τ: 0.545 | tok/s: 11725 | entropy: 1.386
+  [step 9890] loss=2.1646 tok/s=12 elapsed=439201.9s
+Step 9890/19531 | Loss: 2.1646 | LR: 0.000058 | τ: 0.544 | tok/s: 11744 | entropy: 1.386
+  [step 9900] loss=2.1548 tok/s=12 elapsed=439643.5s
+Step 9900/19531 | Loss: 2.1548 | LR: 0.000058 | τ: 0.544 | tok/s: 11872 | entropy: 1.386
+  [step 9910] loss=1.9849 tok/s=12 elapsed=440084.2s
+Step 9910/19531 | Loss: 1.9849 | LR: 0.000058 | τ: 0.543 | tok/s: 11895 | entropy: 1.386
+  [step 9920] loss=1.9438 tok/s=12 elapsed=440523.9s
+Step 9920/19531 | Loss: 1.9438 | LR: 0.000058 | τ: 0.543 | tok/s: 11925 | entropy: 1.386
+  [step 9930] loss=2.1401 tok/s=12 elapsed=440962.5s
+Step 9930/19531 | Loss: 2.1401 | LR: 0.000057 | τ: 0.542 | tok/s: 11952 | entropy: 1.386
+  [step 9940] loss=2.1182 tok/s=12 elapsed=441401.7s
+Step 9940/19531 | Loss: 2.1182 | LR: 0.000057 | τ: 0.542 | tok/s: 11938 | entropy: 1.386
+  [step 9950] loss=2.0957 tok/s=12 elapsed=441840.6s
+Step 9950/19531 | Loss: 2.0957 | LR: 0.000057 | τ: 0.542 | tok/s: 11945 | entropy: 1.386
+  [step 9960] loss=1.9331 tok/s=12 elapsed=442279.4s
+Step 9960/19531 | Loss: 1.9331 | LR: 0.000057 | τ: 0.541 | tok/s: 11948 | entropy: 1.386
+  [step 9970] loss=2.1914 tok/s=12 elapsed=442720.9s
+Step 9970/19531 | Loss: 2.1914 | LR: 0.000057 | τ: 0.541 | tok/s: 11875 | entropy: 1.386
+  [step 9980] loss=2.0845 tok/s=12 elapsed=443167.3s
+Step 9980/19531 | Loss: 2.0845 | LR: 0.000057 | τ: 0.540 | tok/s: 11745 | entropy: 1.386
+  [step 9990] loss=2.2817 tok/s=12 elapsed=443614.2s
+Step 9990/19531 | Loss: 2.2817 | LR: 0.000057 | τ: 0.540 | tok/s: 11733 | entropy: 1.386
+  [step 10000] loss=2.2573 tok/s=12 elapsed=444060.6s
+Step 10000/19531 | Loss: 2.2573 | LR: 0.000057 | τ: 0.539 | tok/s: 11744 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 10000
+Saved portable checkpoint at step 10000
+  [step 10010] loss=2.1201 tok/s=12 elapsed=444584.8s
+Step 10010/19531 | Loss: 2.1201 | LR: 0.000057 | τ: 0.539 | tok/s: 10002 | entropy: 1.386
+  [step 10020] loss=2.0654 tok/s=12 elapsed=445031.2s
+Step 10020/19531 | Loss: 2.0654 | LR: 0.000057 | τ: 0.538 | tok/s: 11745 | entropy: 1.386
+  [step 10030] loss=1.9883 tok/s=12 elapsed=445470.8s
+Step 10030/19531 | Loss: 1.9883 | LR: 0.000057 | τ: 0.538 | tok/s: 11926 | entropy: 1.386
+  [step 10040] loss=2.1123 tok/s=12 elapsed=445909.4s
+Step 10040/19531 | Loss: 2.1123 | LR: 0.000056 | τ: 0.537 | tok/s: 11956 | entropy: 1.386
+  [step 10050] loss=2.2939 tok/s=12 elapsed=446350.4s
+Step 10050/19531 | Loss: 2.2939 | LR: 0.000056 | τ: 0.537 | tok/s: 11887 | entropy: 1.386
+  [step 10060] loss=2.1128 tok/s=12 elapsed=446798.1s
+Step 10060/19531 | Loss: 2.1128 | LR: 0.000056 | τ: 0.536 | tok/s: 11712 | entropy: 1.386
+  [step 10070] loss=2.1182 tok/s=12 elapsed=447241.3s
+Step 10070/19531 | Loss: 2.1182 | LR: 0.000056 | τ: 0.536 | tok/s: 11830 | entropy: 1.386
+  [step 10080] loss=2.0127 tok/s=12 elapsed=447680.8s
+Step 10080/19531 | Loss: 2.0127 | LR: 0.000056 | τ: 0.536 | tok/s: 11928 | entropy: 1.386
+  [step 10090] loss=1.9517 tok/s=12 elapsed=448119.2s
+Step 10090/19531 | Loss: 1.9517 | LR: 0.000056 | τ: 0.535 | tok/s: 11961 | entropy: 1.386
+  [step 10100] loss=2.0630 tok/s=12 elapsed=448566.0s
+Step 10100/19531 | Loss: 2.0630 | LR: 0.000056 | τ: 0.535 | tok/s: 11733 | entropy: 1.386
+  [step 10110] loss=2.1245 tok/s=12 elapsed=449012.7s
+Step 10110/19531 | Loss: 2.1245 | LR: 0.000056 | τ: 0.534 | tok/s: 11737 | entropy: 1.386
+  [step 10120] loss=2.1890 tok/s=12 elapsed=449459.9s
+Step 10120/19531 | Loss: 2.1890 | LR: 0.000056 | τ: 0.534 | tok/s: 11725 | entropy: 1.386
+  [step 10130] loss=2.2432 tok/s=12 elapsed=449907.0s
+Step 10130/19531 | Loss: 2.2432 | LR: 0.000056 | τ: 0.533 | tok/s: 11728 | entropy: 1.386
+  [step 10140] loss=2.1953 tok/s=12 elapsed=450354.6s
+Step 10140/19531 | Loss: 2.1953 | LR: 0.000056 | τ: 0.533 | tok/s: 11713 | entropy: 1.386
+  [step 10150] loss=2.2095 tok/s=12 elapsed=450801.3s
+Step 10150/19531 | Loss: 2.2095 | LR: 0.000056 | τ: 0.532 | tok/s: 11735 | entropy: 1.386
+  [step 10160] loss=2.0620 tok/s=12 elapsed=451247.7s
+Step 10160/19531 | Loss: 2.0620 | LR: 0.000055 | τ: 0.532 | tok/s: 11746 | entropy: 1.386
+  [step 10170] loss=1.9424 tok/s=12 elapsed=451692.2s
+Step 10170/19531 | Loss: 1.9424 | LR: 0.000055 | τ: 0.531 | tok/s: 11795 | entropy: 1.386
+  [step 10180] loss=1.9067 tok/s=12 elapsed=452130.6s
+Step 10180/19531 | Loss: 1.9067 | LR: 0.000055 | τ: 0.531 | tok/s: 11958 | entropy: 1.386
+  [step 10190] loss=1.9121 tok/s=12 elapsed=452570.4s
+Step 10190/19531 | Loss: 1.9121 | LR: 0.000055 | τ: 0.530 | tok/s: 11922 | entropy: 1.386
+  [step 10200] loss=2.2881 tok/s=12 elapsed=453011.8s
+Step 10200/19531 | Loss: 2.2881 | LR: 0.000055 | τ: 0.530 | tok/s: 11878 | entropy: 1.386
+  [step 10210] loss=2.0298 tok/s=12 elapsed=453458.4s
+Step 10210/19531 | Loss: 2.0298 | LR: 0.000055 | τ: 0.530 | tok/s: 11740 | entropy: 1.386
+  [step 10220] loss=2.0845 tok/s=12 elapsed=453899.3s
+Step 10220/19531 | Loss: 2.0845 | LR: 0.000055 | τ: 0.529 | tok/s: 11892 | entropy: 1.386
+  [step 10230] loss=2.1528 tok/s=12 elapsed=454338.6s
+Step 10230/19531 | Loss: 2.1528 | LR: 0.000055 | τ: 0.529 | tok/s: 11933 | entropy: 1.386
+  [step 10240] loss=2.0200 tok/s=12 elapsed=454776.9s
+Step 10240/19531 | Loss: 2.0200 | LR: 0.000055 | τ: 0.528 | tok/s: 11963 | entropy: 1.386
+  [step 10250] loss=2.0557 tok/s=12 elapsed=455219.1s
+Step 10250/19531 | Loss: 2.0557 | LR: 0.000055 | τ: 0.528 | tok/s: 11857 | entropy: 1.386
+  [step 10260] loss=1.7358 tok/s=12 elapsed=455665.7s
+Step 10260/19531 | Loss: 1.7358 | LR: 0.000055 | τ: 0.527 | tok/s: 11740 | entropy: 1.386
+  [step 10270] loss=2.1733 tok/s=11 elapsed=456112.5s
+Step 10270/19531 | Loss: 2.1733 | LR: 0.000054 | τ: 0.527 | tok/s: 11734 | entropy: 1.386
+  [step 10280] loss=2.0625 tok/s=11 elapsed=456558.7s
+Step 10280/19531 | Loss: 2.0625 | LR: 0.000054 | τ: 0.526 | tok/s: 11750 | entropy: 1.386
+  [step 10290] loss=2.0435 tok/s=11 elapsed=457004.6s
+Step 10290/19531 | Loss: 2.0435 | LR: 0.000054 | τ: 0.526 | tok/s: 11758 | entropy: 1.386
+  [step 10300] loss=2.0190 tok/s=11 elapsed=457443.7s
+Step 10300/19531 | Loss: 2.0190 | LR: 0.000054 | τ: 0.525 | tok/s: 11941 | entropy: 1.386
+  [step 10310] loss=2.0000 tok/s=11 elapsed=457887.5s
+Step 10310/19531 | Loss: 2.0000 | LR: 0.000054 | τ: 0.525 | tok/s: 11812 | entropy: 1.386
+  [step 10320] loss=2.0894 tok/s=11 elapsed=458334.1s
+Step 10320/19531 | Loss: 2.0894 | LR: 0.000054 | τ: 0.524 | tok/s: 11742 | entropy: 1.386
+  [step 10330] loss=2.1084 tok/s=11 elapsed=458780.7s
+Step 10330/19531 | Loss: 2.1084 | LR: 0.000054 | τ: 0.524 | tok/s: 11738 | entropy: 1.386
+  [step 10340] loss=2.2095 tok/s=11 elapsed=459220.3s
+Step 10340/19531 | Loss: 2.2095 | LR: 0.000054 | τ: 0.524 | tok/s: 11927 | entropy: 1.386
+  [step 10350] loss=2.0293 tok/s=11 elapsed=459659.9s
+Step 10350/19531 | Loss: 2.0293 | LR: 0.000054 | τ: 0.523 | tok/s: 11928 | entropy: 1.386
+  [step 10360] loss=1.9312 tok/s=11 elapsed=460104.4s
+Step 10360/19531 | Loss: 1.9312 | LR: 0.000054 | τ: 0.523 | tok/s: 11795 | entropy: 1.386
+  [step 10370] loss=1.8286 tok/s=11 elapsed=460543.7s
+Step 10370/19531 | Loss: 1.8286 | LR: 0.000054 | τ: 0.522 | tok/s: 11933 | entropy: 1.386
+  [step 10380] loss=1.8623 tok/s=11 elapsed=460987.6s
+Step 10380/19531 | Loss: 1.8623 | LR: 0.000053 | τ: 0.522 | tok/s: 11812 | entropy: 1.386
+  [step 10390] loss=2.1123 tok/s=11 elapsed=461434.6s
+Step 10390/19531 | Loss: 2.1123 | LR: 0.000053 | τ: 0.521 | tok/s: 11729 | entropy: 1.386
+  [step 10400] loss=2.3325 tok/s=11 elapsed=461881.3s
+Step 10400/19531 | Loss: 2.3325 | LR: 0.000053 | τ: 0.521 | tok/s: 11737 | entropy: 1.386
+  [step 10410] loss=2.0752 tok/s=11 elapsed=462326.4s
+Step 10410/19531 | Loss: 2.0752 | LR: 0.000053 | τ: 0.520 | tok/s: 11780 | entropy: 1.386
+  [step 10420] loss=2.0244 tok/s=11 elapsed=462765.4s
+Step 10420/19531 | Loss: 2.0244 | LR: 0.000053 | τ: 0.520 | tok/s: 11942 | entropy: 1.386
+  [step 10430] loss=2.2568 tok/s=11 elapsed=463208.1s
+Step 10430/19531 | Loss: 2.2568 | LR: 0.000053 | τ: 0.519 | tok/s: 11845 | entropy: 1.386
+  [step 10440] loss=2.0361 tok/s=11 elapsed=463654.9s
+Step 10440/19531 | Loss: 2.0361 | LR: 0.000053 | τ: 0.519 | tok/s: 11733 | entropy: 1.386
+  [step 10450] loss=1.9863 tok/s=11 elapsed=464101.1s
+Step 10450/19531 | Loss: 1.9863 | LR: 0.000053 | τ: 0.519 | tok/s: 11751 | entropy: 1.386
+  [step 10460] loss=1.8926 tok/s=11 elapsed=464547.3s
+Step 10460/19531 | Loss: 1.8926 | LR: 0.000053 | τ: 0.518 | tok/s: 11750 | entropy: 1.386
+  [step 10470] loss=2.2378 tok/s=11 elapsed=464993.5s
+Step 10470/19531 | Loss: 2.2378 | LR: 0.000053 | τ: 0.518 | tok/s: 11750 | entropy: 1.386
+  [step 10480] loss=1.9834 tok/s=11 elapsed=465440.6s
+Step 10480/19531 | Loss: 1.9834 | LR: 0.000053 | τ: 0.517 | tok/s: 11726 | entropy: 1.386
+  [step 10490] loss=2.0869 tok/s=11 elapsed=465886.1s
+Step 10490/19531 | Loss: 2.0869 | LR: 0.000052 | τ: 0.517 | tok/s: 11769 | entropy: 1.386
+  [step 10500] loss=2.2109 tok/s=11 elapsed=466325.8s
+Step 10500/19531 | Loss: 2.2109 | LR: 0.000052 | τ: 0.516 | tok/s: 11925 | entropy: 1.386
+  [step 10510] loss=2.1353 tok/s=11 elapsed=466764.9s
+Step 10510/19531 | Loss: 2.1353 | LR: 0.000052 | τ: 0.516 | tok/s: 11939 | entropy: 1.386
+  [step 10520] loss=2.3706 tok/s=11 elapsed=467203.3s
+Step 10520/19531 | Loss: 2.3706 | LR: 0.000052 | τ: 0.515 | tok/s: 11960 | entropy: 1.386
+  [step 10530] loss=2.1475 tok/s=11 elapsed=467641.2s
+Step 10530/19531 | Loss: 2.1475 | LR: 0.000052 | τ: 0.515 | tok/s: 11974 | entropy: 1.386
+  [step 10540] loss=1.9409 tok/s=11 elapsed=468080.5s
+Step 10540/19531 | Loss: 1.9409 | LR: 0.000052 | τ: 0.514 | tok/s: 11935 | entropy: 1.386
+  [step 10550] loss=1.9922 tok/s=11 elapsed=468521.5s
+Step 10550/19531 | Loss: 1.9922 | LR: 0.000052 | τ: 0.514 | tok/s: 11889 | entropy: 1.386
+  [step 10560] loss=2.1294 tok/s=11 elapsed=468960.1s
+Step 10560/19531 | Loss: 2.1294 | LR: 0.000052 | τ: 0.513 | tok/s: 11952 | entropy: 1.386
+  [step 10570] loss=1.9297 tok/s=11 elapsed=469399.1s
+Step 10570/19531 | Loss: 1.9297 | LR: 0.000052 | τ: 0.513 | tok/s: 11944 | entropy: 1.386
+  [step 10580] loss=1.9634 tok/s=11 elapsed=469837.7s
+Step 10580/19531 | Loss: 1.9634 | LR: 0.000052 | τ: 0.513 | tok/s: 11952 | entropy: 1.386
+  [step 10590] loss=2.1924 tok/s=11 elapsed=470282.5s
+Step 10590/19531 | Loss: 2.1924 | LR: 0.000052 | τ: 0.512 | tok/s: 11789 | entropy: 1.386
+  [step 10600] loss=2.0488 tok/s=11 elapsed=470729.8s
+Step 10600/19531 | Loss: 2.0488 | LR: 0.000051 | τ: 0.512 | tok/s: 11720 | entropy: 1.386
+  [step 10610] loss=2.0864 tok/s=11 elapsed=471176.1s
+Step 10610/19531 | Loss: 2.0864 | LR: 0.000051 | τ: 0.511 | tok/s: 11750 | entropy: 1.386
+  [step 10620] loss=1.9346 tok/s=11 elapsed=471623.1s
+Step 10620/19531 | Loss: 1.9346 | LR: 0.000051 | τ: 0.511 | tok/s: 11729 | entropy: 1.386
+  [step 10630] loss=2.3198 tok/s=11 elapsed=472070.5s
+Step 10630/19531 | Loss: 2.3198 | LR: 0.000051 | τ: 0.510 | tok/s: 11718 | entropy: 1.386
+  [step 10640] loss=2.0981 tok/s=11 elapsed=472516.9s
+Step 10640/19531 | Loss: 2.0981 | LR: 0.000051 | τ: 0.510 | tok/s: 11745 | entropy: 1.386
+  [step 10650] loss=2.0063 tok/s=11 elapsed=472963.3s
+Step 10650/19531 | Loss: 2.0063 | LR: 0.000051 | τ: 0.509 | tok/s: 11745 | entropy: 1.386
+  [step 10660] loss=2.2349 tok/s=11 elapsed=473410.1s
+Step 10660/19531 | Loss: 2.2349 | LR: 0.000051 | τ: 0.509 | tok/s: 11733 | entropy: 1.386
+  [step 10670] loss=2.2378 tok/s=11 elapsed=473856.9s
+Step 10670/19531 | Loss: 2.2378 | LR: 0.000051 | τ: 0.508 | tok/s: 11735 | entropy: 1.386
+  [step 10680] loss=2.0078 tok/s=11 elapsed=474301.5s
+Step 10680/19531 | Loss: 2.0078 | LR: 0.000051 | τ: 0.508 | tok/s: 11793 | entropy: 1.386
+  [step 10690] loss=2.0068 tok/s=11 elapsed=474746.3s
+Step 10690/19531 | Loss: 2.0068 | LR: 0.000051 | τ: 0.507 | tok/s: 11788 | entropy: 1.386
+  [step 10700] loss=1.9253 tok/s=11 elapsed=475184.2s
+Step 10700/19531 | Loss: 1.9253 | LR: 0.000051 | τ: 0.507 | tok/s: 11972 | entropy: 1.386
+  [step 10710] loss=2.1055 tok/s=11 elapsed=475623.0s
+Step 10710/19531 | Loss: 2.1055 | LR: 0.000050 | τ: 0.507 | tok/s: 11949 | entropy: 1.386
+  [step 10720] loss=2.1445 tok/s=11 elapsed=476063.2s
+Step 10720/19531 | Loss: 2.1445 | LR: 0.000050 | τ: 0.506 | tok/s: 11909 | entropy: 1.386
+  [step 10730] loss=2.1406 tok/s=11 elapsed=476509.0s
+Step 10730/19531 | Loss: 2.1406 | LR: 0.000050 | τ: 0.506 | tok/s: 11762 | entropy: 1.386
+  [step 10740] loss=2.0371 tok/s=11 elapsed=476954.4s
+Step 10740/19531 | Loss: 2.0371 | LR: 0.000050 | τ: 0.505 | tok/s: 11771 | entropy: 1.386
+  [step 10750] loss=2.4204 tok/s=11 elapsed=477401.6s
+Step 10750/19531 | Loss: 2.4204 | LR: 0.000050 | τ: 0.505 | tok/s: 11723 | entropy: 1.386
+  [step 10760] loss=2.0210 tok/s=11 elapsed=477848.5s
+Step 10760/19531 | Loss: 2.0210 | LR: 0.000050 | τ: 0.504 | tok/s: 11733 | entropy: 1.386
+  [step 10770] loss=2.0513 tok/s=11 elapsed=478294.7s
+Step 10770/19531 | Loss: 2.0513 | LR: 0.000050 | τ: 0.504 | tok/s: 11749 | entropy: 1.386
+  [step 10780] loss=2.1992 tok/s=11 elapsed=478741.7s
+Step 10780/19531 | Loss: 2.1992 | LR: 0.000050 | τ: 0.503 | tok/s: 11731 | entropy: 1.386
+  [step 10790] loss=2.2368 tok/s=11 elapsed=479189.2s
+Step 10790/19531 | Loss: 2.2368 | LR: 0.000050 | τ: 0.503 | tok/s: 11715 | entropy: 1.386
+  [step 10800] loss=1.9844 tok/s=11 elapsed=479629.1s
+Step 10800/19531 | Loss: 1.9844 | LR: 0.000050 | τ: 0.502 | tok/s: 11919 | entropy: 1.386
+  [step 10810] loss=1.9512 tok/s=11 elapsed=480075.9s
+Step 10810/19531 | Loss: 1.9512 | LR: 0.000050 | τ: 0.502 | tok/s: 11733 | entropy: 1.386
+  [step 10820] loss=2.0479 tok/s=11 elapsed=480517.2s
+Step 10820/19531 | Loss: 2.0479 | LR: 0.000050 | τ: 0.501 | tok/s: 11882 | entropy: 1.386
+  [step 10830] loss=1.9214 tok/s=11 elapsed=480955.6s
+Step 10830/19531 | Loss: 1.9214 | LR: 0.000049 | τ: 0.501 | tok/s: 11959 | entropy: 1.386
+  [step 10840] loss=2.0620 tok/s=11 elapsed=481395.5s
+Step 10840/19531 | Loss: 2.0620 | LR: 0.000049 | τ: 0.501 | tok/s: 11918 | entropy: 1.386
+  [step 10850] loss=1.9004 tok/s=11 elapsed=481835.1s
+Step 10850/19531 | Loss: 1.9004 | LR: 0.000049 | τ: 0.500 | tok/s: 11928 | entropy: 1.386
+  [step 10860] loss=2.0527 tok/s=11 elapsed=482273.5s
+Step 10860/19531 | Loss: 2.0527 | LR: 0.000049 | τ: 0.500 | tok/s: 11959 | entropy: 1.386
+  [step 10870] loss=1.9692 tok/s=11 elapsed=482711.7s
+Step 10870/19531 | Loss: 1.9692 | LR: 0.000049 | τ: 0.499 | tok/s: 11962 | entropy: 1.386
+  [step 10880] loss=2.0181 tok/s=11 elapsed=483151.2s
+Step 10880/19531 | Loss: 2.0181 | LR: 0.000049 | τ: 0.499 | tok/s: 11929 | entropy: 1.386
+  [step 10890] loss=1.9600 tok/s=11 elapsed=483590.1s
+Step 10890/19531 | Loss: 1.9600 | LR: 0.000049 | τ: 0.498 | tok/s: 11946 | entropy: 1.386
+  [step 10900] loss=2.1304 tok/s=11 elapsed=484032.4s
+Step 10900/19531 | Loss: 2.1304 | LR: 0.000049 | τ: 0.498 | tok/s: 11854 | entropy: 1.386
+  [step 10910] loss=2.1240 tok/s=11 elapsed=484478.9s
+Step 10910/19531 | Loss: 2.1240 | LR: 0.000049 | τ: 0.497 | tok/s: 11742 | entropy: 1.386
+  [step 10920] loss=1.9790 tok/s=11 elapsed=484925.9s
+Step 10920/19531 | Loss: 1.9790 | LR: 0.000049 | τ: 0.497 | tok/s: 11729 | entropy: 1.386
+  [step 10930] loss=2.0757 tok/s=11 elapsed=485372.7s
+Step 10930/19531 | Loss: 2.0757 | LR: 0.000049 | τ: 0.496 | tok/s: 11736 | entropy: 1.386
+  [step 10940] loss=2.2778 tok/s=11 elapsed=485819.3s
+Step 10940/19531 | Loss: 2.2778 | LR: 0.000048 | τ: 0.496 | tok/s: 11739 | entropy: 1.386
+  [step 10950] loss=1.9395 tok/s=11 elapsed=486265.6s
+Step 10950/19531 | Loss: 1.9395 | LR: 0.000048 | τ: 0.495 | tok/s: 11748 | entropy: 1.386
+  [step 10960] loss=2.0601 tok/s=11 elapsed=486711.2s
+Step 10960/19531 | Loss: 2.0601 | LR: 0.000048 | τ: 0.495 | tok/s: 11767 | entropy: 1.386
+  [step 10970] loss=2.0195 tok/s=11 elapsed=487150.3s
+Step 10970/19531 | Loss: 2.0195 | LR: 0.000048 | τ: 0.495 | tok/s: 11939 | entropy: 1.386
+  [step 10980] loss=2.0298 tok/s=11 elapsed=487589.2s
+Step 10980/19531 | Loss: 2.0298 | LR: 0.000048 | τ: 0.494 | tok/s: 11947 | entropy: 1.386
+  [step 10990] loss=1.9604 tok/s=11 elapsed=488027.9s
+Step 10990/19531 | Loss: 1.9604 | LR: 0.000048 | τ: 0.494 | tok/s: 11950 | entropy: 1.386
+  [step 11000] loss=1.7197 tok/s=11 elapsed=488466.3s
+Step 11000/19531 | Loss: 1.7197 | LR: 0.000048 | τ: 0.493 | tok/s: 11959 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 11000
+  [step 11010] loss=1.9434 tok/s=11 elapsed=488929.9s
+Step 11010/19531 | Loss: 1.9434 | LR: 0.000048 | τ: 0.493 | tok/s: 11310 | entropy: 1.386
+  [step 11020] loss=2.0859 tok/s=11 elapsed=489368.8s
+Step 11020/19531 | Loss: 2.0859 | LR: 0.000048 | τ: 0.492 | tok/s: 11945 | entropy: 1.386
+  [step 11030] loss=2.2100 tok/s=11 elapsed=489811.4s
+Step 11030/19531 | Loss: 2.2100 | LR: 0.000048 | τ: 0.492 | tok/s: 11847 | entropy: 1.386
+  [step 11040] loss=2.1611 tok/s=11 elapsed=490251.7s
+Step 11040/19531 | Loss: 2.1611 | LR: 0.000048 | τ: 0.491 | tok/s: 11906 | entropy: 1.386
+  [step 11050] loss=2.1006 tok/s=11 elapsed=490691.6s
+Step 11050/19531 | Loss: 2.1006 | LR: 0.000047 | τ: 0.491 | tok/s: 11920 | entropy: 1.386
+  [step 11060] loss=2.1475 tok/s=11 elapsed=491138.3s
+Step 11060/19531 | Loss: 2.1475 | LR: 0.000047 | τ: 0.490 | tok/s: 11737 | entropy: 1.386
+  [step 11070] loss=2.0967 tok/s=11 elapsed=491585.3s
+Step 11070/19531 | Loss: 2.0967 | LR: 0.000047 | τ: 0.490 | tok/s: 11729 | entropy: 1.386
+  [step 11080] loss=2.1968 tok/s=11 elapsed=492031.9s
+Step 11080/19531 | Loss: 2.1968 | LR: 0.000047 | τ: 0.489 | tok/s: 11740 | entropy: 1.386
+  [step 11090] loss=2.1924 tok/s=11 elapsed=492478.5s
+Step 11090/19531 | Loss: 2.1924 | LR: 0.000047 | τ: 0.489 | tok/s: 11739 | entropy: 1.386
+  [step 11100] loss=2.0469 tok/s=11 elapsed=492925.0s
+Step 11100/19531 | Loss: 2.0469 | LR: 0.000047 | τ: 0.489 | tok/s: 11741 | entropy: 1.386
+  [step 11110] loss=1.9971 tok/s=11 elapsed=493371.5s
+Step 11110/19531 | Loss: 1.9971 | LR: 0.000047 | τ: 0.488 | tok/s: 11742 | entropy: 1.386
+  [step 11120] loss=2.0869 tok/s=11 elapsed=493817.9s
+Step 11120/19531 | Loss: 2.0869 | LR: 0.000047 | τ: 0.488 | tok/s: 11745 | entropy: 1.386
+  [step 11130] loss=2.1348 tok/s=11 elapsed=494264.2s
+Step 11130/19531 | Loss: 2.1348 | LR: 0.000047 | τ: 0.487 | tok/s: 11748 | entropy: 1.386
+  [step 11140] loss=2.0073 tok/s=11 elapsed=494710.8s
+Step 11140/19531 | Loss: 2.0073 | LR: 0.000047 | τ: 0.487 | tok/s: 11741 | entropy: 1.386
+  [step 11150] loss=2.0356 tok/s=11 elapsed=495157.3s
+Step 11150/19531 | Loss: 2.0356 | LR: 0.000047 | τ: 0.486 | tok/s: 11742 | entropy: 1.386
+  [step 11160] loss=2.0723 tok/s=11 elapsed=495603.2s
+Step 11160/19531 | Loss: 2.0723 | LR: 0.000046 | τ: 0.486 | tok/s: 11758 | entropy: 1.386
+  [step 11170] loss=2.0186 tok/s=11 elapsed=496049.5s
+Step 11170/19531 | Loss: 2.0186 | LR: 0.000046 | τ: 0.485 | tok/s: 11746 | entropy: 1.386
+  [step 11180] loss=2.0068 tok/s=11 elapsed=496496.2s
+Step 11180/19531 | Loss: 2.0068 | LR: 0.000046 | τ: 0.485 | tok/s: 11737 | entropy: 1.386
+  [step 11190] loss=2.0728 tok/s=11 elapsed=496942.8s
+Step 11190/19531 | Loss: 2.0728 | LR: 0.000046 | τ: 0.484 | tok/s: 11740 | entropy: 1.386
+  [step 11200] loss=2.0547 tok/s=11 elapsed=497389.4s
+Step 11200/19531 | Loss: 2.0547 | LR: 0.000046 | τ: 0.484 | tok/s: 11742 | entropy: 1.386
+  [step 11210] loss=2.0117 tok/s=11 elapsed=497828.9s
+Step 11210/19531 | Loss: 2.0117 | LR: 0.000046 | τ: 0.483 | tok/s: 11930 | entropy: 1.386
+  [step 11220] loss=2.1299 tok/s=11 elapsed=498267.3s
+Step 11220/19531 | Loss: 2.1299 | LR: 0.000046 | τ: 0.483 | tok/s: 11957 | entropy: 1.386
+  [step 11230] loss=2.2612 tok/s=11 elapsed=498714.1s
+Step 11230/19531 | Loss: 2.2612 | LR: 0.000046 | τ: 0.483 | tok/s: 11736 | entropy: 1.386
+  [step 11240] loss=2.0664 tok/s=11 elapsed=499160.5s
+Step 11240/19531 | Loss: 2.0664 | LR: 0.000046 | τ: 0.482 | tok/s: 11745 | entropy: 1.386
+  [step 11250] loss=2.1909 tok/s=10 elapsed=499607.8s
+Step 11250/19531 | Loss: 2.1909 | LR: 0.000046 | τ: 0.482 | tok/s: 11721 | entropy: 1.386
+  [step 11260] loss=2.0259 tok/s=10 elapsed=500055.1s
+Step 11260/19531 | Loss: 2.0259 | LR: 0.000046 | τ: 0.481 | tok/s: 11721 | entropy: 1.386
+  [step 11270] loss=1.9854 tok/s=10 elapsed=500502.1s
+Step 11270/19531 | Loss: 1.9854 | LR: 0.000045 | τ: 0.481 | tok/s: 11730 | entropy: 1.386
+  [step 11280] loss=1.9443 tok/s=10 elapsed=500948.5s
+Step 11280/19531 | Loss: 1.9443 | LR: 0.000045 | τ: 0.480 | tok/s: 11743 | entropy: 1.386
+  [step 11290] loss=2.0513 tok/s=10 elapsed=501396.1s
+Step 11290/19531 | Loss: 2.0513 | LR: 0.000045 | τ: 0.480 | tok/s: 11715 | entropy: 1.386
+  [step 11300] loss=2.1797 tok/s=10 elapsed=501843.7s
+Step 11300/19531 | Loss: 2.1797 | LR: 0.000045 | τ: 0.479 | tok/s: 11713 | entropy: 1.386
+  [step 11310] loss=2.0967 tok/s=10 elapsed=502289.9s
+Step 11310/19531 | Loss: 2.0967 | LR: 0.000045 | τ: 0.479 | tok/s: 11749 | entropy: 1.386
+  [step 11320] loss=1.9658 tok/s=10 elapsed=502730.2s
+Step 11320/19531 | Loss: 1.9658 | LR: 0.000045 | τ: 0.478 | tok/s: 11908 | entropy: 1.386
+  [step 11330] loss=2.1836 tok/s=10 elapsed=503170.7s
+Step 11330/19531 | Loss: 2.1836 | LR: 0.000045 | τ: 0.478 | tok/s: 11901 | entropy: 1.386
+  [step 11340] loss=2.2031 tok/s=10 elapsed=503615.5s
+Step 11340/19531 | Loss: 2.2031 | LR: 0.000045 | τ: 0.477 | tok/s: 11788 | entropy: 1.386
+  [step 11350] loss=2.1235 tok/s=10 elapsed=504062.2s
+Step 11350/19531 | Loss: 2.1235 | LR: 0.000045 | τ: 0.477 | tok/s: 11736 | entropy: 1.386
+  [step 11360] loss=2.1240 tok/s=10 elapsed=504509.2s
+Step 11360/19531 | Loss: 2.1240 | LR: 0.000045 | τ: 0.477 | tok/s: 11729 | entropy: 1.386
+  [step 11370] loss=2.4209 tok/s=10 elapsed=504955.5s
+Step 11370/19531 | Loss: 2.4209 | LR: 0.000045 | τ: 0.476 | tok/s: 11749 | entropy: 1.386
+  [step 11380] loss=2.0439 tok/s=10 elapsed=505400.2s
+Step 11380/19531 | Loss: 2.0439 | LR: 0.000045 | τ: 0.476 | tok/s: 11790 | entropy: 1.386
+  [step 11390] loss=1.9463 tok/s=10 elapsed=505838.9s
+Step 11390/19531 | Loss: 1.9463 | LR: 0.000044 | τ: 0.475 | tok/s: 11952 | entropy: 1.386
+  [step 11400] loss=2.0596 tok/s=10 elapsed=506281.5s
+Step 11400/19531 | Loss: 2.0596 | LR: 0.000044 | τ: 0.475 | tok/s: 11845 | entropy: 1.386
+  [step 11410] loss=2.1128 tok/s=10 elapsed=506719.6s
+Step 11410/19531 | Loss: 2.1128 | LR: 0.000044 | τ: 0.474 | tok/s: 11966 | entropy: 1.386
+  [step 11420] loss=1.7847 tok/s=10 elapsed=507157.4s
+Step 11420/19531 | Loss: 1.7847 | LR: 0.000044 | τ: 0.474 | tok/s: 11975 | entropy: 1.386
+  [step 11430] loss=1.9995 tok/s=10 elapsed=507595.5s
+Step 11430/19531 | Loss: 1.9995 | LR: 0.000044 | τ: 0.473 | tok/s: 11970 | entropy: 1.386
+  [step 11440] loss=2.1323 tok/s=10 elapsed=508035.9s
+Step 11440/19531 | Loss: 2.1323 | LR: 0.000044 | τ: 0.473 | tok/s: 11905 | entropy: 1.386
+  [step 11450] loss=2.4717 tok/s=10 elapsed=508482.3s
+Step 11450/19531 | Loss: 2.4717 | LR: 0.000044 | τ: 0.472 | tok/s: 11743 | entropy: 1.386
+  [step 11460] loss=1.8257 tok/s=10 elapsed=508920.7s
+Step 11460/19531 | Loss: 1.8257 | LR: 0.000044 | τ: 0.472 | tok/s: 11961 | entropy: 1.386
+  [step 11470] loss=1.9990 tok/s=10 elapsed=509359.7s
+Step 11470/19531 | Loss: 1.9990 | LR: 0.000044 | τ: 0.472 | tok/s: 11941 | entropy: 1.386
+  [step 11480] loss=2.2544 tok/s=10 elapsed=509798.3s
+Step 11480/19531 | Loss: 2.2544 | LR: 0.000044 | τ: 0.471 | tok/s: 11955 | entropy: 1.386
+  [step 11490] loss=2.2021 tok/s=10 elapsed=510236.9s
+Step 11490/19531 | Loss: 2.2021 | LR: 0.000044 | τ: 0.471 | tok/s: 11953 | entropy: 1.386
+  [step 11500] loss=1.8765 tok/s=10 elapsed=510678.7s
+Step 11500/19531 | Loss: 1.8765 | LR: 0.000043 | τ: 0.470 | tok/s: 11867 | entropy: 1.386
+  [step 11510] loss=2.1250 tok/s=10 elapsed=511116.4s
+Step 11510/19531 | Loss: 2.1250 | LR: 0.000043 | τ: 0.470 | tok/s: 11980 | entropy: 1.386
+  [step 11520] loss=1.9580 tok/s=10 elapsed=511555.3s
+Step 11520/19531 | Loss: 1.9580 | LR: 0.000043 | τ: 0.469 | tok/s: 11945 | entropy: 1.386
+  [step 11530] loss=1.8174 tok/s=10 elapsed=511994.8s
+Step 11530/19531 | Loss: 1.8174 | LR: 0.000043 | τ: 0.469 | tok/s: 11929 | entropy: 1.386
+  [step 11540] loss=2.0903 tok/s=10 elapsed=512433.4s
+Step 11540/19531 | Loss: 2.0903 | LR: 0.000043 | τ: 0.468 | tok/s: 11954 | entropy: 1.386
+  [step 11550] loss=2.1553 tok/s=10 elapsed=512892.1s
+Step 11550/19531 | Loss: 2.1553 | LR: 0.000043 | τ: 0.468 | tok/s: 11428 | entropy: 1.386
+  [step 11560] loss=2.1963 tok/s=10 elapsed=513339.8s
+Step 11560/19531 | Loss: 2.1963 | LR: 0.000043 | τ: 0.467 | tok/s: 11712 | entropy: 1.386
+  [step 11570] loss=1.9980 tok/s=10 elapsed=513786.2s
+Step 11570/19531 | Loss: 1.9980 | LR: 0.000043 | τ: 0.467 | tok/s: 11745 | entropy: 1.386
+  [step 11580] loss=2.0933 tok/s=10 elapsed=514224.8s
+Step 11580/19531 | Loss: 2.0933 | LR: 0.000043 | τ: 0.466 | tok/s: 11954 | entropy: 1.386
+  [step 11590] loss=2.1240 tok/s=10 elapsed=514663.4s
+Step 11590/19531 | Loss: 2.1240 | LR: 0.000043 | τ: 0.466 | tok/s: 11953 | entropy: 1.386
+  [step 11600] loss=2.0234 tok/s=10 elapsed=515110.2s
+Step 11600/19531 | Loss: 2.0234 | LR: 0.000043 | τ: 0.466 | tok/s: 11734 | entropy: 1.386
+  [step 11610] loss=2.1035 tok/s=10 elapsed=515556.4s
+Step 11610/19531 | Loss: 2.1035 | LR: 0.000042 | τ: 0.465 | tok/s: 11751 | entropy: 1.386
+  [step 11620] loss=1.9751 tok/s=10 elapsed=516003.8s
+Step 11620/19531 | Loss: 1.9751 | LR: 0.000042 | τ: 0.465 | tok/s: 11720 | entropy: 1.386
+  [step 11630] loss=1.9731 tok/s=10 elapsed=516444.7s
+Step 11630/19531 | Loss: 1.9731 | LR: 0.000042 | τ: 0.464 | tok/s: 11890 | entropy: 1.386
+  [step 11640] loss=1.9448 tok/s=10 elapsed=516884.2s
+Step 11640/19531 | Loss: 1.9448 | LR: 0.000042 | τ: 0.464 | tok/s: 11930 | entropy: 1.386
+  [step 11650] loss=2.2407 tok/s=10 elapsed=517330.9s
+Step 11650/19531 | Loss: 2.2407 | LR: 0.000042 | τ: 0.463 | tok/s: 11737 | entropy: 1.386
+  [step 11660] loss=2.3413 tok/s=10 elapsed=517777.5s
+Step 11660/19531 | Loss: 2.3413 | LR: 0.000042 | τ: 0.463 | tok/s: 11740 | entropy: 1.386
+  [step 11670] loss=2.2485 tok/s=10 elapsed=518216.5s
+Step 11670/19531 | Loss: 2.2485 | LR: 0.000042 | τ: 0.462 | tok/s: 11943 | entropy: 1.386
+  [step 11680] loss=1.9448 tok/s=10 elapsed=518655.0s
+Step 11680/19531 | Loss: 1.9448 | LR: 0.000042 | τ: 0.462 | tok/s: 11957 | entropy: 1.386
+  [step 11690] loss=1.6792 tok/s=10 elapsed=519093.9s
+Step 11690/19531 | Loss: 1.6792 | LR: 0.000042 | τ: 0.461 | tok/s: 11944 | entropy: 1.386
+  [step 11700] loss=2.0034 tok/s=10 elapsed=519537.6s
+Step 11700/19531 | Loss: 2.0034 | LR: 0.000042 | τ: 0.461 | tok/s: 11818 | entropy: 1.386
+  [step 11710] loss=2.0879 tok/s=10 elapsed=519984.8s
+Step 11710/19531 | Loss: 2.0879 | LR: 0.000042 | τ: 0.460 | tok/s: 11722 | entropy: 1.386
+  [step 11720] loss=1.9243 tok/s=10 elapsed=520424.8s
+Step 11720/19531 | Loss: 1.9243 | LR: 0.000041 | τ: 0.460 | tok/s: 11917 | entropy: 1.386
+  [step 11730] loss=2.1216 tok/s=10 elapsed=520864.1s
+Step 11730/19531 | Loss: 2.1216 | LR: 0.000041 | τ: 0.460 | tok/s: 11936 | entropy: 1.386
+  [step 11740] loss=1.9277 tok/s=10 elapsed=521309.2s
+Step 11740/19531 | Loss: 1.9277 | LR: 0.000041 | τ: 0.459 | tok/s: 11777 | entropy: 1.386
+  [step 11750] loss=2.0488 tok/s=10 elapsed=521755.8s
+Step 11750/19531 | Loss: 2.0488 | LR: 0.000041 | τ: 0.459 | tok/s: 11742 | entropy: 1.386
+  [step 11760] loss=2.2402 tok/s=10 elapsed=522202.2s
+Step 11760/19531 | Loss: 2.2402 | LR: 0.000041 | τ: 0.458 | tok/s: 11742 | entropy: 1.386
+  [step 11770] loss=2.0684 tok/s=10 elapsed=522649.4s
+Step 11770/19531 | Loss: 2.0684 | LR: 0.000041 | τ: 0.458 | tok/s: 11726 | entropy: 1.386
+  [step 11780] loss=1.8882 tok/s=10 elapsed=523091.6s
+Step 11780/19531 | Loss: 1.8882 | LR: 0.000041 | τ: 0.457 | tok/s: 11855 | entropy: 1.386
+  [step 11790] loss=1.9985 tok/s=10 elapsed=523531.4s
+Step 11790/19531 | Loss: 1.9985 | LR: 0.000041 | τ: 0.457 | tok/s: 11921 | entropy: 1.386
+  [step 11800] loss=2.2529 tok/s=10 elapsed=523975.7s
+Step 11800/19531 | Loss: 2.2529 | LR: 0.000041 | τ: 0.456 | tok/s: 11800 | entropy: 1.386
+  [step 11810] loss=2.2490 tok/s=10 elapsed=524421.4s
+Step 11810/19531 | Loss: 2.2490 | LR: 0.000041 | τ: 0.456 | tok/s: 11765 | entropy: 1.386
+  [step 11820] loss=2.2593 tok/s=10 elapsed=524867.5s
+Step 11820/19531 | Loss: 2.2593 | LR: 0.000041 | τ: 0.455 | tok/s: 11753 | entropy: 1.386
+  [step 11830] loss=1.9873 tok/s=10 elapsed=525314.2s
+Step 11830/19531 | Loss: 1.9873 | LR: 0.000041 | τ: 0.455 | tok/s: 11737 | entropy: 1.386
+  [step 11840] loss=1.9380 tok/s=10 elapsed=525759.7s
+Step 11840/19531 | Loss: 1.9380 | LR: 0.000040 | τ: 0.454 | tok/s: 11767 | entropy: 1.386
+  [step 11850] loss=2.0981 tok/s=10 elapsed=526197.5s
+Step 11850/19531 | Loss: 2.0981 | LR: 0.000040 | τ: 0.454 | tok/s: 11976 | entropy: 1.386
+  [step 11860] loss=2.1865 tok/s=10 elapsed=526639.2s
+Step 11860/19531 | Loss: 2.1865 | LR: 0.000040 | τ: 0.454 | tok/s: 11872 | entropy: 1.386
+  [step 11870] loss=2.2021 tok/s=10 elapsed=527085.5s
+Step 11870/19531 | Loss: 2.2021 | LR: 0.000040 | τ: 0.453 | tok/s: 11746 | entropy: 1.386
+  [step 11880] loss=2.0972 tok/s=10 elapsed=527532.1s
+Step 11880/19531 | Loss: 2.0972 | LR: 0.000040 | τ: 0.453 | tok/s: 11739 | entropy: 1.386
+  [step 11890] loss=1.9619 tok/s=10 elapsed=527972.2s
+Step 11890/19531 | Loss: 1.9619 | LR: 0.000040 | τ: 0.452 | tok/s: 11913 | entropy: 1.386
+  [step 11900] loss=2.2729 tok/s=10 elapsed=528410.5s
+Step 11900/19531 | Loss: 2.2729 | LR: 0.000040 | τ: 0.452 | tok/s: 11962 | entropy: 1.386
+  [step 11910] loss=2.0029 tok/s=10 elapsed=528856.5s
+Step 11910/19531 | Loss: 2.0029 | LR: 0.000040 | τ: 0.451 | tok/s: 11757 | entropy: 1.386
+  [step 11920] loss=2.0620 tok/s=10 elapsed=529303.1s
+Step 11920/19531 | Loss: 2.0620 | LR: 0.000040 | τ: 0.451 | tok/s: 11739 | entropy: 1.386
+  [step 11930] loss=2.0869 tok/s=10 elapsed=529749.6s
+Step 11930/19531 | Loss: 2.0869 | LR: 0.000040 | τ: 0.450 | tok/s: 11743 | entropy: 1.386
+  [step 11940] loss=2.1792 tok/s=10 elapsed=530196.2s
+Step 11940/19531 | Loss: 2.1792 | LR: 0.000040 | τ: 0.450 | tok/s: 11737 | entropy: 1.386
+  [step 11950] loss=1.9922 tok/s=10 elapsed=530639.7s
+Step 11950/19531 | Loss: 1.9922 | LR: 0.000039 | τ: 0.449 | tok/s: 11823 | entropy: 1.386
+  [step 11960] loss=2.3833 tok/s=10 elapsed=531078.6s
+Step 11960/19531 | Loss: 2.3833 | LR: 0.000039 | τ: 0.449 | tok/s: 11946 | entropy: 1.386
+  [step 11970] loss=1.8364 tok/s=10 elapsed=531524.6s
+Step 11970/19531 | Loss: 1.8364 | LR: 0.000039 | τ: 0.448 | tok/s: 11756 | entropy: 1.386
+  [step 11980] loss=2.0405 tok/s=10 elapsed=531971.4s
+Step 11980/19531 | Loss: 2.0405 | LR: 0.000039 | τ: 0.448 | tok/s: 11733 | entropy: 1.386
+  [step 11990] loss=2.1597 tok/s=10 elapsed=532415.0s
+Step 11990/19531 | Loss: 2.1597 | LR: 0.000039 | τ: 0.448 | tok/s: 11819 | entropy: 1.386
+  [step 12000] loss=2.1445 tok/s=10 elapsed=532854.2s
+Step 12000/19531 | Loss: 2.1445 | LR: 0.000039 | τ: 0.447 | tok/s: 11938 | entropy: 1.386
+Saved DeepSpeed checkpoint at step 12000
+  [step 12010] loss=2.2861 tok/s=10 elapsed=533323.1s
+Step 12010/19531 | Loss: 2.2861 | LR: 0.000039 | τ: 0.447 | tok/s: 11182 | entropy: 1.386
+  [step 12020] loss=2.0444 tok/s=10 elapsed=533761.4s
+Step 12020/19531 | Loss: 2.0444 | LR: 0.000039 | τ: 0.446 | tok/s: 11962 | entropy: 1.386
+  [step 12030] loss=2.1416 tok/s=10 elapsed=534199.9s
+Step 12030/19531 | Loss: 2.1416 | LR: 0.000039 | τ: 0.446 | tok/s: 11957 | entropy: 1.386
+  [step 12040] loss=2.0991 tok/s=10 elapsed=534641.0s
+Step 12040/19531 | Loss: 2.0991 | LR: 0.000039 | τ: 0.445 | tok/s: 11886 | entropy: 1.386
+  [step 12050] loss=2.0166 tok/s=10 elapsed=535087.6s
+Step 12050/19531 | Loss: 2.0166 | LR: 0.000039 | τ: 0.445 | tok/s: 11740 | entropy: 1.386
+  [step 12060] loss=2.3145 tok/s=10 elapsed=535534.1s
+Step 12060/19531 | Loss: 2.3145 | LR: 0.000039 | τ: 0.444 | tok/s: 11743 | entropy: 1.386
+  [step 12070] loss=2.0811 tok/s=10 elapsed=535980.8s
+Step 12070/19531 | Loss: 2.0811 | LR: 0.000038 | τ: 0.444 | tok/s: 11735 | entropy: 1.386
+  [step 12080] loss=2.3296 tok/s=10 elapsed=536427.4s
+Step 12080/19531 | Loss: 2.3296 | LR: 0.000038 | τ: 0.443 | tok/s: 11740 | entropy: 1.386
+  [step 12090] loss=1.9907 tok/s=10 elapsed=536874.0s
+Step 12090/19531 | Loss: 1.9907 | LR: 0.000038 | τ: 0.443 | tok/s: 11741 | entropy: 1.386
+  [step 12100] loss=2.1646 tok/s=10 elapsed=537321.4s
+Step 12100/19531 | Loss: 2.1646 | LR: 0.000038 | τ: 0.442 | tok/s: 11717 | entropy: 1.386
+  [step 12110] loss=2.0854 tok/s=10 elapsed=537762.0s
+Step 12110/19531 | Loss: 2.0854 | LR: 0.000038 | τ: 0.442 | tok/s: 11900 | entropy: 1.386
+  [step 12120] loss=2.2983 tok/s=10 elapsed=538202.8s
+Step 12120/19531 | Loss: 2.2983 | LR: 0.000038 | τ: 0.442 | tok/s: 11894 | entropy: 1.386
+  [step 12130] loss=2.1230 tok/s=10 elapsed=538649.2s
+Step 12130/19531 | Loss: 2.1230 | LR: 0.000038 | τ: 0.441 | tok/s: 11745 | entropy: 1.386
+  [step 12140] loss=1.8467 tok/s=10 elapsed=539087.5s
+Step 12140/19531 | Loss: 1.8467 | LR: 0.000038 | τ: 0.441 | tok/s: 11963 | entropy: 1.386
+  [step 12150] loss=2.0610 tok/s=10 elapsed=539529.2s
+Step 12150/19531 | Loss: 2.0610 | LR: 0.000038 | τ: 0.440 | tok/s: 11868 | entropy: 1.386
+  [step 12160] loss=1.9121 tok/s=10 elapsed=539975.9s
+Step 12160/19531 | Loss: 1.9121 | LR: 0.000038 | τ: 0.440 | tok/s: 11739 | entropy: 1.386
+  [step 12170] loss=2.0811 tok/s=10 elapsed=540422.1s
+Step 12170/19531 | Loss: 2.0811 | LR: 0.000038 | τ: 0.439 | tok/s: 11748 | entropy: 1.386
+  [step 12180] loss=2.2119 tok/s=10 elapsed=540868.7s
+Step 12180/19531 | Loss: 2.2119 | LR: 0.000037 | τ: 0.439 | tok/s: 11741 | entropy: 1.386
+  [step 12190] loss=2.0405 tok/s=10 elapsed=541315.1s
+Step 12190/19531 | Loss: 2.0405 | LR: 0.000037 | τ: 0.438 | tok/s: 11744 | entropy: 1.386
+  [step 12200] loss=1.9775 tok/s=10 elapsed=541755.6s
+Step 12200/19531 | Loss: 1.9775 | LR: 0.000037 | τ: 0.438 | tok/s: 11903 | entropy: 1.386
+  [step 12210] loss=2.1733 tok/s=10 elapsed=542193.7s
+Step 12210/19531 | Loss: 2.1733 | LR: 0.000037 | τ: 0.437 | tok/s: 11967 | entropy: 1.386
+  [step 12220] loss=1.7202 tok/s=10 elapsed=542632.3s
+Step 12220/19531 | Loss: 1.7202 | LR: 0.000037 | τ: 0.437 | tok/s: 11955 | entropy: 1.386
+  [step 12230] loss=2.1260 tok/s=10 elapsed=543074.8s
+Step 12230/19531 | Loss: 2.1260 | LR: 0.000037 | τ: 0.436 | tok/s: 11848 | entropy: 1.386
+  [step 12240] loss=1.9946 tok/s=10 elapsed=543513.7s
+Step 12240/19531 | Loss: 1.9946 | LR: 0.000037 | τ: 0.436 | tok/s: 11946 | entropy: 1.386
+  [step 12250] loss=2.1406 tok/s=10 elapsed=543952.9s
+Step 12250/19531 | Loss: 2.1406 | LR: 0.000037 | τ: 0.436 | tok/s: 11936 | entropy: 1.386
+  [step 12260] loss=2.0737 tok/s=10 elapsed=544393.0s
+Step 12260/19531 | Loss: 2.0737 | LR: 0.000037 | τ: 0.435 | tok/s: 11915 | entropy: 1.386
+  [step 12270] loss=2.1763 tok/s=10 elapsed=544839.4s
+Step 12270/19531 | Loss: 2.1763 | LR: 0.000037 | τ: 0.435 | tok/s: 11745 | entropy: 1.386
+  [step 12280] loss=2.0542 tok/s=10 elapsed=545286.0s
+Step 12280/19531 | Loss: 2.0542 | LR: 0.000037 | τ: 0.434 | tok/s: 11739 | entropy: 1.386
+  [step 12290] loss=2.0981 tok/s=10 elapsed=545733.5s
+Step 12290/19531 | Loss: 2.0981 | LR: 0.000037 | τ: 0.434 | tok/s: 11716 | entropy: 1.386
+  [step 12300] loss=2.2183 tok/s=10 elapsed=546180.4s
+Step 12300/19531 | Loss: 2.2183 | LR: 0.000036 | τ: 0.433 | tok/s: 11731 | entropy: 1.386
+  [step 12310] loss=1.9136 tok/s=10 elapsed=546626.8s
+Step 12310/19531 | Loss: 1.9136 | LR: 0.000036 | τ: 0.433 | tok/s: 11745 | entropy: 1.386
+  [step 12320] loss=2.1006 tok/s=10 elapsed=547073.4s
+Step 12320/19531 | Loss: 2.1006 | LR: 0.000036 | τ: 0.432 | tok/s: 11742 | entropy: 1.386
+  [step 12330] loss=2.2148 tok/s=10 elapsed=547520.1s
+Step 12330/19531 | Loss: 2.2148 | LR: 0.000036 | τ: 0.432 | tok/s: 11737 | entropy: 1.386
+  [step 12340] loss=2.0840 tok/s=10 elapsed=547967.1s
+Step 12340/19531 | Loss: 2.0840 | LR: 0.000036 | τ: 0.431 | tok/s: 11727 | entropy: 1.386
+  [step 12350] loss=2.2905 tok/s=10 elapsed=548414.1s
+Step 12350/19531 | Loss: 2.2905 | LR: 0.000036 | τ: 0.431 | tok/s: 11729 | entropy: 1.386
+  [step 12360] loss=2.0908 tok/s=10 elapsed=548860.3s
+Step 12360/19531 | Loss: 2.0908 | LR: 0.000036 | τ: 0.430 | tok/s: 11752 | entropy: 1.386
+[2026-02-27 13:10:26,858] [INFO] [launch.py:335:sigkill_handler] Killing subprocess 251155
+[2026-02-27 13:10:27,280] [INFO] [launch.py:344:sigkill_handler] Main process received SIGTERM, exiting
