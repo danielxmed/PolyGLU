@@ -57,7 +57,7 @@ training:
   # Checkpointing
   checkpoint_dir: checkpoints
   checkpoint_every: 1000
-  portable_checkpoint_every: 5000
+  portable_checkpoint_every: 1000
 
   # Resume
   resume_from: checkpoints/portable_step10000_migrated.pt
