@@ -112,6 +112,8 @@ class SFTConfig:
     # Data
     dataset_id: str = "nvidia/Nemotron-Math-v2"
     dataset_splits: list = field(default_factory=lambda: ["high_part00", "high_part01", "high_part02"])
+    max_examples: int = 0  # 0 = use all examples
+    max_steps: int = 0  # 0 = train full epochs
 
     # Logging
     wandb_project: str = "polychromatic-lm-sft"

@@ -30,6 +30,7 @@ def main():
     parser.add_argument("--batch-size", type=int, default=1, help="Batch size for evaluation")
     parser.add_argument("--device", type=str, default="cuda", help="Device")
     parser.add_argument("--limit", type=int, default=None, help="Limit examples per task (for testing)")
+    parser.add_argument("--num-fewshot", type=int, default=None, help="Number of few-shot examples (None = task default)")
     parser.add_argument("--output", type=str, default="results/eval_results.json", help="Output path")
     parser.add_argument("--config", type=str, default=None, help="Model config YAML (uses defaults if not provided)")
     args = parser.parse_args()
@@ -51,12 +52,16 @@ def main():
 
     # Run evaluation
     print(f"Running evaluation on tasks: {args.tasks}")
-    results = lm_eval.simple_evaluate(
+    eval_kwargs = dict(
         model=lm,
         tasks=args.tasks,
         batch_size=args.batch_size,
         limit=args.limit,
     )
+    if args.num_fewshot is not None:
+        eval_kwargs["num_fewshot"] = args.num_fewshot
+
+    results = lm_eval.simple_evaluate(**eval_kwargs)
 
     # Print results
     print("\n" + "=" * 60)
