@@ -40,7 +40,6 @@ wandb/
 .ipynb_checkpoints/
 
 # Outputs
-figures/
 results/
 
 
